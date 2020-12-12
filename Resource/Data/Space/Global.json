@@ -1,0 +1,19 @@
+{
+    "Create Flag": [
+        "ComponentManager",
+        "ObjectManager",
+        "Scene",
+        "World"
+    ],
+    "Update Flag": [
+    ],
+    "FixedUpdate Flag": [
+    ],
+    "Objects": [
+
+    ],
+    "Settings": {
+        "ProjectionMatrix": "Perspective"
+    },
+    "Type": "Space"
+}
