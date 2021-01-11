@@ -1,4 +1,7 @@
 #include "SpaceEditor.hpp"
+
+#include <iostream>
+
 #include "GameEditor.hpp"
 #include "../../Core/OS-API/Application.hpp"
 #include "../../../Manager/Resource/ResourceManager.hpp"
@@ -333,7 +336,7 @@ namespace PhysicsProject
         ImGui::EndPopup();
     }
 
-    Space* SpaceEditor::DisplayScene(const std::string& name, Real dt) const
+    Space* SpaceEditor::DisplayScene(const std::string& name, Real dt) 
     {
         auto found = m_editing_spaces.find(name);
         auto space = found->second;
@@ -357,14 +360,24 @@ namespace PhysicsProject
             ImGui::Image(
                          m_render_texture_generator->GetTexture()->GetTexture(),
                          ImVec2(scene_scale, scene_scale * ratio), m_uv_min, m_uv_max, m_tint_col, m_border_col);
+           
             if (ImGui::IsItemHovered())
             {
                 GUISystem::SetFocusFree(true);
+
+            
+
             }
             else
             {
                 GUISystem::SetFocusFree(false);
             }
+
+            ImVec2 region = ImGui::GetItemRectMin();
+            m_mouse_pos = ImVec2( ImGui::GetMousePos().x - region.x, ImGui::GetMousePos().y - region.y);
+
+            ImGui::Text("Mouse Pos : (%.3f, %.3f)", m_mouse_pos.x, m_mouse_pos.y);
+            ImGui::Text("Region Pos : (%.3f, %.3f)", region.x, region.y);
         }
         return space;
     }
