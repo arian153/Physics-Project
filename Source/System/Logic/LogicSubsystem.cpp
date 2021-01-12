@@ -1,5 +1,8 @@
 #include "LogicSubsystem.hpp"
 #include "../../Manager/Component/GameComponent/LogicComponent.hpp"
+#include "../Core/Input/InputCommon.hpp"
+#include "../Core/Input/MouseInput.hpp"
+#include "../Graphics/Utility/PrimitiveRenderer.hpp"
 
 namespace PhysicsProject
 {
@@ -21,6 +24,9 @@ namespace PhysicsProject
         {
             logic->Update(dt);
         }
+
+        if (m_input->GetMouseInput()->IsDown(eKeyCodeMouse::Left))
+            m_primitive_renderer->DrawRay(m_picking_ray);
     }
 
     void LogicSubsystem::Render() const
@@ -63,5 +69,15 @@ namespace PhysicsProject
     void LogicSubsystem::SetPrimitiveRenderer(PrimitiveRenderer* primitive_renderer)
     {
         m_primitive_renderer = primitive_renderer;
+    }
+
+    void LogicSubsystem::SetPickingRay(const Ray& ray)
+    {
+        m_picking_ray = ray;
+    }
+
+    void LogicSubsystem::SetMouseOrtho(const Vector2& pos)
+    {
+        m_mouse_ortho = pos;
     }
 }

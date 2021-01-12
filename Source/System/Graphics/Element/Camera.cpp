@@ -157,4 +157,9 @@ namespace PhysicsProject
             m_scene->UpdateView();
         }
     }
+
+    Transform* Camera::GetTransform() const
+    {
+        return m_transform;
+    }
 }

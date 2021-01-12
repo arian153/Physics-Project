@@ -4,6 +4,9 @@
 #include "../../Math/Utility/MathDef.hpp"
 #include <unordered_map>
 
+#include "../../Math/Algebra/Vector2.hpp"
+#include "../../Math/Primitive/Others/Ray.hpp"
+
 namespace PhysicsProject
 {
     class CommandRegistry;
@@ -44,7 +47,7 @@ namespace PhysicsProject
         void   DoSave(JsonResource* resource);
         void   DisplayContents(JsonResource* resource);
         void   DisplayContextMenu(JsonResource* resource);
-        Space* DisplayScene(const std::string& name, Real dt) ;
+        Space* DisplayScene(const std::string& name, Real dt);
 
     private:
         friend class GameEditor;
@@ -57,6 +60,8 @@ namespace PhysicsProject
         ImVec4           m_tint_col      = ImVec4(1.0f, 1.0f, 1.0f, 1.0f); // No tint
         ImVec4           m_border_col    = ImVec4(1.0f, 1.0f, 1.0f, 0.5f); // 50% opaque white
         ImVec2           m_mouse_pos     = ImVec2(0.0f, 0.0f);
+        Vector2          m_ortho_pos;
+        Ray              m_picking_ray;
 
     private:
         GameEditor*      m_game_editor      = nullptr;

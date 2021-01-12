@@ -55,7 +55,7 @@ namespace PhysicsProject
             delete m_primitive_renderer;
             m_primitive_renderer = nullptr;
         }
-         for (auto& camera : m_cameras)
+        for (auto& camera : m_cameras)
         {
             camera->Shutdown();
             delete camera;
@@ -137,7 +137,7 @@ namespace PhysicsProject
 
     void Scene::OnResize() const
     {
-         }
+    }
 
     PrimitiveRenderer* Scene::GetPrimitiveRenderer() const
     {
@@ -168,5 +168,28 @@ namespace PhysicsProject
     Real Scene::GetAspectRatio() const
     {
         return m_matrix_manager->GetAspectRatio();
+    }
+
+    Ray Scene::GetPickingRay(const Vector2& pos) const
+    {
+        Matrix33 proj(m_projection_matrix);
+        Vector2  point;
+        point.x = pos.x / proj(0, 0);
+        point.y = pos.y / proj(1, 1);
+
+        Matrix33 inv_view(m_main_camera->GetViewMatrix().Inverse());
+        Vector3 origin(m_main_camera->GetPosition());
+        Vector3 dir;
+        dir.x = (point.x * inv_view(0, 0)) + (point.y * inv_view(1, 0)) + inv_view(2, 0);
+        dir.y = (point.x * inv_view(0, 1)) + (point.y * inv_view(1, 1)) + inv_view(2, 1);
+        dir.z = (point.x * inv_view(0, 2)) + (point.y * inv_view(1, 2)) + inv_view(2, 2);
+
+        //m_main_camera->GetTransform()->LocalToWorldMatrix();
+
+
+        dir.SetNormalize();
+
+        Ray ray(origin, dir);
+        return ray;
     }
 }
