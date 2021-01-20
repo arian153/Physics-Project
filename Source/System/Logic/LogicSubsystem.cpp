@@ -24,9 +24,6 @@ namespace PhysicsProject
         {
             logic->Update(dt);
         }
-
-        if (m_input->GetMouseInput()->IsDown(eKeyCodeMouse::Left))
-            m_primitive_renderer->DrawRay(m_picking_ray);
     }
 
     void LogicSubsystem::Render() const

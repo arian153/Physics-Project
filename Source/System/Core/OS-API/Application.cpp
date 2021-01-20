@@ -76,6 +76,8 @@ namespace PhysicsProject
         m_game_editor = new GameEditor();
         m_game_editor->Initialize(this);
         m_gui_system->AddGUI(m_game_editor);
+        m_level_manager->SetInitialLevel(m_initial_setting.initial_level);
+        m_game_editor->SetOpen(m_initial_setting.initial_level == "");
     }
 
     void Application::Update() const
@@ -292,6 +294,7 @@ namespace PhysicsProject
             m_initial_setting.screen_width     = 1280;
             m_initial_setting.screen_scale     = 1.0f;
             m_initial_setting.window_mode      = eWindowMode::Windowed;
+            m_initial_setting.initial_level    = "";
         }
         else
         {

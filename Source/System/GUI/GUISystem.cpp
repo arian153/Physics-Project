@@ -74,10 +74,7 @@ namespace PhysicsProject
 
     void GUISystem::CreateGUIContext()
     {
-        // Setup Dear ImGui context
-#if defined(E5_WIN32)
         ImGui_ImplWin32_EnableDpiAwareness();
-#endif
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
     }
@@ -92,8 +89,4 @@ namespace PhysicsProject
         m_game_editor = game_editor;
     }
 
-    bool GUISystem::OnGameEditor() const
-    {
-        return m_game_editor->IsOpen();
-    }
-}
+   }

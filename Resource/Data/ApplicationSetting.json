@@ -5,7 +5,8 @@
         "Show Cursor": true,
         "V-Sync": true,
         "Window Caption": "Physics-Project",
-        "Window Mode": "Windowed"
+        "Window Mode": "Windowed",
+        "Initial Level" : ""
     },
     "Type": "Setting"
 }

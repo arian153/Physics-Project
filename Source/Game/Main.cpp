@@ -9,7 +9,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prev_instance, LPSTR cmd_line, 
     E5_LEAK_CHECKS(-1);
     auto app = new PhysicsProject::Application();
     app->Initialize();
-    app->GetLevelManager()->SetInitialLevel("Collider");
+    //app->GetLevelManager()->SetInitialLevel("Collider");
     //Add game components
     app->GetComponentRegistry()->AddFactory(new Game::ControllerFactory);
 

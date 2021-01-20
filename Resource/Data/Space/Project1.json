@@ -1,0 +1,57 @@
+{
+    "Create Flag": [
+        "ComponentManager",
+        "ObjectManager",
+        "Scene",
+        "Logic"
+    ],
+    "Update Flag": [
+        "Scene",
+        "Logic"
+    ],
+    "FixedUpdate Flag": [
+    ],
+    "Objects": [
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ 0, 0, -60 ],
+                        "Scale": [ 1, 1, 1 ]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::CameraComponent",
+                    "Value": {
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ 0, 0, -60 ],
+                        "Zoom": 1.0
+                    }
+                }
+            ],
+            "Name": "Camera"
+        },
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 0, -60],
+                        "Scale": [1, 1, 1]
+                    }
+                },
+                {
+
+                }
+            ],
+            "Name": "Camera"
+        }
+        ],
+    "Settings": {
+                "ProjectionMatrix": "Perspective"
+    },
+    "Type": "Space"
+}
