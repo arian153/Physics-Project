@@ -178,6 +178,16 @@ namespace PhysicsProject
         return m_angular_velocity;
     }
 
+    Vector3 RigidBody::GetForce() const
+    {
+        return m_force_accumulator;
+    }
+
+    Vector3 RigidBody::GetTorque() const
+    {
+        return m_torque_accumulator;
+    }
+
     void RigidBody::SetPositionalConstraints(const Vector3& linear)
     {
         m_linear_constraints = linear;

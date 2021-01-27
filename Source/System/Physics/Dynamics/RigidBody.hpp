@@ -43,6 +43,8 @@ namespace PhysicsProject
 
         Vector3 GetLinearVelocity() const;
         Vector3 GetAngularVelocity() const;
+        Vector3 GetForce() const;
+        Vector3 GetTorque() const;
 
         void SetPositionalConstraints(const Vector3& linear);
         void SetRotationalConstraints(const Vector3& angular);

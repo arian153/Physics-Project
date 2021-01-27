@@ -32,6 +32,7 @@ namespace PhysicsProject
         void UpdateSceneWindow(Real dt);
         void UpdateInspectorWindow();
         void UpdateHierarchyWindow();
+        void UpdateSpaceSetting();
 
         void OpenSequence();
         void CloseAllSequence();

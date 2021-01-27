@@ -17,6 +17,7 @@ namespace Json
 
 namespace PhysicsProject
 {
+    class CommandRegistry;
     class RayTest;
     class ForceFactory;
     class Force;
@@ -37,6 +38,7 @@ namespace PhysicsProject
 
         void Load(const Json::Value& data);
         void Save(const Json::Value& data);
+        void Edit(CommandRegistry* registry);
 
         void SetBroadPhaseMode(eBroadPhaseMode mode);
         void SetPrimitiveRenderer(PrimitiveRenderer* primitive_renderer);
@@ -46,6 +48,8 @@ namespace PhysicsProject
         void SetDrawFlagContact(bool b_draw, const Color& color = ColorDef::Pure::White);
         void SetDrawFlagPrimitive(bool b_draw, const Color& color = ColorDef::Pure::White);
         void SetDrawFlagBP(bool b_draw, const Color& color = ColorDef::Pure::White);
+        void SetDrawFlagVelocity(bool b_draw, const Color& color = ColorDef::Pure::White);
+        void SetDrawFlagPositionTrace(bool b_draw, const Color& color = ColorDef::Pure::White);
 
         ColliderPrimitive* CreateCollider(ColliderSet* collider_set, eColliderType type) const;
         Force*             CreateForce(const std::string& type) const;
@@ -92,13 +96,23 @@ namespace PhysicsProject
         std::vector<RigidBody*>   m_rigid_bodies;
         std::list<ColliderPair>   m_pairs;
         std::vector<RayTest>      m_rays;
+    
         //factory
         std::unordered_map<std::string, ForceFactory*>* m_factories = nullptr;
 
+        ColorFlag m_draw_broad_phase;
+        ColorFlag m_draw_primitive;
         ColorFlag m_draw_gjk;
         ColorFlag m_draw_epa;
         ColorFlag m_draw_contact;
-        ColorFlag m_draw_primitive;
-        ColorFlag m_draw_broad_phase;
+
+        ColorFlag m_draw_velocity;
+        ColorFlag m_draw_position;
+
+        bool m_do_broad_phase  = true;
+        bool m_do_narrow_phase = true;
+        bool m_do_resolution   = true;
     };
+
+    
 }

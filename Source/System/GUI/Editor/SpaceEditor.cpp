@@ -20,6 +20,7 @@
 #include "../../../Manager/Object/Object.hpp"
 #include "../../../Manager/Component/Component.hpp"
 #include "../../Logic/LogicSubsystem.hpp"
+#include "../../Physics/Dynamics/World.hpp"
 
 namespace PhysicsProject
 {
@@ -226,6 +227,20 @@ namespace PhysicsProject
         ImGui::End();
     }
 
+    void SpaceEditor::UpdateSpaceSetting()
+    {
+        ImGui::Begin("Space Setting");
+        if (m_editing_space != nullptr)
+        {
+            World* world = m_editing_space->GetWorld();
+            if (world != nullptr)
+            {
+                world->Edit(m_command_registry);
+            }
+        }
+        ImGui::End();
+    }
+
     void SpaceEditor::OpenSequence()
     {
         for (size_t i = 0; i < m_resources.size(); ++i)
@@ -375,18 +390,18 @@ namespace PhysicsProject
 
             ImVec2 region = ImGui::GetItemRectMin();
             m_mouse_pos   = ImVec2(ImGui::GetMousePos().x - region.x, ImGui::GetMousePos().y - region.y);
-            ImGui::Text("Mouse Pos : (%.3f, %.3f)", m_mouse_pos.x, m_mouse_pos.y);
+            //ImGui::Text("Mouse Pos : (%.3f, %.3f)", m_mouse_pos.x, m_mouse_pos.y);
             m_ortho_pos.x = ((2.0f * m_mouse_pos.x) / size.x) - 1.0f;
             m_ortho_pos.y = (((2.0f * m_mouse_pos.y) / size.y) - 1.0f) * -1.0f;
-            ImGui::Text("Ortho Pos : (%.3f, %.3f)", m_ortho_pos.x, m_ortho_pos.y);
+            //ImGui::Text("Ortho Pos : (%.3f, %.3f)", m_ortho_pos.x, m_ortho_pos.y);
 
             m_picking_ray = scene != nullptr ? scene->GetPickingRay(m_ortho_pos) : m_picking_ray;
 
             space->GetLogicSubsystem()->SetPickingRay(m_picking_ray);
             space->GetLogicSubsystem()->SetMouseOrtho(m_ortho_pos);
 
-            ImGui::Text("Ray Pos : (%.3f, %.3f, %.3f)", m_picking_ray.position.x, m_picking_ray.position.y, m_picking_ray.position.z);
-            ImGui::Text("Ray Dir : (%.3f, %.3f, %.3f)", m_picking_ray.direction.x, m_picking_ray.direction.y, m_picking_ray.direction.z);
+            //ImGui::Text("Ray Pos : (%.3f, %.3f, %.3f)", m_picking_ray.position.x, m_picking_ray.position.y, m_picking_ray.position.z);
+            //ImGui::Text("Ray Dir : (%.3f, %.3f, %.3f)", m_picking_ray.direction.x, m_picking_ray.direction.y, m_picking_ray.direction.z);
         }
         return space;
     }

@@ -5,6 +5,7 @@
 #include "../NarrowPhase/NarrowPhase.hpp"
 #include "../NarrowPhase/ManifoldTable.hpp"
 #include "ColliderSet.hpp"
+#include "../../../External/imgui/imgui.h"
 #include "../ColliderPrimitive/ColliderPrimitive.hpp"
 #include "../Resolution/Resolution.hpp"
 #include "../../Graphics/Utility/PrimitiveRenderer.hpp"
@@ -65,20 +66,25 @@ namespace PhysicsProject
         {
             m_narrow_phase->Render(m_draw_gjk, m_draw_epa);
         }
-        if (m_draw_contact.b_flag)
-        {
-            m_resolution_phase->Render(m_draw_contact);
-        }
-
+        m_resolution_phase->Render(m_draw_contact);
+        Quaternion no_rotation;
         for (auto& body : m_rigid_bodies)
         {
-            auto vel = body->GetLinearVelocity();
-            auto pos = body->GetCentroid();
+            Vector3 vel = body->GetLinearVelocity();
+            Vector3 pos = body->GetCentroid();
+
+            if (m_draw_velocity.b_flag)
+            {
+                m_primitive_renderer->DrawArrow(pos, pos + vel, m_draw_velocity.color);
+            }
+            if (m_draw_position.b_flag)
+            {
+                m_primitive_renderer->DrawPrimitive(Sphere(pos, no_rotation, 0.05f), eRenderingMode::Face, m_draw_position.color);
+            }
         }
 
         for (auto& data : m_rays)
         {
-            Quaternion no_rotation;
             if (data.option == eRayTestOption::Cast)
             {
                 RayCastResult result(data.ray);
@@ -204,6 +210,54 @@ namespace PhysicsProject
             }
             SetDrawFlagPrimitive(flag.b_flag, flag.color);
         }
+
+      
+
+        if (JsonResource::HasMember(data, "Draw Velocity"))
+        {
+            ColorFlag   flag;
+            Json::Value value = data["Draw Velocity"];
+            if (JsonResource::HasMember(value, "Color") && JsonResource::IsColor(value["Color"]))
+            {
+                flag.color = JsonResource::AsColor(value["Color"]);
+            }
+            if (JsonResource::HasMember(value, "Flag") && value["Flag"].isBool())
+            {
+                flag.b_flag = value["Flag"].asBool();
+            }
+            SetDrawFlagVelocity(flag.b_flag, flag.color);
+        }
+
+        if (JsonResource::HasMember(data, "Draw Position"))
+        {
+            ColorFlag   flag;
+            Json::Value value = data["Draw Position"];
+            if (JsonResource::HasMember(value, "Color") && JsonResource::IsColor(value["Color"]))
+            {
+                flag.color = JsonResource::AsColor(value["Color"]);
+            }
+            if (JsonResource::HasMember(value, "Flag") && value["Flag"].isBool())
+            {
+                flag.b_flag = value["Flag"].asBool();
+            }
+            SetDrawFlagPositionTrace(flag.b_flag, flag.color);
+        }
+
+        if (JsonResource::HasMember(data, "Do Broad Phase"))
+        {
+            m_do_broad_phase = data["Do Broad Phase"].asBool();
+        }
+
+        if (JsonResource::HasMember(data, "Do Narrow Phase"))
+        {
+            m_do_narrow_phase = data["Do Narrow Phase"].asBool();
+        }
+
+        if (JsonResource::HasMember(data, "Do Resolution"))
+        {
+            m_do_resolution = data["Do Resolution"].asBool();
+        }
+
         if (JsonResource::HasMember(data, "Forces") && data["Forces"].isArray())
         {
             for (auto it = data["Forces"].begin(); it != data["Forces"].end(); ++it)
@@ -271,15 +325,97 @@ namespace PhysicsProject
     {
     }
 
+    void World::Edit(CommandRegistry* registry)
+    {
+        if (ImGui::CollapsingHeader("Space-World"))
+        {
+            if (ImGui::TreeNode("Broad Phase"))
+            {
+                ImGui::Text("Execute Broad Phase");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Do Broad Phase", &m_do_broad_phase);
+                ImGui::Text("Show Broad Phase");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Show Broad Phase", &m_draw_broad_phase.b_flag);
+                ImGui::ColorEdit4("##Edit Color Broad Phase", &m_draw_broad_phase.color.r);
+
+                ImGui::Text("Show Primitive");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Show Primitive", &m_draw_primitive.b_flag);
+                ImGui::ColorEdit4("##Edit Color Primitive", &m_draw_primitive.color.r);
+                ImGui::TreePop();
+                ImGui::Separator();
+            }
+
+            if (ImGui::TreeNode("Narrow Phase"))
+            {
+                ImGui::Text("Execute Narrow Phase");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Do Narrow Phase", &m_do_narrow_phase);
+
+                ImGui::Text("Show GJK");
+                ImGui::ColorEdit4("##Edit Color GJK", &m_draw_gjk.color.r);
+                ImGui::SameLine();
+                ImGui::Checkbox("##Show GJK", &m_draw_gjk.b_flag);
+
+                ImGui::Text("Show EPA");
+                ImGui::ColorEdit4("##Edit Color EPA", &m_draw_epa.color.r);
+                ImGui::SameLine();
+                ImGui::Checkbox("##Show EPA", &m_draw_epa.b_flag);
+                ImGui::TreePop();
+                ImGui::Separator();
+            }
+
+            if (ImGui::TreeNode("Resolution Phase"))
+            {
+                ImGui::Text("Execute Resolution Phase");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Do Resolution Phase", &m_do_resolution);
+
+                ImGui::Text("Show Contact");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Show Contact", &m_draw_contact.b_flag);
+                ImGui::ColorEdit4("##Edit Color Contact", &m_draw_contact.color.r);
+
+               
+
+                ImGui::Text("Show Velocity");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Show Velocity", &m_draw_velocity.b_flag);
+                ImGui::ColorEdit4("##Edit Color Velocity", &m_draw_velocity.color.r);
+
+                ImGui::Text("Show Position");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Show Position", &m_draw_position.b_flag);
+                ImGui::ColorEdit4("##Edit Color Position", &m_draw_position.color.r);
+
+                ImGui::TreePop();
+                ImGui::Separator();
+            }
+
+            ImGui::NewLine();
+            ImGui::Text("Forces");
+            m_resolution_phase->Edit(registry);
+        }
+    }
+
     void World::Update(Real dt)
     {
-        //broad phase
-        m_broad_phase->Update(dt);
-        m_broad_phase->ComputePairs(m_pairs);
-        //narrow phase
-        m_narrow_phase->GenerateContact(m_pairs, m_manifold_table);
-        //resolution
-        m_resolution_phase->SolveConstraints(m_manifold_table, &m_rigid_bodies, dt);
+        if (m_do_broad_phase)
+        {
+            m_broad_phase->Update(dt);
+            m_broad_phase->ComputePairs(m_pairs);
+        }
+
+        if (m_do_narrow_phase)
+        {
+            m_narrow_phase->GenerateContact(m_pairs, m_manifold_table);
+        }
+
+        if (m_do_resolution)
+        {
+            m_resolution_phase->SolveConstraints(m_manifold_table, &m_rigid_bodies, dt);
+        }
     }
 
     void World::Shutdown()
@@ -399,6 +535,19 @@ namespace PhysicsProject
     {
         m_draw_broad_phase.b_flag = m_primitive_renderer != nullptr ? b_draw : false;
         m_draw_broad_phase.color  = color;
+    }
+
+   
+    void World::SetDrawFlagVelocity(bool b_draw, const Color& color)
+    {
+        m_draw_velocity.b_flag = m_primitive_renderer != nullptr ? b_draw : false;
+        m_draw_velocity.color  = color;
+    }
+
+    void World::SetDrawFlagPositionTrace(bool b_draw, const Color& color)
+    {
+        m_draw_position.b_flag = m_primitive_renderer != nullptr ? b_draw : false;
+        m_draw_position.color  = color;
     }
 
     ColliderPrimitive* World::CreateCollider(ColliderSet* collider_set, eColliderType type) const

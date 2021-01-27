@@ -5,6 +5,7 @@
 // ReSharper disable once CppUnusedIncludeDirective
 #include "ContactManifold.hpp"
 #include "../../Graphics/DataType/Color.hpp"
+#include "../../Graphics/Utility/PrimitiveRenderer.hpp"
 #include "Force/Force.hpp"
 
 namespace PhysicsProject
@@ -45,6 +46,7 @@ namespace PhysicsProject
     {
         for (auto& force : m_forces)
         {
+            force->Clear();
             for (auto& body : *rigid_bodies)
             {
                 force->Update(body, dt);
@@ -89,6 +91,7 @@ namespace PhysicsProject
                 contact.ApplyVelocityConstraints();
             }
         }
+
         for (auto& body : *rigid_bodies)
         {
             body->IntegrateVelocity(dt);
@@ -139,6 +142,25 @@ namespace PhysicsProject
             {
                 contact.Render(m_primitive_renderer, draw_contact_flag.color);
             }
+        }
+
+        for (auto& force : m_forces)
+        {
+            if (force->draw_force.b_flag)
+            {
+                for (auto& draw : force->applied_forces)
+                {
+                    m_primitive_renderer->DrawArrow(draw.a, draw.a + draw.b, force->draw_force.color);
+                }
+            }
+        }
+    }
+
+    void Resolution::Edit(CommandRegistry* registry)
+    {
+        for (auto& force : m_forces)
+        {
+            force->Edit(registry);
         }
     }
 }

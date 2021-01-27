@@ -192,9 +192,7 @@ namespace PhysicsProject
 
     void PrimitiveRenderer::DrawArrow(const Vector3& start, const Vector3& end, Color color)
     {
-        Quaternion no_rotation;
-        DrawPrimitive(Sphere(start, no_rotation, 0.1f), eRenderingMode::Face, color);
-        if (end.LengthSquared() > Math::EPSILON)
+        if (end.DistanceSquaredTo(start) > Math::EPSILON)
         {
             Quaternion rotation(Vector3(0.0f, 1.0f, 0.0f), (end - start).Normalize());
             DrawPrimitive(Cone(end, rotation, 0.1f, 0.2f), eRenderingMode::Face, color);

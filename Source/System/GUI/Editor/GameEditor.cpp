@@ -38,7 +38,7 @@ namespace PhysicsProject
             ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
             ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
             ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("Engine 5th Editor", &m_b_open, m_window_flags);
+            ImGui::Begin("Engine 5th Editor", nullptr, m_window_flags);
             ImGui::PopStyleVar(3);
             // DockSpace
             ImGuiIO& io = ImGui::GetIO();
@@ -59,6 +59,7 @@ namespace PhysicsProject
                 m_space_editor.UpdateSceneWindow(dt);
                 m_space_editor.UpdateHierarchyWindow();
                 m_space_editor.UpdateInspectorWindow();
+                m_space_editor.UpdateSpaceSetting();
                 m_level_editor.Update(dt);
                 UpdateCommandWindow();
             }
@@ -106,10 +107,6 @@ namespace PhysicsProject
             if (ImGui::MenuItem("Close All", nullptr, false, open_count > 0))
             {
                 m_space_editor.CloseAllSequence();
-            }
-            if (ImGui::MenuItem("Close Editor"))
-            {
-                m_b_open = false;
             }
             ImGui::Separator();
             if (ImGui::MenuItem("Save", nullptr, false, open_count > 0))
