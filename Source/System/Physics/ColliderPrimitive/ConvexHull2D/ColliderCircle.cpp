@@ -154,8 +154,8 @@ namespace PhysicsProject
 
     void ColliderCircle::UpdateBoundingVolume()
     {
-        Real bounding_factor = m_scaled_radius;
-        Vector3 pos = m_rigid_body != nullptr ? m_rigid_body->LocalToWorldPoint(m_local.position) : m_local.position;
+        Real    bounding_factor = m_scaled_radius;
+        Vector3 pos             = m_rigid_body != nullptr ? m_rigid_body->LocalToWorldPoint(m_local.position) : m_local.position;
         Vector3 min_max(bounding_factor, bounding_factor, bounding_factor);
         m_bounding_volume->Set(-min_max + pos, min_max + pos);
     }
@@ -195,7 +195,7 @@ namespace PhysicsProject
         else if (mode == eRenderingMode::Face)
         {
             //add a center pos
-            I32     center   = static_cast<I32>(renderer->VerticesSize(mode));
+            I32     center = static_cast<I32>(renderer->VerticesSize(mode));
             Vector3 position;
             position = LocalToWorldPoint(position);
             position = body_transform->LocalToWorldPoint(position);
@@ -221,6 +221,13 @@ namespace PhysicsProject
     {
         m_radius = radius;
         UpdatePrimitive();
+    }
+
+    Vector3Pair ColliderCircle::GetMinMax() const
+    {
+        return Vector3Pair(
+                           LocalToWorldPoint(Vector3(-m_radius, -m_radius, 0.0f)),
+                           LocalToWorldPoint(Vector3(m_radius, m_radius, 0.0f)));
     }
 
     void ColliderCircle::Clone(ColliderPrimitive* origin)
@@ -254,6 +261,10 @@ namespace PhysicsProject
     }
 
     void ColliderCircle::Save(const Json::Value& data)
+    {
+    }
+
+    void ColliderCircle::EditPrimitive(CommandRegistry* registry)
     {
     }
 }

@@ -36,6 +36,8 @@ namespace PhysicsProject
         void UpdateBoundingVolume() override;
         void Draw(PrimitiveRenderer* renderer, eRenderingMode mode, const Color& color) const override;
 
+        Vector3Pair GetMinMax() const override;
+
         Real    HalfHeight() const;
         Real    Height() const;
         Vector2 Radius() const;
@@ -50,6 +52,8 @@ namespace PhysicsProject
         void Clone(ColliderPrimitive* origin) override;
         void Load(const Json::Value& data) override;
         void Save(const Json::Value& data) override;
+        void EditPrimitive(CommandRegistry* registry) override;
+
 
     private:
         Vector2 m_radius = Vector2(0.5f, 0.5f);

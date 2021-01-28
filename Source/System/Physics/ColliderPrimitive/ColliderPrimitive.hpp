@@ -12,6 +12,7 @@ namespace Json
 
 namespace PhysicsProject
 {
+    class CommandRegistry;
     class Color;
     enum class eRenderingMode;
     class PrimitiveRenderer;
@@ -38,7 +39,7 @@ namespace PhysicsProject
 
         Vector3    GetBodyPosition() const;
         Quaternion GetBodyOrientation() const;
-        Transform*  GetBodyTransform() const;
+        Transform* GetBodyTransform() const;
 
         RigidBody*    GetRigidBody() const;
         BoundingAABB* GetBoundingVolume() const;
@@ -73,6 +74,8 @@ namespace PhysicsProject
         virtual void UpdateBoundingVolume() = 0;
         virtual void Draw(PrimitiveRenderer* renderer, eRenderingMode mode, const Color& color) const = 0;
 
+        virtual Vector3Pair GetMinMax() const = 0;
+
     protected:
         void UpdatePrimitive();
         void UpdateMassData() const;
@@ -80,6 +83,7 @@ namespace PhysicsProject
         void LoadMaterial(const Json::Value& data);
         void LoadTransform(const Json::Value& data);
         void LoadMass(const Json::Value& data);
+        void EditCollider(CommandRegistry* registry);
 
     protected:
         virtual void SetMassData(Real density) = 0;
@@ -88,6 +92,7 @@ namespace PhysicsProject
 
         virtual void Load(const Json::Value& data) = 0;
         virtual void Save(const Json::Value& data) = 0;
+        virtual void EditPrimitive(CommandRegistry* registry) = 0;
 
     private:
         void UpdateRigidBody();

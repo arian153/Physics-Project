@@ -371,6 +371,11 @@ namespace PhysicsProject
         return true;
     }
 
+    Vector3Pair ColliderPolyhedron::GetMinMax() const
+    {
+        return Vector3Pair(m_min_bound, m_max_bound);
+    }
+
     void ColliderPolyhedron::Clone(ColliderPrimitive* origin)
     {
         if (origin != this && origin != nullptr && origin->Type() == m_type)
@@ -438,6 +443,10 @@ namespace PhysicsProject
     }
 
     void ColliderPolyhedron::Save(const Json::Value& data)
+    {
+    }
+
+    void ColliderPolyhedron::EditPrimitive(CommandRegistry* registry)
     {
     }
 

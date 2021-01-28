@@ -284,6 +284,15 @@ namespace PhysicsProject
         }
     }
 
+    void ColliderSet::UpdateUnitScale()
+    {
+        for (auto& collider_data : *m_colliders)
+        {
+
+        }
+
+    }
+
     void ColliderSet::Clone(ColliderSet* origin, RigidBody* body, World* world)
     {
         if (origin != this)

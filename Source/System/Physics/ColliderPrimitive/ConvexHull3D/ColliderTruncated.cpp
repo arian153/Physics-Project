@@ -439,6 +439,16 @@ namespace PhysicsProject
         }
     }
 
+    Vector3Pair ColliderTruncated::GetMinMax() const
+    {
+        Vector3 obb_min = LocalToWorldPoint(Vector3(-m_radius.x, -m_height *0.5f, -m_radius.y));
+        Vector3 obb_max = LocalToWorldPoint(Vector3(m_radius.x, m_height * 0.5f, m_radius.y));
+
+        
+
+        return Vector3Pair();
+    }
+
     Real ColliderTruncated::HalfHeight() const
     {
         if (m_collider_set != nullptr)
@@ -539,6 +549,10 @@ namespace PhysicsProject
     }
 
     void ColliderTruncated::Save(const Json::Value& data)
+    {
+    }
+
+    void ColliderTruncated::EditPrimitive(CommandRegistry* registry)
     {
     }
 }

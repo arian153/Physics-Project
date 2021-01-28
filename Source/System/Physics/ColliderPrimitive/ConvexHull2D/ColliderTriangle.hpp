@@ -33,10 +33,13 @@ namespace PhysicsProject
 
         Vector2 Vertex(size_t i) const;
         void SetTriangle(const Vector2& v0, const Vector2& v1, const Vector2& v2);
+
+        Vector3Pair GetMinMax() const override;
     protected:
         void Clone(ColliderPrimitive* origin) override;
         void Load(const Json::Value& data) override;
         void Save(const Json::Value& data) override;
+        void EditPrimitive(CommandRegistry* registry) override;
 
     private:
         Vector2 m_vertices[3];

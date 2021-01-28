@@ -37,11 +37,13 @@ namespace PhysicsProject
         Vector3 Vertex(size_t i) const;
         size_t  Size() const;
         bool SetPolyhedron(const std::vector<Vector3>& vertices);
+        Vector3Pair GetMinMax() const override;
 
     protected:
         void Clone(ColliderPrimitive* origin) override;
         void Load(const Json::Value& data) override;
         void Save(const Json::Value& data) override;
+        void EditPrimitive(CommandRegistry* registry) override;
 
     private:
         class SubMassData

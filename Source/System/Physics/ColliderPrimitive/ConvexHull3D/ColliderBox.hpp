@@ -34,10 +34,13 @@ namespace PhysicsProject
         Vector3 Vertex(size_t i) const;
         void    SetBox(Real width, Real height, Real depth);
 
+        Vector3Pair GetMinMax() const override;
+
     protected:
         void Clone(ColliderPrimitive* origin) override;
         void Load(const Json::Value& data) override;
         void Save(const Json::Value& data) override;
+        void EditPrimitive(CommandRegistry* registry) override;
 
     private:
         Vector3 m_vertices[8];

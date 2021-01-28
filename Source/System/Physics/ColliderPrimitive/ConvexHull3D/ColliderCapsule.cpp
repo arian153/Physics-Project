@@ -435,6 +435,11 @@ namespace PhysicsProject
         UpdatePrimitive();
     }
 
+    Vector3Pair ColliderCapsule::GetMinMax() const
+    {
+        return Vector3Pair();
+    }
+
     void ColliderCapsule::Clone(ColliderPrimitive* origin)
     {
         if (origin != this && origin != nullptr && origin->Type() == m_type)
@@ -472,6 +477,10 @@ namespace PhysicsProject
     }
 
     void ColliderCapsule::Save(const Json::Value& data)
+    {
+    }
+
+    void ColliderCapsule::EditPrimitive(CommandRegistry* registry)
     {
     }
 

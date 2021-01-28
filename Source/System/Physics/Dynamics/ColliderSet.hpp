@@ -40,6 +40,7 @@ namespace PhysicsProject
         void SyncToTransform(Transform* transform) const;
         void SyncFromTransform(Transform* transform);
         void UpdateBoundingVolume();
+        void UpdateUnitScale();
 
         void Clone(ColliderSet* origin, RigidBody* body, World* world);
 

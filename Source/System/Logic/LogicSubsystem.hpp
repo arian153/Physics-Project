@@ -2,10 +2,12 @@
 #include <vector>
 
 #include "../Math/Primitive/Others/Ray.hpp"
+#include "../Math/Structure/Transform.hpp"
 #include "../Math/Utility/MathDef.hpp"
 
 namespace PhysicsProject
 {
+    class ObjectManager;
     class PrimitiveRenderer;
     class TextRenderer;
     class InputCommon;
@@ -34,11 +36,14 @@ namespace PhysicsProject
         friend class LogicSystem;
     private:
         std::vector<LogicComponent*> m_logic_components;
+        std::vector<Transform*> m_transforms;
 
         //
         InputCommon*       m_input              = nullptr;
         TextRenderer*      m_text_renderer      = nullptr;
         PrimitiveRenderer* m_primitive_renderer = nullptr;
+
+
 
         Vector2 m_mouse_ortho;
         Ray     m_picking_ray;

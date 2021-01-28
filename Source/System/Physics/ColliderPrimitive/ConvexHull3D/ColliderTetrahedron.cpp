@@ -278,6 +278,11 @@ namespace PhysicsProject
         UpdatePrimitive();
     }
 
+    Vector3Pair ColliderTetrahedron::GetMinMax() const
+    {
+        return Vector3Pair();
+    }
+
     void ColliderTetrahedron::Clone(ColliderPrimitive* origin)
     {
         if (origin != this && origin != nullptr && origin->Type() == m_type)
@@ -316,6 +321,10 @@ namespace PhysicsProject
     }
 
     void ColliderTetrahedron::Save(const Json::Value& data)
+    {
+    }
+
+    void ColliderTetrahedron::EditPrimitive(CommandRegistry* registry)
     {
     }
 

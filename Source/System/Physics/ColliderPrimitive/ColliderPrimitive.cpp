@@ -1,6 +1,9 @@
 #include "ColliderPrimitive.hpp"
+
+#include "../../../External/imgui/imgui.h"
 #include "../../../Manager/Resource/ResourceType/JsonResource.hpp"
 #include "../../../External/JSONCPP/json/json.h"
+#include "../../GUI/Editor/Command/EditorCommand.hpp"
 
 namespace PhysicsProject
 {
@@ -385,6 +388,30 @@ namespace PhysicsProject
         }
 
         m_rigid_body->UpdateInertia();
+    }
+
+    void ColliderPrimitive::EditCollider(CommandRegistry* registry)
+    {
+        AxisRadian axis_rad = m_local.orientation.ToAxisRadian();
+        ImGui::Text("Position");
+        ImGui::InputFloat3("##LocalTransformEdit0", &m_local.position.x, 3);
+        ImGui::Text("Scale");
+        ImGui::InputFloat3("##LocalTransformEdit1", &m_local.scale.x, 3);
+        ImGui::Text("Orientation");
+        ImGui::Text("Axis");
+        if(ImGui::InputFloat3("##LocalTransformEdit2", &axis_rad.axis.x, 3))
+        {
+            m_local.orientation.Set(axis_rad);
+        }
+        ImGui::Text("Radian");
+        if(ImGui::SliderAngle("##LocalTransformEdit3", &axis_rad.radian))
+        {
+            m_local.orientation.Set(axis_rad);
+        }
+        ImGui::Text("Quaternion");
+        ImGui::SliderFloat4("##LocalTransformEdit4", &m_local.orientation.r, -1.0f, 1.0f);
+
+
     }
 
     void ColliderPrimitive::UpdateRigidBody()
