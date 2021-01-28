@@ -320,7 +320,7 @@ namespace PhysicsProject
 
     Vector3Pair ColliderBox::GetMinMax() const
     {
-        return Vector3Pair();
+        return Vector3Pair( );
     }
 
     void ColliderBox::Clone(ColliderPrimitive* origin)
