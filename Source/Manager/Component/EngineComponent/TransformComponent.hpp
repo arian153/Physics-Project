@@ -27,7 +27,6 @@ namespace PhysicsProject
         void SetScale(const Vector3& scale);
         void SetScale(const Vector3& scale, eAnchor3D anchor);
         void SetScale(Real x, Real y, Real z, eAnchor3D anchor = eAnchor3D::CCC);
-        void SetOrigin(const Vector3& origin);
 
         //Adder
         void AddPosition(const Vector3& delta_position);
@@ -42,7 +41,6 @@ namespace PhysicsProject
         //Getter
         Vector3    GetPosition() const;
         Vector3    GetScale() const;
-        Vector3    GetOrigin() const;
         Quaternion GetOrientation() const;
         Matrix33   GetRotationMatrix() const;
         Matrix44   GetTransformMatrix() const;

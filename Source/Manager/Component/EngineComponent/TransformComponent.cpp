@@ -108,11 +108,7 @@ namespace PhysicsProject
         }
     }
 
-    void TransformComponent::SetOrigin(const Vector3& origin)
-    {
-        m_transform.rotating_origin = origin;
-    }
-
+  
     void TransformComponent::AddPosition(const Vector3& delta_position)
     {
         m_transform.position += delta_position;
@@ -186,10 +182,6 @@ namespace PhysicsProject
         return m_transform.scale;
     }
 
-    Vector3 TransformComponent::GetOrigin() const
-    {
-        return m_transform.rotating_origin;
-    }
 
     Quaternion TransformComponent::GetOrientation() const
     {
@@ -257,11 +249,7 @@ namespace PhysicsProject
                 SetOrientation(JsonResource::AsQuaternionRIJK(data["Orientation"]));
             }
         }
-        if (JsonResource::HasMember(data, "Origin") && JsonResource::IsVector3(data["Origin"]))
-        {
-            SetOrigin(JsonResource::AsVector3(data["Origin"]));
-        }
-        return true;
+              return true;
     }
 
     void TransformComponent::Save(Json::Value& data) const
@@ -277,7 +265,6 @@ namespace PhysicsProject
             float axis[ 3 ]            = {m_axis_holder.axis.x, m_axis_holder.axis.y, m_axis_holder.axis.z};
             float radian               = m_axis_holder.radian;
             float quaternion[4]        = {m_transform.orientation.r, m_transform.orientation.i, m_transform.orientation.j, m_transform.orientation.k};
-            float rotating_origin[ 3 ] = {m_transform.rotating_origin.x, m_transform.rotating_origin.y, m_transform.rotating_origin.z};
             ImGui::Separator();
             ImGui::Text("Position");
             ImGui::InputFloat3("##TransformEdit0", position, 3);
@@ -355,20 +342,7 @@ namespace PhysicsProject
             ImGui::Text("J : %.3f [sin(%.f) * %.3fj]", quaternion[2], degree, axis[1]);
             ImGui::Text("K : %.3f [sin(%.f) * %.3fk]", quaternion[3], degree, axis[2]);
             ImGui::Separator();
-            ImGui::Text("Rotating Origin");
-            ImGui::InputFloat3("##TransformEdit5", rotating_origin, 3);
-            if (ImGui::IsItemEdited())
-            {
-                Vector3 prev = m_transform.rotating_origin;
-                Vector3 next(rotating_origin);
-                command_registry->PushCommand(
-                                              new EditFunction<
-                                                  Vector3,
-                                                  TransformComponent,
-                                                  &TransformComponent::SetOrigin>(this, prev, next));
-            }
-            ImGui::Separator();
-        }
+                }
     }
 
     void TransformComponent::Subscribe()

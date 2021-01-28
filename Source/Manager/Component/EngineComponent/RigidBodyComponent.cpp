@@ -516,10 +516,7 @@ namespace PhysicsProject
             ImGui::Text("Orientation");
             Quaternion o = m_rigid_body->m_local.orientation;
             ImGui::Text("[%.3f, %.3f, %.3f, %.3f]", o.r, o.i, o.j, o.k);
-            ImGui::Text("Rotating Origin");
-            Vector3 r = m_rigid_body->m_local.rotating_origin;
-            ImGui::Text("[%.3f, %.3f, %.3f]", r[0], r[1], r[2]);
-            ImGui::Separator();
+                ImGui::Separator();
         }
     }
 

@@ -321,7 +321,7 @@ namespace PhysicsProject
         {
             if (m_local.position != transform->position
                 || m_local.orientation != transform->orientation
-                || m_local.rotating_origin != transform->rotating_origin)
+               )
             {
                 m_local = *transform;
                 UpdateOrientation();
