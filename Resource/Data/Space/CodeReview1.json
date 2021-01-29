@@ -90,7 +90,7 @@
                     "Type": "class PhysicsProject::RigidBodyComponent",
                     "Value": {
                         "Angular": {
-                        
+
                         }
                     }
                 },
@@ -112,6 +112,84 @@
 
             ],
             "Name": "Ellipsoid2"
+        },
+
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Origin": [ 0, 0, 0 ],
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ 0, 10, 0 ],
+                        "Scale": [ 1, 1, 1 ]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                        "Angular": {
+
+                        }
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Orientation": [ 1, 0, 0, 0 ],
+                                "Position": [ 0, 0, 0 ],
+                                "Radius": [ 4.5, 2.5, 1 ],
+                                "Scale": 1,
+                                "Type": "Ellipsoid"
+                            }
+                        ]
+                    }
+                }
+
+            ],
+            "Name": "Ellipsoid3"
+        },
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ 0, 0, -5 ],
+                        "Scale": [ 1, 1, 1 ]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Material": "Rubber",
+                                "Orientation": [ 1, 0, 0, 0 ],
+                                "Position": [ 0, 0, 0 ],
+                                "Radius": [ 3, 1 ],
+                                "Height": 3,
+                                "Ratio": 1.5,
+                                "Scale": 1,
+                                "Type": "Truncated"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "class Game::ControllerComponent"
+                }
+            ],
+            "Name": "Truncated"
         }
     ],
     "Settings": {

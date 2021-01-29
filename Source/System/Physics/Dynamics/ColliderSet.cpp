@@ -286,11 +286,21 @@ namespace PhysicsProject
 
     void ColliderSet::UpdateUnitScale()
     {
-        for (auto& collider_data : *m_colliders)
+        if (m_colliders != nullptr)
         {
+            size_t size = m_colliders->size();
+            if (size > 0)
+            {
+                Vector3Pair result_min_max = (*m_colliders)[0]->GetMinMax();
 
+                for (size_t i = 1; i < size; ++i)
+                {
+                    Vector3Pair min_max = (*m_colliders)[i]->GetMinMax();
+                    if (min_max.a.x < result_min_max.a.x)
+                        result_min_max.a.x = min_max.a.x;
+                }
+            }
         }
-
     }
 
     void ColliderSet::Clone(ColliderSet* origin, RigidBody* body, World* world)
