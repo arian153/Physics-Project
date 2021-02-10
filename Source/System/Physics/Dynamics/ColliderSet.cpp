@@ -286,7 +286,7 @@ namespace PhysicsProject
 
     void ColliderSet::UpdateUnitScale()
     {
-        if (m_colliders != nullptr)
+       /* if (m_colliders != nullptr)
         {
             size_t size = m_colliders->size();
             if (size > 0)
@@ -300,7 +300,7 @@ namespace PhysicsProject
                         result_min_max.a.x = min_max.a.x;
                 }
             }
-        }
+        }*/
     }
 
     void ColliderSet::Clone(ColliderSet* origin, RigidBody* body, World* world)

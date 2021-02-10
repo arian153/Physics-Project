@@ -42,7 +42,6 @@ namespace PhysicsProject
         void SetCylinder(Real height, const Vector2& radius);
         void SetHeight(Real height);
         void SetRadius(const Vector2& radius);
-        Vector3Pair GetMinMax() const override;
 
     protected:
         void Clone(ColliderPrimitive* origin) override;

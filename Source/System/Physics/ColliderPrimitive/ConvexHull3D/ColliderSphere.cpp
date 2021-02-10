@@ -224,11 +224,6 @@ namespace PhysicsProject
         UpdatePrimitive();
     }
 
-    Vector3Pair ColliderSphere::GetMinMax() const
-    {
-        return Vector3Pair();
-    }
-
     void ColliderSphere::Clone(ColliderPrimitive* origin)
     {
         if (origin != this && origin != nullptr && origin->Type() == m_type)

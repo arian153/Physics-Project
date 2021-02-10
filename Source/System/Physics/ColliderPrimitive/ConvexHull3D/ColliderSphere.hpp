@@ -33,7 +33,6 @@ namespace PhysicsProject
 
         Real Radius() const;
         void SetSphere(Real radius);
-        Vector3Pair GetMinMax() const override;
 
     protected:
         void Clone(ColliderPrimitive* origin) override;

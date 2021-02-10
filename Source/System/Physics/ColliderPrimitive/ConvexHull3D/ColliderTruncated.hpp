@@ -36,7 +36,6 @@ namespace PhysicsProject
         void UpdateBoundingVolume() override;
         void Draw(PrimitiveRenderer* renderer, eRenderingMode mode, const Color& color) const override;
 
-        Vector3Pair GetMinMax() const override;
 
         Real    HalfHeight() const;
         Real    Height() const;

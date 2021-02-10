@@ -34,7 +34,6 @@ namespace PhysicsProject
         Vector2 Radius() const;
         void SetEllipse(const Vector2& radius);
 
-        Vector3Pair GetMinMax() const override;
     protected:
         void Clone(ColliderPrimitive* origin) override;
         void Load(const Json::Value& data) override;

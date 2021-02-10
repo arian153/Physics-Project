@@ -188,28 +188,41 @@ namespace PhysicsProject
 
     void ColliderTetrahedron::UpdateBoundingVolume()
     {
-        Vector3 max_bound, min_bound;
-        max_bound = Math::REAL_NEGATIVE_MAX;
-        min_bound = Math::REAL_POSITIVE_MAX;
-        for (size_t i = 0; i < 4; ++i)
+        bool has_body = m_rigid_body != nullptr;
+
+        Vector3 min = has_body
+                          ? m_rigid_body->LocalToWorldPoint(m_local.LocalToWorldPoint(m_scaled_vertices[0]))
+                          : m_local.LocalToWorldPoint(m_scaled_vertices[0]);
+        Vector3 max = min;
+
+        if (has_body)
         {
-            for (size_t j = 0; j < 3; ++j)
+            for (int i = 1; i < 4; ++i)
             {
-                Real value = Vertex(i)[j];
-                if (max_bound[j] < value)
-                {
-                    max_bound[j] = value;
-                }
-                if (min_bound[j] > value)
-                {
-                    min_bound[j] = value;
-                }
+                Vector3 vertex = m_rigid_body->LocalToWorldPoint(m_local.LocalToWorldPoint(m_scaled_vertices[i]));
+                min.x          = Math::Min(min.x, vertex.x);
+                min.y          = Math::Min(min.y, vertex.y);
+                min.z          = Math::Min(min.z, vertex.z);
+                max.x          = Math::Max(max.x, vertex.x);
+                max.y          = Math::Max(max.y, vertex.y);
+                max.z          = Math::Max(max.z, vertex.z);
             }
         }
-        Real    bounding_factor = (max_bound - min_bound).Length();
-        Vector3 pos = m_rigid_body != nullptr ? m_rigid_body->LocalToWorldPoint(m_local.position) : m_local.position;
-        Vector3 min_max(bounding_factor, bounding_factor, bounding_factor);
-        m_bounding_volume->Set(-min_max + pos, min_max + pos);
+        else
+        {
+            for (int i = 1; i < 4; ++i)
+            {
+                Vector3 vertex = m_local.LocalToWorldPoint(m_scaled_vertices[i]);
+                min.x          = Math::Min(min.x, vertex.x);
+                min.y          = Math::Min(min.y, vertex.y);
+                min.z          = Math::Min(min.z, vertex.z);
+                max.x          = Math::Max(max.x, vertex.x);
+                max.y          = Math::Max(max.y, vertex.y);
+                max.z          = Math::Max(max.z, vertex.z);
+            }
+        }
+
+        m_bounding_volume->Set(min, max);
     }
 
     void ColliderTetrahedron::Draw(PrimitiveRenderer* renderer, eRenderingMode mode, const Color& color) const
@@ -276,11 +289,6 @@ namespace PhysicsProject
         m_vertices[2] = v2;
         m_vertices[3] = v3;
         UpdatePrimitive();
-    }
-
-    Vector3Pair ColliderTetrahedron::GetMinMax() const
-    {
-        return Vector3Pair();
     }
 
     void ColliderTetrahedron::Clone(ColliderPrimitive* origin)

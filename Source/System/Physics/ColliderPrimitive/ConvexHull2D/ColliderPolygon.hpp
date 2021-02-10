@@ -36,7 +36,6 @@ namespace PhysicsProject
 
         bool SetPolygon(const std::vector<Vector2>& vertices);
 
-        Vector3Pair GetMinMax() const override;
 
     protected:
         void Clone(ColliderPrimitive* origin) override;

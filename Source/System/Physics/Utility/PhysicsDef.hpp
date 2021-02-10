@@ -63,5 +63,10 @@ namespace PhysicsProject
             const Real   SEPARATION_SLOP              = 0.02f;
             const size_t MAX_MANIFOLD_POINT_COUNT     = 4;
         }
+
+        namespace Primitive
+        {
+            const Real BOUNDING_VOLUME_MARGIN = 0.05f;
+        }
     }
 }

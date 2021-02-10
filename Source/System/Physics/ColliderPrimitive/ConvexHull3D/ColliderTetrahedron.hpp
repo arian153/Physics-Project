@@ -36,8 +36,6 @@ namespace PhysicsProject
         Vector3 Vertex(size_t i) const;
         void    SetTetrahedron(const Vector3& v0, const Vector3& v1, const Vector3& v2, const Vector3& v3);
 
-        Vector3Pair GetMinMax() const override;
-
     protected:
         void Clone(ColliderPrimitive* origin) override;
         void Load(const Json::Value& data) override;

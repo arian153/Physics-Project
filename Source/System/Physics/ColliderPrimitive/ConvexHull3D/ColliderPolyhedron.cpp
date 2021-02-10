@@ -229,9 +229,55 @@ namespace PhysicsProject
     void ColliderPolyhedron::UpdateBoundingVolume()
     {
         Real    bounding_factor = (m_max_bound - m_min_bound).Length();
-        Vector3 pos = m_rigid_body != nullptr ? m_rigid_body->LocalToWorldPoint(m_local.position) : m_local.position;
+        Vector3 pos             = m_rigid_body != nullptr ? m_rigid_body->LocalToWorldPoint(m_local.position) : m_local.position;
         Vector3 min_max(bounding_factor, bounding_factor, bounding_factor);
         m_bounding_volume->Set(-min_max + pos, min_max + pos);
+
+        Vector3 obb_vertices[8];
+        obb_vertices[0].Set(m_max_bound.x, m_max_bound.y, m_max_bound.z);
+        obb_vertices[1].Set(m_max_bound.x, m_max_bound.y, m_min_bound.z);
+        obb_vertices[2].Set(m_max_bound.x, m_min_bound.y, m_max_bound.z);
+        obb_vertices[3].Set(m_max_bound.x, m_min_bound.y, m_min_bound.z);
+        obb_vertices[4].Set(m_min_bound.x, m_max_bound.y, m_max_bound.z);
+        obb_vertices[5].Set(m_min_bound.x, m_max_bound.y, m_min_bound.z);
+        obb_vertices[6].Set(m_min_bound.x, m_min_bound.y, m_max_bound.z);
+        obb_vertices[7].Set(m_min_bound.x, m_min_bound.y, m_min_bound.z);
+
+        bool has_body = m_rigid_body != nullptr;
+
+        Vector3 min = has_body
+                          ? m_rigid_body->LocalToWorldPoint(m_local.LocalToWorldPoint(obb_vertices[0]))
+                          : m_local.LocalToWorldPoint(obb_vertices[0]);
+        Vector3 max = min;
+
+        if (has_body)
+        {
+            for (int i = 1; i < 8; ++i)
+            {
+                Vector3 vertex = m_rigid_body->LocalToWorldPoint(m_local.LocalToWorldPoint(obb_vertices[i]));
+                min.x          = Math::Min(min.x, vertex.x);
+                min.y          = Math::Min(min.y, vertex.y);
+                min.z          = Math::Min(min.z, vertex.z);
+                max.x          = Math::Max(max.x, vertex.x);
+                max.y          = Math::Max(max.y, vertex.y);
+                max.z          = Math::Max(max.z, vertex.z);
+            }
+        }
+        else
+        {
+            for (int i = 1; i < 8; ++i)
+            {
+                Vector3 vertex = m_local.LocalToWorldPoint(obb_vertices[i]);
+                min.x          = Math::Min(min.x, vertex.x);
+                min.y          = Math::Min(min.y, vertex.y);
+                min.z          = Math::Min(min.z, vertex.z);
+                max.x          = Math::Max(max.x, vertex.x);
+                max.y          = Math::Max(max.y, vertex.y);
+                max.z          = Math::Max(max.z, vertex.z);
+            }
+        }
+
+        m_bounding_volume->Set(min, max);
     }
 
     void ColliderPolyhedron::Draw(PrimitiveRenderer* renderer, eRenderingMode mode, const Color& color) const
@@ -369,11 +415,6 @@ namespace PhysicsProject
         //All collinear edges have been merged.
         //And all coincident vertices have had their DualFace pointers merged.
         return true;
-    }
-
-    Vector3Pair ColliderPolyhedron::GetMinMax() const
-    {
-        return Vector3Pair(m_min_bound, m_max_bound);
     }
 
     void ColliderPolyhedron::Clone(ColliderPrimitive* origin)

@@ -37,7 +37,6 @@ namespace PhysicsProject
 
         Vector3 Radius() const;
         void SetDome(const Vector3& radius);
-        Vector3Pair GetMinMax() const override;
 
     protected:
         void Clone(ColliderPrimitive* origin) override;

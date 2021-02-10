@@ -34,8 +34,6 @@ namespace PhysicsProject
         Vector2 Vertex(size_t i) const;
         void    SetRectangle(Real width, Real height);
 
-        Vector3Pair GetMinMax() const override;
-
     protected:
         void Clone(ColliderPrimitive* origin) override;
         void Load(const Json::Value& data) override;

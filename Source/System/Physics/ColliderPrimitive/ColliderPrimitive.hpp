@@ -74,8 +74,6 @@ namespace PhysicsProject
         virtual void UpdateBoundingVolume() = 0;
         virtual void Draw(PrimitiveRenderer* renderer, eRenderingMode mode, const Color& color) const = 0;
 
-        virtual Vector3Pair GetMinMax() const = 0;
-
     protected:
         void UpdatePrimitive();
         void UpdateMassData() const;

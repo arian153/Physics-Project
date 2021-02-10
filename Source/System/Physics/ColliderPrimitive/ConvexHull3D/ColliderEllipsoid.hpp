@@ -34,7 +34,6 @@ namespace PhysicsProject
 
         Vector3 Radius() const;
         void SetEllipsoid(const Vector3& radius);
-        Vector3Pair GetMinMax() const override;
 
     protected:
         void Clone(ColliderPrimitive* origin) override;
