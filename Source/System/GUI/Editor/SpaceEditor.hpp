@@ -9,6 +9,7 @@
 
 namespace PhysicsProject
 {
+    class FrameUtility;
     class CommandRegistry;
     class Object;
     class GUISystem;
@@ -72,6 +73,7 @@ namespace PhysicsProject
         Space*           m_editing_space    = nullptr;
         Object*          m_editing_object   = nullptr;
         CommandRegistry* m_command_registry = nullptr;
+        FrameUtility*    m_frame_utility    = nullptr;
         //tool
         std::vector<JsonResource*>              m_resources;
         std::vector<JsonResource*>              m_close_queue;

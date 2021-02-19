@@ -48,7 +48,7 @@ namespace PhysicsProject
         m_input = new InputCommon();
         m_input->Initialize();
         m_render_system = new RenderSystem(m_operating_system);
-        m_render_system->Initialize(m_initial_setting.screen_width, m_initial_setting.screen_height, m_resource_manager);
+        m_render_system->Initialize(m_initial_setting.screen_width, m_initial_setting.screen_height, m_initial_setting.b_v_sync, m_resource_manager);
         m_physics_system = new PhysicsSystem();
         m_physics_system->Initialize();
         //GUI
@@ -65,6 +65,10 @@ namespace PhysicsProject
         m_component_registry->Initialize();
         m_object_factory = new ObjectFactory();
         m_object_factory->Initialize(m_component_registry);
+        m_object_factory->LoadArchetype(m_resource_manager);
+
+
+
         m_space_manager = new SpaceManager(m_physics_system, m_render_system, m_object_factory, m_component_registry, m_resource_manager, m_logic_system);
         m_space_manager->Initialize();
         m_level_manager = new LevelManager();

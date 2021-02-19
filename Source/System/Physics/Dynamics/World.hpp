@@ -85,6 +85,9 @@ namespace PhysicsProject
         void AddRay(const RayTest& ray);
 
     private:
+        void DrawPotentialPair() const;
+
+    private:
         eBroadPhaseMode    m_mode               = eBroadPhaseMode::DynamicBVH;
         BroadPhase*        m_broad_phase        = nullptr;
         NarrowPhase*       m_narrow_phase       = nullptr;
@@ -105,6 +108,7 @@ namespace PhysicsProject
         ColorFlag m_draw_gjk;
         ColorFlag m_draw_epa;
         ColorFlag m_draw_contact;
+        ColorFlag m_draw_potential_pair;
 
         ColorFlag m_draw_velocity;
         ColorFlag m_draw_position;
@@ -112,6 +116,7 @@ namespace PhysicsProject
         bool m_do_broad_phase  = true;
         bool m_do_narrow_phase = true;
         bool m_do_resolution   = true;
+        int m_broad_phase_mode = 1;
     };
 
     

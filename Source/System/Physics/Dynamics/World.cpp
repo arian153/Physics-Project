@@ -58,10 +58,16 @@ namespace PhysicsProject
 
     void World::Render() const
     {
+        if (m_draw_potential_pair.b_flag)
+        {
+            DrawPotentialPair();
+        }
+
         if (m_draw_primitive.b_flag || m_draw_broad_phase.b_flag)
         {
             m_broad_phase->Render(m_primitive_renderer, m_draw_broad_phase, m_draw_primitive);
         }
+
         if (m_draw_gjk.b_flag || m_draw_epa.b_flag)
         {
             m_narrow_phase->Render(m_draw_gjk, m_draw_epa);
@@ -211,8 +217,6 @@ namespace PhysicsProject
             SetDrawFlagPrimitive(flag.b_flag, flag.color);
         }
 
-      
-
         if (JsonResource::HasMember(data, "Draw Velocity"))
         {
             ColorFlag   flag;
@@ -331,6 +335,20 @@ namespace PhysicsProject
         {
             if (ImGui::TreeNode("Broad Phase"))
             {
+                ImGui::Text("Broad Phase Type");
+                const char* broad_phase_types[] = {"N-Squared", "Dynamic-BVH"};
+                if (ImGui::Combo("##CalculateMethod", &m_broad_phase_mode, broad_phase_types, 2))
+                {
+                    if (m_broad_phase_mode == 0)
+                    {
+                        SetBroadPhaseMode(eBroadPhaseMode::NSquared);
+                    }
+                    else if (m_broad_phase_mode == 1)
+                    {
+                        SetBroadPhaseMode(eBroadPhaseMode::DynamicBVH);
+                    }
+                }
+
                 ImGui::Text("Execute Broad Phase");
                 ImGui::SameLine();
                 ImGui::Checkbox("##Do Broad Phase", &m_do_broad_phase);
@@ -343,6 +361,12 @@ namespace PhysicsProject
                 ImGui::SameLine();
                 ImGui::Checkbox("##Show Primitive", &m_draw_primitive.b_flag);
                 ImGui::ColorEdit4("##Edit Color Primitive", &m_draw_primitive.color.r);
+
+                ImGui::Text("Show Potential Pair");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Show Potential Pair", &m_draw_potential_pair.b_flag);
+                ImGui::ColorEdit4("##Edit Color Potential Pair", &m_draw_potential_pair.color.r);
+
                 ImGui::TreePop();
                 ImGui::Separator();
             }
@@ -376,8 +400,6 @@ namespace PhysicsProject
                 ImGui::SameLine();
                 ImGui::Checkbox("##Show Contact", &m_draw_contact.b_flag);
                 ImGui::ColorEdit4("##Edit Color Contact", &m_draw_contact.color.r);
-
-               
 
                 ImGui::Text("Show Velocity");
                 ImGui::SameLine();
@@ -537,7 +559,6 @@ namespace PhysicsProject
         m_draw_broad_phase.color  = color;
     }
 
-   
     void World::SetDrawFlagVelocity(bool b_draw, const Color& color)
     {
         m_draw_velocity.b_flag = m_primitive_renderer != nullptr ? b_draw : false;
@@ -694,5 +715,16 @@ namespace PhysicsProject
     void World::AddRay(const RayTest& ray)
     {
         m_rays.push_back(ray);
+    }
+
+    void World::DrawPotentialPair() const
+    {
+        for (auto& pair : m_pairs)
+        {
+            auto a = pair.first->GetBoundingVolume();
+            auto b = pair.second->GetBoundingVolume();
+            m_primitive_renderer->DrawBox(a->Center(), Quaternion(), a->Size(), eRenderingMode::Line, m_draw_potential_pair.color);
+            m_primitive_renderer->DrawBox(b->Center(), Quaternion(), b->Size(), eRenderingMode::Line, m_draw_potential_pair.color);
+        }
     }
 }

@@ -5,6 +5,11 @@
 #include "../../../System/GUI/Editor/Command/CommandRegistry.hpp"
 #include "../../../System/GUI/Editor/Command/EditorCommand.hpp"
 
+namespace
+{
+    PhysicsProject::Random random;
+}
+
 namespace PhysicsProject
 {
     TransformComponent::~TransformComponent()
@@ -108,7 +113,6 @@ namespace PhysicsProject
         }
     }
 
-  
     void TransformComponent::AddPosition(const Vector3& delta_position)
     {
         m_transform.position += delta_position;
@@ -182,7 +186,6 @@ namespace PhysicsProject
         return m_transform.scale;
     }
 
-
     Quaternion TransformComponent::GetOrientation() const
     {
         return m_transform.orientation;
@@ -225,9 +228,20 @@ namespace PhysicsProject
 
     bool TransformComponent::Load(const Json::Value& data)
     {
-        if (JsonResource::HasMember(data, "Position") && JsonResource::IsVector3(data["Position"]))
+        if (JsonResource::HasMember(data, "Position"))
         {
-            SetPosition(JsonResource::AsVector3(data["Position"]));
+            if (JsonResource::IsVector3(data["Position"]))
+            {
+                SetPosition(JsonResource::AsVector3(data["Position"]));
+            }
+            if (data["Position"].isString())
+            {
+                SetPosition(
+                            Vector3(
+                                    random.GetRangedRandomReal(-50.0f, 50.0f),
+                                    random.GetRangedRandomReal(-20.0f, 20.0f),
+                                    random.GetRangedRandomReal(-50.0f, 50.0f)));
+            }
         }
         if (JsonResource::HasMember(data, "Scale") && JsonResource::IsVector3(data["Scale"]))
         {
@@ -249,7 +263,7 @@ namespace PhysicsProject
                 SetOrientation(JsonResource::AsQuaternionRIJK(data["Orientation"]));
             }
         }
-              return true;
+        return true;
     }
 
     void TransformComponent::Save(Json::Value& data) const
@@ -260,11 +274,11 @@ namespace PhysicsProject
     {
         if (ImGui::CollapsingHeader(m_type.c_str(), &m_b_open))
         {
-            float position[ 3 ]        = {m_transform.position.x, m_transform.position.y, m_transform.position.z};
-            float scale[ 3 ]           = {m_transform.scale.x, m_transform.scale.y, m_transform.scale.z};
-            float axis[ 3 ]            = {m_axis_holder.axis.x, m_axis_holder.axis.y, m_axis_holder.axis.z};
-            float radian               = m_axis_holder.radian;
-            float quaternion[4]        = {m_transform.orientation.r, m_transform.orientation.i, m_transform.orientation.j, m_transform.orientation.k};
+            float position[3]   = {m_transform.position.x, m_transform.position.y, m_transform.position.z};
+            float scale[3]      = {m_transform.scale.x, m_transform.scale.y, m_transform.scale.z};
+            float axis[3]       = {m_axis_holder.axis.x, m_axis_holder.axis.y, m_axis_holder.axis.z};
+            float radian        = m_axis_holder.radian;
+            float quaternion[4] = {m_transform.orientation.r, m_transform.orientation.i, m_transform.orientation.j, m_transform.orientation.k};
             ImGui::Separator();
             ImGui::Text("Position");
             ImGui::InputFloat3("##TransformEdit0", position, 3);
@@ -342,7 +356,7 @@ namespace PhysicsProject
             ImGui::Text("J : %.3f [sin(%.f) * %.3fj]", quaternion[2], degree, axis[1]);
             ImGui::Text("K : %.3f [sin(%.f) * %.3fk]", quaternion[3], degree, axis[2]);
             ImGui::Separator();
-                }
+        }
     }
 
     void TransformComponent::Subscribe()

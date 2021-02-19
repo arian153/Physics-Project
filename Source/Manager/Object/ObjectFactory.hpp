@@ -5,6 +5,7 @@
 
 namespace PhysicsProject
 {
+    class ResourceManager;
     class Space;
     class JsonResource;
     class ComponentRegistry;
@@ -24,6 +25,8 @@ namespace PhysicsProject
         Object* CreateRawObject(const std::string& name);
         Object* CreateRawObject(const std::string& name, ObjectManager* object_manager);
         Object* CreateArchetypeObject(const std::string& name, size_t archetype_id, Space* space);
+
+        void LoadArchetype(ResourceManager* resource_manager);
 
         void AddArchetype(Object* object);
         void AddArchetype(JsonResource* resource);

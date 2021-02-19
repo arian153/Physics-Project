@@ -19,6 +19,7 @@
 #include "../../../Manager/Object/ObjectManager.hpp"
 #include "../../../Manager/Object/Object.hpp"
 #include "../../../Manager/Component/Component.hpp"
+#include "../../Core/Utility/FrameUtility.hpp"
 #include "../../Logic/LogicSubsystem.hpp"
 #include "../../Physics/Dynamics/World.hpp"
 
@@ -38,6 +39,7 @@ namespace PhysicsProject
         m_resource_manager         = application->GetResourceManager();
         m_render_texture_generator = application->GetRenderSystem()->GetRenderTextureGenerator();
         m_space_manager            = application->GetSpaceManager();
+        m_frame_utility            = application->GetFrameUtility();
         m_resource_manager->GetJsonResources(eJsonType::Space, m_resources);
     }
 
@@ -230,6 +232,10 @@ namespace PhysicsProject
     void SpaceEditor::UpdateSpaceSetting()
     {
         ImGui::Begin("Space Setting");
+        Real fps  = m_frame_utility->GetFramePerSecond();
+        Real mspf = m_frame_utility->GetMillisecondPerFrame();
+        ImGui::Text("FPS : %.1f, ms/f : %.3f", fps, mspf);
+
         if (m_editing_space != nullptr)
         {
             World* world = m_editing_space->GetWorld();

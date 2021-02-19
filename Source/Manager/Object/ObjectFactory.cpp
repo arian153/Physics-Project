@@ -5,6 +5,7 @@
 #include "../Resource/ResourceType/JsonResource.hpp"
 #include "../../External/JSONCPP/json/json.h"
 #include "../Component/Component.hpp"
+#include "../Resource/ResourceManager.hpp"
 
 namespace PhysicsProject
 {
@@ -56,6 +57,17 @@ namespace PhysicsProject
             return archetype;
         }
         return nullptr;
+    }
+
+    void ObjectFactory::LoadArchetype(ResourceManager* resource_manager)
+    {
+        std::vector<JsonResource*> resources;
+        resource_manager->GetJsonResources(eJsonType::Archetype, resources);
+
+        for(auto& resource : resources)
+        {
+            AddArchetype(resource);
+        }
     }
 
     void ObjectFactory::AddArchetype(Object* object)
