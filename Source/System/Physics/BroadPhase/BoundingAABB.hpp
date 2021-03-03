@@ -10,7 +10,6 @@ namespace PhysicsProject
     {
     public:
         explicit BoundingAABB(ColliderPrimitive* collider = nullptr);
-        BoundingAABB(const BoundingAABB& a, const BoundingAABB& b);
         ~BoundingAABB();
 
         void         Set(const Vector3& min, const Vector3& max);
@@ -20,7 +19,6 @@ namespace PhysicsProject
         bool         TestRayIntersection(const Ray& ray, Real& t, Real max_distance = -1.0f) const;
         bool         Contains(BoundingAABB* aabb) const;
         Real         Volume() const;
-        Real         Growth(const BoundingAABB& aabb) const;
         Vector3      Center() const;
         Vector3      Size() const;
         Vector3      HalfSize() const;
