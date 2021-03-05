@@ -64,5 +64,6 @@ namespace PhysicsProject
         Real m_margin;
         DynamicBVHNode* m_root = nullptr;
         std::vector<DynamicBVHNode*> m_invalid_nodes;
+      
     };
 }
