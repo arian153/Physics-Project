@@ -272,11 +272,15 @@ namespace PhysicsProject
     {
         if (m_colliders != nullptr)
         {
-            m_bounding_volume.Set(Math::Vector3::ORIGIN, Math::Vector3::ORIGIN);
-            for (auto& collider_data : *m_colliders)
+            if (!m_colliders->empty())
             {
-                if (collider_data->m_bounding_volume != nullptr)
+                auto collider_data = m_colliders->at(0);
+                collider_data->UpdateBoundingVolume();
+                m_bounding_volume.Set(collider_data->m_bounding_volume->Min(), collider_data->m_bounding_volume->Max());
+
+                for (size_t i = 1; i < m_colliders->size(); ++i)
                 {
+                    collider_data = m_colliders->at(i);
                     collider_data->UpdateBoundingVolume();
                     m_bounding_volume = collider_data->m_bounding_volume->Union(m_bounding_volume);
                 }

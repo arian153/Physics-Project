@@ -203,6 +203,16 @@ namespace PhysicsProject
         return 0.5f * (m_max - m_min);
     }
 
+    Vector3 BoundingAABB::Min() const
+    {
+        return m_min;
+    }
+
+    Vector3 BoundingAABB::Max() const
+    {
+        return m_max;
+    }
+
     BoundingAABB BoundingAABB::Union(const BoundingAABB& aabb) const
     {
         BoundingAABB result;

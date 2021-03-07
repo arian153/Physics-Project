@@ -418,6 +418,18 @@ namespace PhysicsProject
                     {
                         m_editing_object = found_collider->GetComponent()->GetOwner();
                     }
+                    else
+                    {
+                        m_editing_object = nullptr;
+                    }
+                }
+
+                if (m_editing_object != nullptr)
+                {
+                    if (m_editing_object->HasComponent<ColliderComponent>() && scene != nullptr)
+                    {
+                        m_editing_object->GetComponent<ColliderComponent>()->RenderBoundingVolume(scene->GetPrimitiveRenderer(), Color(1.0f, 0.0f, 0.0f, 1.0f));
+                    }
                 }
             }
 

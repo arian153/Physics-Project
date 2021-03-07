@@ -22,6 +22,8 @@ namespace PhysicsProject
         Vector3      Center() const;
         Vector3      Size() const;
         Vector3      HalfSize() const;
+        Vector3      Min() const;
+        Vector3      Max() const;
         BoundingAABB Union(const BoundingAABB& aabb) const;
         //getter
         ColliderPrimitive* GetCollider() const;
@@ -31,7 +33,6 @@ namespace PhysicsProject
         friend class DynamicBVH;
         friend class GridData;
         friend class GridPartition;
-
     private:
         Vector3            m_min;
         Vector3            m_max;
