@@ -12,6 +12,12 @@ namespace PhysicsProject
 
     class ColliderSet
     {
+    private:
+        friend class World;
+        friend class RigidBody;
+        friend class ColliderComponent;
+        friend class ManifoldTable;
+        friend class ContactManifold;
     public:
         explicit ColliderSet(World* world);
         ~ColliderSet();
@@ -44,14 +50,9 @@ namespace PhysicsProject
 
         void Clone(ColliderSet* origin, RigidBody* body, World* world);
 
-    private:
+        ColliderComponent* GetComponent() const;
 
-    private:
-        friend class World;
-        friend class RigidBody;
-        friend class ColliderComponent;
-        friend class ManifoldTable;
-        friend class ContactManifold;
+  
 
     private:
         RigidBody*         m_rigid_body = nullptr;

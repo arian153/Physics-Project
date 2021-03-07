@@ -717,6 +717,24 @@ namespace PhysicsProject
         m_rays.push_back(ray);
     }
 
+    void World::SetPickingRay(const Ray& ray)
+    {
+        m_picking_ray = ray;
+    }
+
+    ColliderSet* World::PickColliderSet(const Ray& ray) const
+    {
+        RayCastResult result(ray);
+        m_broad_phase->CastRay(result);
+
+        if (result.hit_data.hit)
+        {
+            return result.hit_data.collider->GetColliderSet();
+        }
+
+        return nullptr;
+    }
+
     void World::DrawPotentialPair() const
     {
         for (auto& pair : m_pairs)

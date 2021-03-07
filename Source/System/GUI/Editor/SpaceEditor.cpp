@@ -19,8 +19,10 @@
 #include "../../../Manager/Object/ObjectManager.hpp"
 #include "../../../Manager/Object/Object.hpp"
 #include "../../../Manager/Component/Component.hpp"
+#include "../../../Manager/Component/EngineComponent/ColliderComponent.hpp"
 #include "../../Core/Utility/FrameUtility.hpp"
 #include "../../Logic/LogicSubsystem.hpp"
+#include "../../Physics/Dynamics/ColliderSet.hpp"
 #include "../../Physics/Dynamics/World.hpp"
 
 namespace PhysicsProject
@@ -405,6 +407,19 @@ namespace PhysicsProject
 
             space->GetLogicSubsystem()->SetPickingRay(m_picking_ray);
             space->GetLogicSubsystem()->SetMouseOrtho(m_ortho_pos);
+
+            if (space->GetWorld() != nullptr)
+            {
+                if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+                {
+                    space->GetWorld()->SetPickingRay(m_picking_ray);
+                    auto found_collider = space->GetWorld()->PickColliderSet(m_picking_ray);
+                    if (found_collider != nullptr)
+                    {
+                        m_editing_object = found_collider->GetComponent()->GetOwner();
+                    }
+                }
+            }
 
             //ImGui::Text("Ray Pos : (%.3f, %.3f, %.3f)", m_picking_ray.position.x, m_picking_ray.position.y, m_picking_ray.position.z);
             //ImGui::Text("Ray Dir : (%.3f, %.3f, %.3f)", m_picking_ray.direction.x, m_picking_ray.direction.y, m_picking_ray.direction.z);

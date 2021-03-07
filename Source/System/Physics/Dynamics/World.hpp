@@ -84,6 +84,10 @@ namespace PhysicsProject
         void AddRay(const Ray& ray, eRayTestOption option, Real max_distance = -1.0f, size_t reflect_count = 0, const Color& color = ColorDef::Pure::White);
         void AddRay(const RayTest& ray);
 
+        void SetPickingRay(const Ray& ray);
+
+        ColliderSet* PickColliderSet(const Ray& ray) const;
+
     private:
         void DrawPotentialPair() const;
 
@@ -99,7 +103,8 @@ namespace PhysicsProject
         std::vector<RigidBody*>   m_rigid_bodies;
         std::list<ColliderPair>   m_pairs;
         std::vector<RayTest>      m_rays;
-    
+        Ray                       m_picking_ray;
+
         //factory
         std::unordered_map<std::string, ForceFactory*>* m_factories = nullptr;
 
@@ -113,11 +118,9 @@ namespace PhysicsProject
         ColorFlag m_draw_velocity;
         ColorFlag m_draw_position;
 
-        bool m_do_broad_phase  = true;
-        bool m_do_narrow_phase = true;
-        bool m_do_resolution   = true;
-        int m_broad_phase_mode = 1;
+        bool m_do_broad_phase   = true;
+        bool m_do_narrow_phase  = true;
+        bool m_do_resolution    = true;
+        int  m_broad_phase_mode = 1;
     };
-
-    
 }
