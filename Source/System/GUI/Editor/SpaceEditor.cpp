@@ -418,10 +418,10 @@ namespace PhysicsProject
                     {
                         m_editing_object = found_collider->GetComponent()->GetOwner();
                     }
-                    else
+                    /*else
                     {
                         m_editing_object = nullptr;
-                    }
+                    }*/
                 }
 
                 if (m_editing_object != nullptr)
