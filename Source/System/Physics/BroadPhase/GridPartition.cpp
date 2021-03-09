@@ -1,6 +1,8 @@
 #include "GridPartition.hpp"
 #include "..//Dynamics/RigidBody.hpp"
 #include <algorithm>
+
+#include "../../Graphics/Utility/PrimitiveRenderer.hpp"
 #include "../ColliderPrimitive/ColliderPrimitive.hpp"
 
 namespace PhysicsProject
@@ -35,16 +37,16 @@ namespace PhysicsProject
 
     void GridPartition::Initialize()
     {
-        m_a_count = (size_t)ceil((Real)m_width / m_size_of_cell);
-        m_b_count = (size_t)ceil((Real)m_height / m_size_of_cell);
-        m_grid_cell_list.resize(m_a_count * m_b_count);
+        m_a_count    = (size_t)ceil((Real)m_width / m_size_of_cell);
+        m_b_count    = (size_t)ceil((Real)m_height / m_size_of_cell);
+        size_t count = m_a_count * m_b_count;
+        m_grid_cell_list.resize(count);
         m_center_of_grid[m_axis_normal] = 0.0f;
         m_center_of_grid[m_basis_a]     = static_cast<Real>(m_width) * 0.5f;
         m_center_of_grid[m_basis_b]     = static_cast<Real>(m_height) * 0.5f;
-        size_t  size                    = m_grid_cell_list.size();
         Vector3 cell_start(-m_center_of_grid);
         Real    size_of_cell = static_cast<Real>(m_size_of_cell);
-        for (size_t i = 0; i < size; i++)
+        for (size_t i = 0; i < count; i++)
         {
             m_grid_cell_list[i].grid_index    = i;
             size_t a_index                    = i % m_b_count;
@@ -53,15 +55,15 @@ namespace PhysicsProject
             m_grid_cell_list[i].basis_b_index = b_index;
             m_grid_cell_list[i].aabb_list.reserve(20);
             Vector3 cell_min;
-            cell_min[m_basis_a] = static_cast<Real>(a_index) * size_of_cell;
-            cell_min[m_basis_b] = static_cast<Real>(b_index) * size_of_cell;
+            cell_min[m_basis_a]     = static_cast<Real>(a_index) * size_of_cell;
+            cell_min[m_basis_b]     = static_cast<Real>(b_index) * size_of_cell;
+            cell_min[m_axis_normal] = -size_of_cell;
             Vector3 cell_max;
-            cell_max[m_basis_a] = static_cast<Real>(a_index + 1) * size_of_cell;
-            cell_max[m_basis_b] = static_cast<Real>(b_index + 1) * size_of_cell;
+            cell_max[m_basis_a]     = static_cast<Real>(a_index + 1) * size_of_cell;
+            cell_max[m_basis_b]     = static_cast<Real>(b_index + 1) * size_of_cell;
+            cell_max[m_axis_normal] = size_of_cell;
             m_grid_cell_list[i].cell_boundary.Set(cell_start + cell_min, cell_start + cell_max);
         }
-        m_basis_a = (m_axis_normal % 3) + 1;
-        m_basis_b = (m_axis_normal % 3) + 2;
     }
 
     void GridPartition::Update(Real dt)
@@ -164,6 +166,23 @@ namespace PhysicsProject
 
     void GridPartition::Render(PrimitiveRenderer* primitive_renderer, const ColorFlag& broad_phase_color, const ColorFlag& primitive_color)
     {
+        for (auto& cell : m_grid_cell_list)
+        {
+            primitive_renderer->DrawBox(
+                                        cell.cell_boundary.Center(), Quaternion(),
+                                        cell.cell_boundary.Size(), eRenderingMode::Line, broad_phase_color.color);
+            for (auto& aabb : cell.aabb_list)
+            {
+                primitive_renderer->DrawBox(
+                                            aabb->Center(), Quaternion(),
+                                            aabb->Size(), eRenderingMode::Line, broad_phase_color.color);
+
+                if (aabb->GetCollider() != nullptr && primitive_color.b_flag)
+                {
+                    aabb->GetCollider()->Draw(primitive_renderer, eRenderingMode::Line, primitive_color.color);
+                }
+            }
+        }
     }
 
     void GridPartition::ComputePairs(std::list<ColliderPair>& result)
@@ -242,42 +261,76 @@ namespace PhysicsProject
     {
         Ray     ray          = result.ray;
         Vector3 ab_direction = ray.direction;
-        auto    dir_a        = DirectionHelper(ray.position[m_basis_a] + m_center_of_grid[m_basis_a], ray.direction[m_basis_a]);
-        auto    dir_b        = DirectionHelper(ray.position[m_basis_b] + m_center_of_grid[m_basis_b], ray.direction[m_basis_b]);
-        Real    t            = 0.0f;
+        //  auto    dir_a        = DirectionHelper(ray.position[m_basis_a] + m_center_of_grid[m_basis_a], ray.direction[m_basis_a]);
+        //auto    dir_b        = DirectionHelper(ray.position[m_basis_b] + m_center_of_grid[m_basis_b], ray.direction[m_basis_b]);
+        // Real    t            = 0.0f;
         //remove perpendicular
         ab_direction[m_axis_normal] = 0.0f;
+        Vector3 ray_unit_step, ray_length;
+
+        int    step_a, step_b;
+        size_t cell_a, cell_b;
+
+        PointToIndex(ray.position, cell_a, cell_b);
+
+        int grid_a = (int)ray.position[m_basis_a];
+        int grid_b = (int)ray.position[m_basis_b];
+
+        ray_unit_step[m_basis_a] = sqrtf(1.0f + ((ray.direction[m_basis_b] / ray.direction[m_basis_a]) * (ray.direction[m_basis_b] / ray.direction[m_basis_a])));
+        ray_unit_step[m_basis_b] = sqrtf(1.0f + ((ray.direction[m_basis_a] / ray.direction[m_basis_b]) * (ray.direction[m_basis_a] / ray.direction[m_basis_b])));
+
+        if (ray_unit_step[m_basis_a] < 0)
+        {
+            step_a                = -1;
+            ray_length[m_basis_a] = (ray.position[m_basis_a] - (Real)grid_a) * ray_unit_step[m_basis_a];
+        }
+        else
+        {
+            step_a                = 1;
+            ray_length[m_basis_a] = ((Real)(grid_a + 1) - ray.position[m_basis_a]) * ray_unit_step[m_basis_a];
+        }
+        if (ray_unit_step[m_basis_b] < 0)
+        {
+            step_b                = -1;
+            ray_length[m_basis_b] = (ray.position[m_basis_b] - (Real)grid_b) * ray_unit_step[m_basis_b];
+        }
+        else
+        {
+            step_b                = 1;
+            ray_length[m_basis_b] = ((Real)(grid_b + 1) - ray.position[m_basis_b]) * ray_unit_step[m_basis_b];
+        }
+
         if (ab_direction.LengthSquared() > 0.0f)
         {
-            while (dir_a.cell > 0 && dir_a.cell <= m_width && dir_b.cell > 0 && dir_b.cell <= m_height)
+            float t = 0.0f;
+
+            while ((cell_a > 0 && cell_a <= m_width && cell_b > 0 && cell_b <= m_height))
             {
-                CastRayCell(QueryCell(dir_a.cell, dir_b.cell), result, max_distance);
-                if (result.hit_data.hit == true)
+                CastRayCell(QueryCell(cell_a, cell_b), result, max_distance);
+                if (result.hit_data.hit)
                 {
                     break;
                 }
-                if (dir_a.delta_t < dir_b.delta_t)
+                if (ray_length[m_basis_a] < ray_length[m_basis_b])
                 {
-                    dir_a.cell += dir_a.delta_cell;
-                    auto dt = dir_a.delta_t;
-                    t += dt;
-                    dir_a.delta_t = dir_a.delta_t + dir_a.delta_dir_t - dt;
-                    dir_b.delta_t -= dt;
+                    grid_a += step_a;
+                    cell_a += step_a;
+                    t = ray_length[m_basis_a];
+                    ray_length[m_basis_a] += ray_unit_step[m_basis_a];
                 }
                 else
                 {
-                    dir_b.cell += dir_b.delta_cell;
-                    auto dt = dir_b.delta_t;
-                    t += dt;
-                    dir_a.delta_t -= dt;
-                    dir_b.delta_t = dir_b.delta_t + dir_b.delta_dir_t - dt;
+                    grid_b += step_b;
+                    cell_b += step_b;
+                    t = ray_length[m_basis_b];
+                    ray_length[m_basis_b] += ray_unit_step[m_basis_b];
                 }
             }
         }
         else
         {
             //ray direction is perpendicular to grid plane
-            CastRayCell(QueryCell(dir_a.cell, dir_b.cell), result, max_distance);
+            CastRayCell(QueryCell(grid_a, grid_b), result, max_distance);
         }
     }
 
@@ -386,6 +439,47 @@ namespace PhysicsProject
         size_t a_index = a;
         size_t b_index = m_a_count * b;
         return &m_grid_cell_list[a_index + b_index];
+    }
+
+    void GridPartition::PointToIndex(const Vector3& point, size_t& a_index, size_t& b_index) const
+    {
+        Real   a_pos  = (point[m_basis_a] + m_center_of_grid[m_basis_a]) / (Real)m_size_of_cell;
+        Real   b_pos  = (point[m_basis_b] + m_center_of_grid[m_basis_b]) / (Real)m_size_of_cell;
+        size_t cell_a = static_cast<size_t>(a_pos);
+        size_t cell_b = static_cast<size_t>(b_pos);
+        if (a_pos < 0.0f)
+        {
+            cell_a = 0;
+        }
+        else if (cell_a >= m_a_count)
+        {
+            cell_a = m_a_count - 1;
+        }
+        if (b_pos < 0.0f)
+        {
+            cell_b = 0;
+        }
+        else if (cell_b >= m_b_count)
+        {
+            cell_b = m_b_count - 1;
+        }
+        a_index = cell_a;
+        b_index = m_a_count * cell_b;
+    }
+
+    Vector3 GridPartition::IndexToPoint(size_t a, size_t b) const
+    {
+        if (a >= m_a_count)
+        {
+            a = m_a_count - 1;
+        }
+        if (b >= m_b_count)
+        {
+            b = m_b_count - 1;
+        }
+        size_t a_index = a;
+        size_t b_index = m_a_count * b;
+        return m_grid_cell_list[a_index + b_index].cell_boundary.m_min;
     }
 
     GridPartition::GridDirection GridPartition::DirectionHelper(Real pos, Real dir) const

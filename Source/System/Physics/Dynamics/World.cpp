@@ -336,8 +336,8 @@ namespace PhysicsProject
             if (ImGui::TreeNode("Broad Phase"))
             {
                 ImGui::Text("Broad Phase Type");
-                const char* broad_phase_types[] = {"N-Squared", "Dynamic-BVH"};
-                if (ImGui::Combo("##CalculateMethod", &m_broad_phase_mode, broad_phase_types, 2))
+                const char* broad_phase_types[] = {"N-Squared", "Dynamic-BVH", "Grid-Partition"};
+                if (ImGui::Combo("##CalculateMethod", &m_broad_phase_mode, broad_phase_types, 3))
                 {
                     if (m_broad_phase_mode == 0)
                     {
@@ -346,6 +346,10 @@ namespace PhysicsProject
                     else if (m_broad_phase_mode == 1)
                     {
                         SetBroadPhaseMode(eBroadPhaseMode::DynamicBVH);
+                    }
+                    else if(m_broad_phase_mode == 2)
+                    {
+                        SetBroadPhaseMode(eBroadPhaseMode::GridPartition);
                     }
                 }
 
@@ -498,6 +502,7 @@ namespace PhysicsProject
                 break;
             case eBroadPhaseMode::GridPartition:
                 broad_phase = new GridPartition();
+                broad_phase->Initialize();
                 break;
             default:
                 broad_phase = new DynamicBVH();
