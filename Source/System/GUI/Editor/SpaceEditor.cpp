@@ -91,6 +91,10 @@ namespace PhysicsProject
                 DisplayContextMenu(resource);
                 if (visible)
                 {
+                    if (m_space_index != i)
+                    {
+                        m_editing_object = nullptr;
+                    }
                     m_space_index = i;
                     DisplayContents(resource);
                     m_editing_space = DisplayScene(resource->FileName(), dt);

@@ -8,6 +8,7 @@ namespace PhysicsProject
 {
     ColliderRectangle::ColliderRectangle()
     {
+        m_is_2D = true;
     }
 
     ColliderRectangle::~ColliderRectangle()

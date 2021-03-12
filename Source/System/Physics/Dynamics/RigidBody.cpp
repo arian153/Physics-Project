@@ -21,12 +21,10 @@ namespace PhysicsProject
         }
     }
 
-    void RigidBody::IntegrateVelocity(Real dt)
+    void RigidBody::Integrate(Real dt)
     {
         if (m_motion_mode != eMotionMode::Dynamic)
-        {
             return;
-        }
         // integrate linear velocity
         m_linear_velocity += m_mass_data.inverse_mass * m_force_accumulator * dt;
         // integrate angular velocity
@@ -34,14 +32,7 @@ namespace PhysicsProject
         // zero out accumulated force and torque
         m_force_accumulator.SetZero();
         m_torque_accumulator.SetZero();
-    }
 
-    void RigidBody::IntegratePosition(Real dt)
-    {
-        if (m_motion_mode != eMotionMode::Dynamic)
-        {
-            return;
-        }
         SyncFromTransform(m_transform);
         Vector3 delta_linear_velocity = m_linear_velocity * dt;
         delta_linear_velocity         = delta_linear_velocity.HadamardProduct(m_linear_constraints);
@@ -52,7 +43,7 @@ namespace PhysicsProject
         Vector3 axis                   = delta_angular_velocity.Unit();
         Real    radian                 = delta_angular_velocity.Length() * dt;
         m_local.orientation.AddRotation(axis, radian);
-        // update physical properties
+        // update remain properties
         UpdateOrientation();
         UpdateInertia();
         UpdatePosition();
@@ -321,7 +312,7 @@ namespace PhysicsProject
         {
             if (m_local.position != transform->position
                 || m_local.orientation != transform->orientation
-               )
+            )
             {
                 m_local = *transform;
                 UpdateOrientation();

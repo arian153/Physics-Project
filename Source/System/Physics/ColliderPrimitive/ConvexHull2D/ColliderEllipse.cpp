@@ -8,6 +8,7 @@ namespace PhysicsProject
 {
     ColliderEllipse::ColliderEllipse()
     {
+        m_is_2D = true;
     }
 
     ColliderEllipse::~ColliderEllipse()

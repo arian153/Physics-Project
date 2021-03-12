@@ -13,9 +13,7 @@ namespace PhysicsProject
 
         void Shutdown() const;
 
-        void IntegrateVelocity(Real dt);
-        void IntegratePosition(Real dt);
-
+        void Integrate(Real dt);
         void UpdateCentroid();
         void UpdatePosition();
         void UpdateInertia();

@@ -8,6 +8,7 @@ namespace PhysicsProject
 {
     ColliderPolygon::ColliderPolygon()
     {
+        m_is_2D = true;
     }
 
     ColliderPolygon::~ColliderPolygon()

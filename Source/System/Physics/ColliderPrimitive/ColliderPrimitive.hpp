@@ -55,6 +55,9 @@ namespace PhysicsProject
 
         eColliderType Type() const;
 
+        bool Is2DPrimitive() const;
+        Vector3 PlaneNormal2D() const;
+
     public: //virtual methods
         virtual void Initialize() = 0;
         virtual void Shutdown() = 0;
@@ -107,6 +110,7 @@ namespace PhysicsProject
     protected:
         //collider local space data
         Transform m_local;
+        bool m_is_2D = false;
 
         //collider mass data
         Vector3  m_centroid; //center of mass

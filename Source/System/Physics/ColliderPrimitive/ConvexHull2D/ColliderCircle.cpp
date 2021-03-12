@@ -8,6 +8,7 @@ namespace PhysicsProject
 {
     ColliderCircle::ColliderCircle()
     {
+        m_is_2D = true;
     }
 
     ColliderCircle::~ColliderCircle()

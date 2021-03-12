@@ -237,6 +237,16 @@ namespace PhysicsProject
         return m_type;
     }
 
+    bool ColliderPrimitive::Is2DPrimitive() const
+    {
+        return m_is_2D;
+    }
+
+    Vector3 ColliderPrimitive::PlaneNormal2D() const
+    {
+        return m_local.orientation.Rotate(Vector3(0.0f, 0.0f, 1.0f));
+    }
+
     void ColliderPrimitive::UpdatePrimitive()
     {
         if (m_collider_set != nullptr)

@@ -16,9 +16,9 @@ namespace PhysicsProject
 
     enum class eRenderingMode
     {
-        Dot
-      , Line
-      , Face
+        Dot,
+        Line,
+        Face
     };
 
     class PrimitiveRenderer

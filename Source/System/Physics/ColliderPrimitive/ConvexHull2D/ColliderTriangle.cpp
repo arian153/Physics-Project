@@ -8,6 +8,7 @@ namespace PhysicsProject
 {
     ColliderTriangle::ColliderTriangle()
     {
+        m_is_2D = true;
     }
 
     ColliderTriangle::~ColliderTriangle()

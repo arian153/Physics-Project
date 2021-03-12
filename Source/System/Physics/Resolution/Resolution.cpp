@@ -94,9 +94,9 @@ namespace PhysicsProject
 
         for (auto& body : *rigid_bodies)
         {
-            body->IntegrateVelocity(dt);
-            body->IntegratePosition(dt);
+            body->Integrate(dt);
         }
+
         if (m_position_iteration > 0)
         {
             for (auto& constraint : m_constraints)
