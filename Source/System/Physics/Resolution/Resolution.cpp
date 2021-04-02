@@ -42,7 +42,7 @@ namespace PhysicsProject
         m_forces.clear();
     }
 
-    void Resolution::SolveConstraints(ManifoldTable* manifold_table, std::vector<RigidBody*>* rigid_bodies, Real dt)
+    void Resolution::ApplyForces(std::vector<RigidBody*>* rigid_bodies, Real dt)
     {
         for (auto& force : m_forces)
         {
@@ -52,23 +52,39 @@ namespace PhysicsProject
                 force->Update(body, dt);
             }
         }
+    }
+
+    void Resolution::ProcessContactConstraints(ManifoldTable* manifold_table)
+    {
         m_contact_constraints.clear();
+        for (auto& [key, manifold] : manifold_table->m_manifold_table)
+        {
+            auto& contact = m_contact_constraints.emplace_back(&manifold, &m_friction_utility);
+        }
+    }
+
+    void Resolution::SolveVelocityConstraints(Real dt)
+    {
         if (m_velocity_iteration > 0)
         {
             for (auto& constraint : m_constraints)
             {
                 constraint->GenerateVelocityConstraints(dt);
             }
-            for (auto& manifold : manifold_table->m_manifold_table)
-            {
-                auto& contact = m_contact_constraints.emplace_back(&manifold.second, &m_friction_utility);
-                contact.GenerateVelocityConstraints(dt);
-            }
+
             if (m_b_warm_starting == true)
             {
                 for (auto& contact_constraint : m_contact_constraints)
                 {
+                    contact_constraint.GenerateVelocityConstraints(dt);
                     contact_constraint.WarmStart();
+                }
+            }
+            else
+            {
+                for (auto& contact_constraint : m_contact_constraints)
+                {
+                    contact_constraint.GenerateVelocityConstraints(dt);
                 }
             }
             for (size_t i = 0; i < m_velocity_iteration; ++i)
@@ -91,12 +107,18 @@ namespace PhysicsProject
                 contact.ApplyVelocityConstraints();
             }
         }
+    }
 
+    void Resolution::IntegrateRigidBodies(std::vector<RigidBody*>* rigid_bodies, Real dt)
+    {
         for (auto& body : *rigid_bodies)
         {
             body->Integrate(dt);
         }
+    }
 
+    void Resolution::SolvePositionConstraints(Real dt)
+    {
         if (m_position_iteration > 0)
         {
             for (auto& constraint : m_constraints)

@@ -24,7 +24,12 @@ namespace PhysicsProject
         void Initialize();
         void Shutdown();
 
-        void SolveConstraints(ManifoldTable* manifold_table, std::vector<RigidBody*>* rigid_bodies, Real dt);
+        void ApplyForces(std::vector<RigidBody*>* rigid_bodies, Real dt);
+        void ProcessContactConstraints(ManifoldTable* manifold_table);
+        void SolveVelocityConstraints(Real dt);
+        void IntegrateRigidBodies(std::vector<RigidBody*>* rigid_bodies, Real dt);
+        void SolvePositionConstraints(Real dt);
+
         void SetPrimitiveRenderer(PrimitiveRenderer* primitive_renderer);
         void Render(const ColorFlag& draw_contact_flag);
         void Edit(CommandRegistry* registry);
@@ -37,11 +42,11 @@ namespace PhysicsProject
         size_t m_velocity_iteration = 3;
         size_t m_position_iteration = 0;
 
-        FrictionUtility                   m_friction_utility;
-        ConstraintUtility                 m_constraint_utility;
-        std::vector<ContactConstraint>    m_contact_constraints;
-        std::vector<Constraint*>          m_constraints;
-        std::vector<Force*>               m_forces;
-        PrimitiveRenderer*                m_primitive_renderer = nullptr;
+        FrictionUtility                m_friction_utility;
+        ConstraintUtility              m_constraint_utility;
+        std::vector<ContactConstraint> m_contact_constraints;
+        std::vector<Constraint*>       m_constraints;
+        std::vector<Force*>            m_forces;
+        PrimitiveRenderer*             m_primitive_renderer = nullptr;
     };
 }

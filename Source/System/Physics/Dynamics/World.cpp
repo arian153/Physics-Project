@@ -262,6 +262,11 @@ namespace PhysicsProject
             m_do_resolution = data["Do Resolution"].asBool();
         }
 
+        if (JsonResource::HasMember(data, "Solve Constraints"))
+        {
+            m_solve_constraints = data["Solve Constraints"].asBool();
+        }
+
         if (JsonResource::HasMember(data, "Forces") && data["Forces"].isArray())
         {
             for (auto it = data["Forces"].begin(); it != data["Forces"].end(); ++it)
@@ -347,7 +352,7 @@ namespace PhysicsProject
                     {
                         SetBroadPhaseMode(eBroadPhaseMode::DynamicBVH);
                     }
-                    else if(m_broad_phase_mode == 2)
+                    else if (m_broad_phase_mode == 2)
                     {
                         SetBroadPhaseMode(eBroadPhaseMode::GridPartition);
                     }
@@ -400,6 +405,10 @@ namespace PhysicsProject
                 ImGui::SameLine();
                 ImGui::Checkbox("##Do Resolution Phase", &m_do_resolution);
 
+                ImGui::Text("Solve Constraints");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Solve Constraints", &m_solve_constraints);
+
                 ImGui::Text("Show Contact");
                 ImGui::SameLine();
                 ImGui::Checkbox("##Show Contact", &m_draw_contact.b_flag);
@@ -440,7 +449,16 @@ namespace PhysicsProject
 
         if (m_do_resolution)
         {
-            m_resolution_phase->SolveConstraints(m_manifold_table, &m_rigid_bodies, dt);
+            m_resolution_phase->ApplyForces(&m_rigid_bodies, dt);
+            m_resolution_phase->ProcessContactConstraints(m_manifold_table);
+
+            if (m_solve_constraints)
+            {
+                m_resolution_phase->SolveVelocityConstraints(dt);
+            }
+
+            m_resolution_phase->IntegrateRigidBodies(&m_rigid_bodies, dt);
+            m_resolution_phase->SolvePositionConstraints(dt);
         }
     }
 
@@ -749,5 +767,9 @@ namespace PhysicsProject
             m_primitive_renderer->DrawBox(a->Center(), Quaternion(), a->Size(), eRenderingMode::Line, m_draw_potential_pair.color);
             m_primitive_renderer->DrawBox(b->Center(), Quaternion(), b->Size(), eRenderingMode::Line, m_draw_potential_pair.color);
         }
+    }
+
+    void World::UpdateResolutionPhase()
+    {
     }
 }

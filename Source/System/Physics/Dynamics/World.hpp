@@ -90,6 +90,7 @@ namespace PhysicsProject
 
     private:
         void DrawPotentialPair() const;
+        void UpdateResolutionPhase();
 
     private:
         eBroadPhaseMode    m_mode               = eBroadPhaseMode::DynamicBVH;
@@ -118,9 +119,10 @@ namespace PhysicsProject
         ColorFlag m_draw_velocity;
         ColorFlag m_draw_position;
 
-        bool m_do_broad_phase   = true;
-        bool m_do_narrow_phase  = true;
-        bool m_do_resolution    = true;
-        int  m_broad_phase_mode = 1;
+        bool m_do_broad_phase    = true;
+        bool m_do_narrow_phase   = true;
+        bool m_do_resolution     = true;
+        bool m_solve_constraints = true;
+        int  m_broad_phase_mode  = 1;
     };
 }
