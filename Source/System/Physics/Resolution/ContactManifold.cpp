@@ -68,18 +68,16 @@ namespace PhysicsProject
         {
             //convert existing contact point from local space to world space.
             //if both bodies are far enough away, remove contact from manifold data.
-            //a->m_rigid_body->LocalToWorldPoint(a->LocalToWorldPoint(result.local_position_a))
             Vector3 local_to_global_a = m_set_a->m_rigid_body->LocalToWorldPoint(contact.collider_a->LocalToWorldPoint(contact.local_position_a));
             Vector3 local_to_global_b = m_set_b->m_rigid_body->LocalToWorldPoint(contact.collider_b->LocalToWorldPoint(contact.local_position_b));
             //current frame's distance between a to b.
             Vector3 r_ab = local_to_global_b - local_to_global_a;
-            //how much distance changed between prev to current
             Vector3 r_a = contact.global_position_a - local_to_global_a;
             Vector3 r_b = contact.global_position_b - local_to_global_b;
             //check still penetrate between both bodies.
             bool b_still_penetrating = contact.normal.DotProduct(r_ab) <= 0.0f;
-            bool b_r_a_close_enough  = r_a.LengthSquared() < persistent_threshold_squared;
-            bool b_r_b_close_enough  = r_b.LengthSquared() < persistent_threshold_squared;
+            bool b_r_a_close_enough  = r_a.LengthSquared() < Physics::Collision::PERSISTENT_THRESHOLD;
+            bool b_r_b_close_enough  = r_b.LengthSquared() < Physics::Collision::PERSISTENT_THRESHOLD;
             // keep contact point if the collision pair is still colliding at this point, 
             // and the local positions are not too far from the global positions original acquired from collision detection
             if (b_r_a_close_enough && b_r_b_close_enough && b_still_penetrating)

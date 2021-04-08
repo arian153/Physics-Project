@@ -5,6 +5,11 @@
 #include "../ColliderPrimitive/ColliderPrimitive.hpp"
 #include "ManifoldTable.hpp"
 
+namespace
+{
+    PhysicsProject::Random random;
+}
+
 namespace PhysicsProject
 {
     NarrowPhase::NarrowPhase()
@@ -154,7 +159,8 @@ namespace PhysicsProject
         {
             if (CrossProduct(a->PlaneNormal2D(), b->PlaneNormal2D()).IsZero())
             {
-                Vector3 direction = a->m_local.orientation.Rotate(Vector3(0.0f, 1.0f, 0.0f));
+                Vector3 direction = a->m_local.orientation.Rotate(Vector3(0, 1, 0));
+                
                 for (size_t i = 0; i < m_gjk_exit_iteration; ++i)
                 {
                     if (direction.IsValid() == false)
@@ -175,7 +181,10 @@ namespace PhysicsProject
             }
         }
 
-        Vector3 direction = Vector3(0.0f, 1.0f, 0.0f);
+        Vector3 direction = Vector3(
+            random.GetRangedRandomReal(-10.0f, 10.0f),
+            random.GetRangedRandomReal(-10.0f, 10.0f),
+            random.GetRangedRandomReal(-10.0f, 10.0f)).Unit();
         for (size_t i = 0; i < m_gjk_exit_iteration; ++i)
         {
             if (direction.IsValid() == false)

@@ -126,8 +126,8 @@ namespace PhysicsProject
             Vector3 pos_b = contact_point.global_position_b;
             primitive_renderer->DrawPrimitive(Sphere(pos_a, no_rotation, 0.05f), eRenderingMode::Face, color);
             primitive_renderer->DrawPrimitive(Sphere(pos_b, no_rotation, 0.05f), eRenderingMode::Face, color);
-            primitive_renderer->DrawArrow(pos_a, pos_a - contact_point.normal, color);
-            primitive_renderer->DrawArrow(pos_b, pos_b + contact_point.normal, color);
+            primitive_renderer->DrawSegment(pos_a, pos_a - contact_point.normal * contact_point.depth, color);
+            //primitive_renderer->DrawArrow(pos_b, pos_b + contact_point.normal, color);
         }
     }
 

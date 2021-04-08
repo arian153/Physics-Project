@@ -86,7 +86,7 @@ namespace PhysicsProject
                 break;
             case eMaterial::Rubber:
                 density = 1.522f;
-                restitution = 0.4f;
+                restitution = 0.0f;
                 break;
             case eMaterial::Velcro:
                 density = 1.52f;

@@ -55,7 +55,7 @@ namespace PhysicsProject
         namespace Collision
         {
             const Real   BROAD_PHASE_MARGIN           = 0.1f;
-            const Real   PERSISTENT_THRESHOLD         = 0.1f;
+            const Real   PERSISTENT_THRESHOLD         = 0.01f;
             const Real   PERSISTENT_THRESHOLD_SQUARED = PERSISTENT_THRESHOLD * PERSISTENT_THRESHOLD;
             const Real   LINEAR_SLOP                  = 0.01f;
             const Real   ANGULAR_SLOP                 = Math::RADIAN * 2.0f;

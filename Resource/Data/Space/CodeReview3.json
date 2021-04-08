@@ -19,16 +19,16 @@
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 0, 0, -60 ],
-                        "Scale": [ 1, 1, 1 ]
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 0, -60],
+                        "Scale": [1, 1, 1]
                     }
                 },
                 {
                     "Type": "class PhysicsProject::CameraComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 0, 0, -60 ],
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 0, -60],
                         "Zoom": 1.0
                     }
                 },
@@ -38,152 +38,14 @@
             ],
             "Name": "Camera"
         },
-
         {
             "Components": [
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ -20, 0, 0 ],
-                        "Scale": [ 1, 1, 1 ]
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::RigidBodyComponent",
-                    "Value": {
-                        "Linear": {
-                            "Velocity": [ 0, 0, 0 ]
-                        }
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::ColliderComponent",
-                    "Value": {
-                        "Colliders": [
-                            {
-                                "Density": 1.0,
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Radius": [ 1, 5, 1 ],
-                                "Scale": 1,
-                                "Type": "Ellipsoid"
-                            },
-                            {
-                                "Density": 1.0,
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 5, 0 ],
-                                "Radius": [ 4, 2, 4 ],
-                                "Scale": 1,
-                                "Type": "Ellipsoid"
-                            },
-                            {
-                                "Density": 1.0,
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, -5, 0 ],
-                                "Radius": [ 3, 3, 3 ],
-                                "Scale": 1,
-                                "Type": "Ellipsoid"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "Name": "Dumbbell"
-        },
-        {
-            "Components": [
-                {
-                    "Type": "class PhysicsProject::TransformComponent",
-                    "Value": {
-                        "Origin": [ 0, 0, 0 ],
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 10, -5, 0 ],
-                        "Scale": [ 1, 1, 1 ]
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::RigidBodyComponent",
-                    "Value": {
-                        "Angular": {
-
-                        }
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::ColliderComponent",
-                    "Value": {
-                        "Colliders": [
-                            {
-                                "Density": 30.0,
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Radius": [ 3.5, 0.5, 0.5 ],
-                                "Scale": 1,
-                                "Type": "Ellipsoid"
-                            }
-                        ]
-                    }
-                }
-
-            ],
-            "Name": "Ellipsoid2"
-        },
-
-        {
-            "Components": [
-                {
-                    "Type": "class PhysicsProject::TransformComponent",
-                    "Value": {
-                        "Origin": [ 0, 0, 0 ],
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 0, 10, 0 ],
-                        "Scale": [ 1, 1, 1 ]
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::RigidBodyComponent",
-                    "Value": {
-                        "Angular": {
-
-                        }
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::ColliderComponent",
-                    "Value": {
-                        "Colliders": [
-                            {
-                                "Density": 1.0,
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Radius": [ 4.5, 2.5, 1 ],
-                                "Scale": 1,
-                                "Type": "Ellipsoid"
-                            },
-                            {
-                                "Density": 1.0,
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Radius": [ 1, 2.5, 4.5 ],
-                                "Scale": 1,
-                                "Type": "Ellipsoid"
-                            }
-                        ]
-                    }
-                }
-
-            ],
-            "Name": "ComplexEllipsoid"
-        },
-        {
-            "Components": [
-                {
-                    "Type": "class PhysicsProject::TransformComponent",
-                    "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 10, 9, -3 ],
-                        "Scale": [ 1, 1, 1 ]
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [10, 4, 0],
+                        "Scale": [1, 1, 1]
                     }
                 },
                 {
@@ -198,57 +60,121 @@
                             {
                                 "Density": 1.0,
                                 "Material": "Rubber",
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Radius": [ 3, 1 ],
-                                "Height": 3,
-                                "Ratio": 1.5,
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Cube": [4, 4, 4],
                                 "Scale": 1,
-                                "Type": "Truncated"
+                                "Type": "Box"
                             }
                         ]
                     }
-                },
-                {
-                    "Type": "class Game::ControllerComponent"
                 }
             ],
-            "Name": "Truncated"
+            "Name": "Box1"
+        },
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 0, 0],
+                        "Scale": [1, 1, 1]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Material": "Rubber",
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Cube": [6, 6, 6],
+                                "Scale": 1,
+                                "Type": "Box"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Box2"
+        },
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [-10, 0, 0],
+                        "Scale": [1, 1, 1]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                        "Motion": "Static"
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Material": "Rubber",
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Cube": [5, 5, 5],
+                                "Scale": 1,
+                                "Type": "Box"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Platform"
         }
     ],
     "Settings": {
         "World": {
             "Draw Broad Phase": {
                 "Color": [ 1, 1, 1, 1 ],
-                "Flag": true
-            },
-            "Draw Contact": {
-                "Color": [ 1, 0.274509804, 0.274509804, 1 ],
                 "Flag": false
             },
+            "Draw Contact": {
+                "Color": [1, 0.274509804, 0.274509804, 1],
+                "Flag": true
+            },
             "Draw EPA": {
-                "Color": [ 1, 1, 0, 1 ],
+                "Color": [0.1, 0.1, 0, 1],
                 "Flag": false
             },
             "Draw GJK": {
-                "Color": [ 0, 1, 0, 1 ],
+                "Color": [0, 0.5, 0.5, 1],
                 "Flag": false
             },
             "Draw Primitive": {
-                "Color": [ 0, 0, 1, 1 ],
+                "Color": [0, 0, 1, 1],
                 "Flag": true
             },
             "Draw Force": {
-                "Color": [ 1, 0.898039216, 0, 1 ],
-                "Flag": true
+                "Color": [1, 0.898039216, 0, 1],
+                "Flag": false
             },
             "Draw Velocity": {
-                "Color": [ 0, 0.698039216, 0.11372549, 1 ],
-                "Flag": true
+                "Color": [0, 0.698039216, 0.11372549, 1],
+                "Flag": false
             },
             "Draw Position": {
-                "Color": [ 0, 0.419607843, 1, 1 ],
-                "Flag": true
+                "Color": [0, 0.419607843, 1, 1],
+                "Flag": false
             },
             "Do Broad Phase": true,
             "Do Narrow Phase": true,
@@ -256,10 +182,10 @@
 
             "Forces": [
                 {
-                    "Type": "class PhysicsProject::Drag",
+                    "Type": "class PhysicsProject::Gravity",
                     "Value": {
-                        "Linear Drag": 0.0,
-                        "Angular Drag": 0.0
+                        "Global Gravity": [0, 0, 0],
+                        "Gravity Coefficient": 10.0
                     }
                 }
             ]
