@@ -338,6 +338,9 @@ namespace PhysicsProject
     {
         if (ImGui::CollapsingHeader("Space-World"))
         {
+            ImGui::Text("Object Count : %i", m_rigid_bodies.size());
+
+
             if (ImGui::TreeNode("Broad Phase"))
             {
                 ImGui::Text("Broad Phase Type");

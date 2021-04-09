@@ -7754,7 +7754,7 @@
                 "Flag": false
             },
             "Do Broad Phase": true,
-            "Do Narrow Phase": false,
+            "Do Narrow Phase": true,
             "Do Resolution": true,
 
             "Forces": [

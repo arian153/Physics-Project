@@ -23,7 +23,7 @@ namespace PhysicsProject
 
     void RigidBody::Integrate(Real dt)
     {
-        if (m_motion_mode != eMotionMode::Dynamic)
+        if (m_motion_mode == eMotionMode::Static)
             return;
         // integrate linear velocity
         m_linear_velocity += m_mass_data.inverse_mass * m_force_accumulator * dt;

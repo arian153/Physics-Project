@@ -277,7 +277,6 @@ namespace PhysicsProject
             {
                 m_rigid_body->m_mass_data.local_centroid = JsonResource::AsVector3(mass_data["Centroid"]);
                 m_rigid_body->UpdateCentroid();
-         
             }
         }
         m_rigid_body->UpdateInertia();
@@ -303,12 +302,11 @@ namespace PhysicsProject
                                               new EditFunction<
                                                   Vector3,
                                                   RigidBody,
-                                                  &RigidBody::SetLinearVelocity>
-                                              (
-                                               m_rigid_body,
-                                               m_rigid_body->m_linear_velocity,
-                                               linear_velocity
-                                              )
+                                                  &RigidBody::SetLinearVelocity>(
+                                                                                 m_rigid_body,
+                                                                                 m_rigid_body->m_linear_velocity,
+                                                                                 linear_velocity
+                                                                                )
                                              );
             }
             ImGui::Text("Angular Velocity");
@@ -320,12 +318,11 @@ namespace PhysicsProject
                                               new EditFunction<
                                                   Vector3,
                                                   RigidBody,
-                                                  &RigidBody::SetAngularVelocity>
-                                              (
-                                               m_rigid_body,
-                                               m_rigid_body->m_angular_velocity,
-                                               angular_velocity
-                                              )
+                                                  &RigidBody::SetAngularVelocity>(
+                                                                                  m_rigid_body,
+                                                                                  m_rigid_body->m_angular_velocity,
+                                                                                  angular_velocity
+                                                                                 )
                                              );
             }
             ImGui::Separator();
@@ -338,12 +335,11 @@ namespace PhysicsProject
                                               new EditFunction<
                                                   Vector3,
                                                   RigidBody,
-                                                  &RigidBody::ApplyForceCentroid>
-                                              (
-                                               m_rigid_body,
-                                               m_rigid_body->m_force_accumulator,
-                                               force_accumulator
-                                              )
+                                                  &RigidBody::ApplyForceCentroid>(
+                                                                                  m_rigid_body,
+                                                                                  m_rigid_body->m_force_accumulator,
+                                                                                  force_accumulator
+                                                                                 )
                                              );
             }
             ImGui::Text("Torque");
@@ -355,12 +351,11 @@ namespace PhysicsProject
                                               new EditFunction<
                                                   Vector3,
                                                   RigidBody,
-                                                  &RigidBody::ApplyTorque>
-                                              (
-                                               m_rigid_body,
-                                               m_rigid_body->m_torque_accumulator,
-                                               torque_accumulator
-                                              )
+                                                  &RigidBody::ApplyTorque>(
+                                                                           m_rigid_body,
+                                                                           m_rigid_body->m_torque_accumulator,
+                                                                           torque_accumulator
+                                                                          )
                                              );
             }
             ImGui::Separator();
@@ -380,12 +375,11 @@ namespace PhysicsProject
                                               new EditFunction<
                                                   Vector3,
                                                   RigidBody,
-                                                  &RigidBody::SetPositionalConstraints>
-                                              (
-                                               m_rigid_body,
-                                               m_rigid_body->m_linear_constraints,
-                                               linear_constraints
-                                              )
+                                                  &RigidBody::SetPositionalConstraints>(
+                                                                                        m_rigid_body,
+                                                                                        m_rigid_body->m_linear_constraints,
+                                                                                        linear_constraints
+                                                                                       )
                                              );
             }
             ImGui::Text("Angular Constraints");
@@ -397,12 +391,11 @@ namespace PhysicsProject
                                               new EditFunction<
                                                   Vector3,
                                                   RigidBody,
-                                                  &RigidBody::SetRotationalConstraints>
-                                              (
-                                               m_rigid_body,
-                                               m_rigid_body->m_angular_constraints,
-                                               angular_constraints
-                                              )
+                                                  &RigidBody::SetRotationalConstraints>(
+                                                                                        m_rigid_body,
+                                                                                        m_rigid_body->m_angular_constraints,
+                                                                                        angular_constraints
+                                                                                       )
                                              );
             }
             ImGui::Separator();
@@ -415,16 +408,13 @@ namespace PhysicsProject
                                               new EditFunction<
                                                   Real,
                                                   RigidBodyComponent,
-                                                  &RigidBodyComponent::SetMass>
-                                              (
-                                               this,
-                                               m_rigid_body->m_mass_data.mass,
-                                               mass
-                                              )
+                                                  &RigidBodyComponent::SetMass>(
+                                                                                this,
+                                                                                m_rigid_body->m_mass_data.mass,
+                                                                                mass
+                                                                               )
                                              );
             }
-
-          
 
             ImGui::Separator();
             if (ImGui::TreeNode("Momentum & Kinetic Energy"))
@@ -482,7 +472,7 @@ namespace PhysicsProject
             }
             ImGui::Separator();
             ImGui::Text("Motion Mode");
-            const char* motion_modes[] = {"Dynamic", "Kinematic", "Static"};
+            const char* motion_modes[] = {"Dynamic", "Static", "Kinematic"};
             m_motion_index             = (int)m_rigid_body->m_motion_mode;
             if (ImGui::Combo("##RigidBodyEdit9", &m_motion_index, motion_modes, 3))
             {
@@ -490,12 +480,11 @@ namespace PhysicsProject
                                               new EditFunction<
                                                   eMotionMode,
                                                   RigidBodyComponent,
-                                                  &RigidBodyComponent::SetMotionMode>
-                                              (
-                                               this,
-                                               m_rigid_body->m_motion_mode,
-                                               (eMotionMode)m_motion_index
-                                              )
+                                                  &RigidBodyComponent::SetMotionMode>(
+                                                                                      this,
+                                                                                      m_rigid_body->m_motion_mode,
+                                                                                      (eMotionMode)m_motion_index
+                                                                                     )
                                              );
             }
             ImGui::Separator();
@@ -516,7 +505,7 @@ namespace PhysicsProject
             ImGui::Text("Orientation");
             Quaternion o = m_rigid_body->m_local.orientation;
             ImGui::Text("[%.3f, %.3f, %.3f, %.3f]", o.r, o.i, o.j, o.k);
-                ImGui::Separator();
+            ImGui::Separator();
         }
     }
 
