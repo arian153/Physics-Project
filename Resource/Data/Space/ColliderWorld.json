@@ -233,11 +233,11 @@
             },
             "Draw EPA": {
                 "Color": [ 1, 1, 0, 1 ],
-                "Flag": true
+                "Flag": false
             },
             "Draw GJK": {
                 "Color": [ 0, 1, 0, 1 ],
-                "Flag": true
+                "Flag": false
             },
             "Draw Primitive": {
                 "Color": [ 0, 0, 1, 1 ],
@@ -258,17 +258,7 @@
                         "Gravity Coefficient": 10.0
                     }
                 }
-            ],
-            "Rays": [
-                {
-                    "Option": "Trace",
-                    "Position": [ 0, 0, 0 ],
-                    "Direction": [ -1, 1, 0 ],
-                    "Reflection Count": 4,
-                    "Max Distance": -1.0,
-                    "Color" : [1, 0, 0, 1]
-                }
-            ]
+            ] 
         },
         "ProjectionMatrix": "Perspective"
     },

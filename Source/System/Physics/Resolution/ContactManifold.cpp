@@ -72,8 +72,8 @@ namespace PhysicsProject
             Vector3 local_to_global_b = m_set_b->m_rigid_body->LocalToWorldPoint(contact.collider_b->LocalToWorldPoint(contact.local_position_b));
             //current frame's distance between a to b.
             Vector3 r_ab = local_to_global_b - local_to_global_a;
-            Vector3 r_a = contact.global_position_a - local_to_global_a;
-            Vector3 r_b = contact.global_position_b - local_to_global_b;
+            Vector3 r_a  = contact.global_position_a - local_to_global_a;
+            Vector3 r_b  = contact.global_position_b - local_to_global_b;
             //check still penetrate between both bodies.
             bool b_still_penetrating = contact.normal.DotProduct(r_ab) <= 0.0f;
             bool b_r_a_close_enough  = r_a.LengthSquared() < Physics::Collision::PERSISTENT_THRESHOLD;
@@ -84,9 +84,6 @@ namespace PhysicsProject
             {
                 // contact persistent, keep
                 contact.b_persistent = true;
-               /* contact.global_position_a = local_to_global_a;
-                contact.global_position_b = local_to_global_b;
-                contact.depth = contact.normal.DotProduct(r_ab);*/
             }
             else
             {

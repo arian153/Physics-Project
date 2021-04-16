@@ -38539,8 +38539,8 @@
                 {
                     "Type": "class PhysicsProject::Drag",
                     "Value": {
-                        "Linear Drag": 0.0,
-                        "Angular Drag": 0.0
+                        "Linear Drag": 0.01,
+                        "Angular Drag": 0.01
                     }
                 }
             ]

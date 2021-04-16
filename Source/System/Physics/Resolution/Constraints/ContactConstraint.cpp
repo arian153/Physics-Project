@@ -154,9 +154,7 @@ namespace PhysicsProject
 
     Real ContactConstraint::GetRestitution(ColliderPrimitive* a, ColliderPrimitive* b) const
     {
-        Physics::MaterialData m_a(a->GetMaterialCode());
-        Physics::MaterialData m_b(b->GetMaterialCode());
-        return Math::Min(m_a.restitution, m_b.restitution);
+        return Math::Min(a->GetMaterial().restitution, b->GetMaterial().restitution);
     }
 
     void ContactConstraint::InitializeJacobian(const ContactPoint& contact, const Vector3& direction, Jacobian& jacobian, Real dt, bool b_normal) const
@@ -177,7 +175,7 @@ namespace PhysicsProject
                     + CrossProduct(m_velocity_term.w_b, contact.r_b);
             Real closing_velocity = DotProduct(relative_velocity, direction);
             //Real depth = -DotProduct((contact.global_position_b - contact.global_position_a), contact.normal);
-            jacobian.bias         = -(beta / dt) * Math::Max(contact.depth, 0.0f) + restitution * closing_velocity;
+            jacobian.bias = -(beta / dt) * Math::Max(contact.depth, 0.0f) + restitution * closing_velocity;
         }
         else
         {
@@ -218,7 +216,6 @@ namespace PhysicsProject
             jacobian.total_lambda = Math::Clamp(jacobian.total_lambda + lambda, -max_friction, max_friction);
         }
         lambda = (jacobian.total_lambda - old_total_lambda);
-
 
         // velocity correction
         m_velocity_term.v_a += m_mass_term.m_a * jacobian.v_a * lambda;
