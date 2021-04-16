@@ -66,8 +66,8 @@ namespace PhysicsProject
         void RemoveConstraint(Constraint* constraint) const;
         void RemoveForce(Force* force) const;
 
-        void SetVelocityIteration(size_t iteration) const;
-        void SetPositionIteration(size_t iteration) const;
+        void SetVelocityIteration(int iteration) const;
+        void SetPositionIteration(int iteration) const;
         void SetWarmStarting(bool b_warm_starting) const;
 
         FrictionUtility*   GetFrictionUtility() const;

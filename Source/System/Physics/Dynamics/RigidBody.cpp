@@ -25,6 +25,10 @@ namespace PhysicsProject
     {
         if (m_motion_mode == eMotionMode::Static)
             return;
+
+        if (m_b_sleep)
+            return;
+
         // integrate linear velocity
         m_linear_velocity += m_mass_data.inverse_mass * m_force_accumulator * dt;
         // integrate angular velocity
@@ -85,17 +89,20 @@ namespace PhysicsProject
 
     void RigidBody::ApplyForce(const Vector3& force, const Vector3& at)
     {
+        SetAwake();
         m_force_accumulator += force;
         m_torque_accumulator += (at - m_global_centroid).CrossProduct(force);
     }
 
     void RigidBody::ApplyForceCentroid(const Vector3& force)
     {
+        SetAwake();
         m_force_accumulator += force;
     }
 
     void RigidBody::ApplyTorque(const Vector3& torque)
     {
+        SetAwake();
         m_torque_accumulator += torque;
     }
 
@@ -187,6 +194,34 @@ namespace PhysicsProject
     void RigidBody::SetRotationalConstraints(const Vector3& angular)
     {
         m_angular_constraints = angular;
+    }
+
+    void RigidBody::SetAwake()
+    {
+        if (m_motion_mode != eMotionMode::Static)
+        {
+            m_b_sleep        = false;
+            m_sleep_momentum = Physics::Collision::SLEEP_AWAKE;
+        }
+    }
+
+    void RigidBody::UpdateSleepState()
+    {
+        Real current_motion = m_linear_velocity.LengthSquared() + (m_angular_velocity.Length() * m_mass_data.inverse_mass);
+        m_sleep_momentum    = Physics::Collision::SLEEP_BIAS * m_sleep_momentum + (1.0f - Physics::Collision::SLEEP_BIAS) * current_motion;
+
+        if (m_sleep_momentum < Physics::Collision::SLEEP_THRESHOLD)
+        {
+            //set sleep
+            m_linear_velocity.SetZero();
+            m_angular_velocity.SetZero();
+            m_b_sleep = true;
+        }
+        else
+        {
+            if (m_sleep_momentum > Physics::Collision::SLEEP_THRESHOLD_EXTREME)
+                m_sleep_momentum = Physics::Collision::SLEEP_THRESHOLD_EXTREME;
+        }
     }
 
     void RigidBody::SetMassInfinite()
@@ -348,5 +383,10 @@ namespace PhysicsProject
             m_local       = origin->m_local;
             m_motion_mode = origin->m_motion_mode;
         }
+    }
+
+    bool RigidBody::IsSleep() const
+    {
+        return m_b_sleep;
     }
 }

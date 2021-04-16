@@ -78,6 +78,7 @@ namespace PhysicsProject
                 {
                     contact_constraint.GenerateVelocityConstraints(dt);
                     contact_constraint.WarmStart();
+                    contact_constraint.AwakeState();
                 }
             }
             else
@@ -85,9 +86,10 @@ namespace PhysicsProject
                 for (auto& contact_constraint : m_contact_constraints)
                 {
                     contact_constraint.GenerateVelocityConstraints(dt);
+                    contact_constraint.AwakeState();
                 }
             }
-            for (size_t i = 0; i < m_velocity_iteration; ++i)
+            for (int i = 0; i < m_velocity_iteration; ++i)
             {
                 for (auto& constraint : m_constraints)
                 {
@@ -109,11 +111,22 @@ namespace PhysicsProject
         }
     }
 
-    void Resolution::IntegrateRigidBodies(std::vector<RigidBody*>* rigid_bodies, Real dt)
+    void Resolution::IntegrateRigidBodies(std::vector<RigidBody*>* rigid_bodies, Real dt) const
     {
-        for (auto& body : *rigid_bodies)
+        if (m_b_enable_sleep)
         {
-            body->Integrate(dt);
+            for (auto& body : *rigid_bodies)
+            {
+                body->Integrate(dt);
+                body->UpdateSleepState();
+            }
+        }
+        else
+        {
+            for (auto& body : *rigid_bodies)
+            {
+                body->Integrate(dt);
+            }
         }
     }
 
@@ -129,7 +142,7 @@ namespace PhysicsProject
             {
                 contact.GeneratePositionConstraints(dt);
             }
-            for (size_t i = 0; i < m_position_iteration; ++i)
+            for (int i = 0; i < m_position_iteration; ++i)
             {
                 for (auto& constraint : m_constraints)
                 {

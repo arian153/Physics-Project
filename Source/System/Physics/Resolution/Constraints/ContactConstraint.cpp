@@ -223,4 +223,15 @@ namespace PhysicsProject
         m_velocity_term.v_b += m_mass_term.m_b * jacobian.v_b * lambda;
         m_velocity_term.w_b += m_mass_term.i_b * jacobian.w_b * lambda;
     }
+
+    void ContactConstraint::AwakeState() const
+    {
+        bool is_a_sleep = m_body_a->IsSleep();
+        bool is_b_sleep = m_body_b->IsSleep();
+
+        if (is_a_sleep ^ is_b_sleep)
+        {
+            is_a_sleep ? m_body_a->SetAwake() : m_body_b->SetAwake();
+        }
+    }
 }

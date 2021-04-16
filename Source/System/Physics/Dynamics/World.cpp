@@ -340,7 +340,6 @@ namespace PhysicsProject
         {
             ImGui::Text("Object Count : %i", m_rigid_bodies.size());
 
-
             if (ImGui::TreeNode("Broad Phase"))
             {
                 ImGui::Text("Broad Phase Type");
@@ -411,6 +410,29 @@ namespace PhysicsProject
                 ImGui::Text("Solve Constraints");
                 ImGui::SameLine();
                 ImGui::Checkbox("##Solve Constraints", &m_solve_constraints);
+
+                ImGui::Text("Enable Sleep");
+                ImGui::SameLine();
+                if (ImGui::Checkbox("##Enable Sleep", &m_resolution_phase->m_b_enable_sleep))
+                {
+                    if (m_resolution_phase->m_b_enable_sleep == false)
+                    {
+                        for (auto& body : m_rigid_bodies)
+                        {
+                            body->SetAwake();
+                        }
+                    }
+                }
+
+                ImGui::Text("Enable Warm Start");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Enable Warm Start", &m_resolution_phase->m_b_warm_starting);
+
+                ImGui::Text("Velocity Iteration");
+                ImGui::SliderInt("##Velocity Iteration", &m_resolution_phase->m_velocity_iteration, 0, 10);
+
+                ImGui::Text("Position Iteration");
+                ImGui::SliderInt("##Position Iteration", &m_resolution_phase->m_position_iteration, 0, 5);
 
                 ImGui::Text("Show Contact");
                 ImGui::SameLine();
@@ -683,12 +705,12 @@ namespace PhysicsProject
         force->Shutdown();
     }
 
-    void World::SetVelocityIteration(size_t iteration) const
+    void World::SetVelocityIteration(int iteration) const
     {
         m_resolution_phase->m_velocity_iteration = iteration;
     }
 
-    void World::SetPositionIteration(size_t iteration) const
+    void World::SetPositionIteration(int iteration) const
     {
         m_resolution_phase->m_position_iteration = iteration;
     }

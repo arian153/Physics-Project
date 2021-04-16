@@ -4,44 +4,44 @@ namespace PhysicsProject
 {
     enum class eColliderType : int
     {
-        Circle
-      , Ellipse
-      , Polygon
-      , Rectangle
-      , Triangle
-      , Box
-      , Capsule
-      , Cone
-      , Cylinder
-      , Dome
-      , Ellipsoid
-      , Polyhedron
-      , Sphere
-      , Tetrahedron
-      , Truncated
-      , InvalidPrimitive
+        Circle,
+        Ellipse,
+        Polygon,
+        Rectangle,
+        Triangle,
+        Box,
+        Capsule,
+        Cone,
+        Cylinder,
+        Dome,
+        Ellipsoid,
+        Polyhedron,
+        Sphere,
+        Tetrahedron,
+        Truncated,
+        InvalidPrimitive
     };
 
     enum class eMotionMode : int
     {
-        Dynamic
-      , Static
-      , Kinematic
+        Dynamic,
+        Static,
+        Kinematic
     };
 
     enum class eBroadPhaseMode : int
     {
-        DynamicBVH
-      , StaticBVH
-      , NSquared
-      , GridPartition
+        DynamicBVH,
+        StaticBVH,
+        NSquared,
+        GridPartition
     };
 
     enum class eCollisionDetectionMode : int
     {
-        Discrete
-      , ContinuousStatic
-      , ContinuousFull
+        Discrete,
+        ContinuousStatic,
+        ContinuousFull
     };
 
     namespace Physics
@@ -62,6 +62,10 @@ namespace PhysicsProject
             const Real   MAX_LINEAR_CORRECTION        = 0.2f;
             const Real   SEPARATION_SLOP              = 0.02f;
             const size_t MAX_MANIFOLD_POINT_COUNT     = 4;
+            const Real   SLEEP_THRESHOLD              = 0.025f;
+            const Real   SLEEP_THRESHOLD_EXTREME      = SLEEP_THRESHOLD * 10.0f;
+            const Real   SLEEP_AWAKE                  = SLEEP_THRESHOLD * 3.0f;
+            const Real   SLEEP_BIAS                   = 0.75f;
         }
 
         namespace Primitive

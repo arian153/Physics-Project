@@ -254,8 +254,8 @@
                 {
                     "Type": "class PhysicsProject::Gravity",
                     "Value": {
-                        "Global Gravity": [ 0, -1, 0 ],
-                        "Gravity Coefficient": 10.0
+                        "Global Gravity": [ 0, -10, 0 ],
+                        "Gravity Coefficient": 1.0
                     }
                 }
             ] 

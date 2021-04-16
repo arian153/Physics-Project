@@ -298,6 +298,7 @@ namespace PhysicsProject
             ImGui::InputFloat3("##RigidBodyEdit0", linear_velocity.GetData(), 3);
             if (ImGui::IsItemEdited())
             {
+                m_rigid_body->SetAwake();
                 command_registry->PushCommand(
                                               new EditFunction<
                                                   Vector3,
@@ -314,6 +315,7 @@ namespace PhysicsProject
             ImGui::InputFloat3("##RigidBodyEdit1", angular_velocity.GetData(), 3);
             if (ImGui::IsItemEdited())
             {
+                m_rigid_body->SetAwake();
                 command_registry->PushCommand(
                                               new EditFunction<
                                                   Vector3,

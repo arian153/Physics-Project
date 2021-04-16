@@ -581,7 +581,14 @@ namespace PhysicsProject
                 {
                     if (node->data->GetCollider() != nullptr && primitive_color.b_flag)
                     {
-                        node->data->GetCollider()->Draw(primitive_renderer, eRenderingMode::Line, primitive_color.color);
+                        if (node->data->GetCollider()->GetRigidBody()->IsSleep())
+                        {
+                            node->data->GetCollider()->Draw(primitive_renderer, eRenderingMode::Line, Color(0.23f, 0.23f, 0.23f, 1.0f));
+                        }
+                        else
+                        {
+                            node->data->GetCollider()->Draw(primitive_renderer, eRenderingMode::Line, primitive_color.color);
+                        }
                     }
                 }
             }

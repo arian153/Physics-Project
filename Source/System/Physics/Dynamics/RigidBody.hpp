@@ -46,6 +46,8 @@ namespace PhysicsProject
 
         void SetPositionalConstraints(const Vector3& linear);
         void SetRotationalConstraints(const Vector3& angular);
+        void SetAwake();
+        void UpdateSleepState();
 
         void     SetMassInfinite();
         void     SetMass(Real mass = 1.0f);
@@ -75,6 +77,7 @@ namespace PhysicsProject
         void SyncFromTransform(Transform* transform);
         void SetTransform(Transform* transform);
         void Clone(RigidBody* origin);
+        bool IsSleep() const;
 
     private:
         friend class Resolution;
@@ -105,6 +108,8 @@ namespace PhysicsProject
         eMotionMode         m_motion_mode = eMotionMode::Dynamic;
         Transform*          m_transform   = nullptr;
         Transform           m_local;
-        RigidBodyComponent* m_component = nullptr;
+        RigidBodyComponent* m_component      = nullptr;
+        bool                m_b_sleep        = false;
+        Real                m_sleep_momentum = 100.0f;
     };
 }
