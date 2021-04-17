@@ -62,10 +62,10 @@ namespace PhysicsProject
             const Real   MAX_LINEAR_CORRECTION        = 0.2f;
             const Real   SEPARATION_SLOP              = 0.02f;
             const size_t MAX_MANIFOLD_POINT_COUNT     = 4;
-            const Real   SLEEP_THRESHOLD              = 0.025f;
+            const Real   SLEEP_THRESHOLD              = 0.0025f;
             const Real   SLEEP_THRESHOLD_EXTREME      = SLEEP_THRESHOLD * 10.0f;
             const Real   SLEEP_AWAKE                  = SLEEP_THRESHOLD * 3.0f;
-            const Real   SLEEP_BIAS                   = 0.75f;
+            const Real   SLEEP_BIAS                   = 0.80f;
         }
 
         namespace Primitive

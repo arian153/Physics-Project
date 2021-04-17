@@ -207,7 +207,7 @@ namespace PhysicsProject
 
     void RigidBody::UpdateSleepState()
     {
-        Real current_motion = m_linear_velocity.LengthSquared() + (m_angular_velocity.Length() * m_mass_data.inverse_mass);
+        Real current_motion = (m_linear_velocity.LengthSquared() + m_angular_velocity.LengthSquared()) * m_mass_data.inverse_mass;
         m_sleep_momentum    = Physics::Collision::SLEEP_BIAS * m_sleep_momentum + (1.0f - Physics::Collision::SLEEP_BIAS) * current_motion;
 
         if (m_sleep_momentum < Physics::Collision::SLEEP_THRESHOLD)

@@ -369,6 +369,11 @@ namespace PhysicsProject
                 }
             }
         }
+        if (JsonResource::HasMember(data, "Box") && JsonResource::IsVector3(data["Box"]))
+        {
+            auto cube = JsonResource::AsVector2(data["Box"]);
+            SetRectangle(cube.x, cube.y);
+        }
         //need to set rectangle
         LoadMaterial(data);
         LoadMass(data);

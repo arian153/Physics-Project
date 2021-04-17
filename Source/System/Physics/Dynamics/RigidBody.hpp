@@ -110,6 +110,6 @@ namespace PhysicsProject
         Transform           m_local;
         RigidBodyComponent* m_component      = nullptr;
         bool                m_b_sleep        = false;
-        Real                m_sleep_momentum = 100.0f;
+        Real                m_sleep_momentum = Physics::Collision::SLEEP_AWAKE;
     };
 }

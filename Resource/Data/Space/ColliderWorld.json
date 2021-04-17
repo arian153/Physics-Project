@@ -19,16 +19,16 @@
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 0, 0, -60 ],
-                        "Scale": [ 1, 1, 1 ]
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 0, -60],
+                        "Scale": [1, 1, 1]
                     }
                 },
                 {
                     "Type": "class PhysicsProject::CameraComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 0, 0, -60 ],
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 0, -60],
                         "Zoom": 1.0
                     }
                 },
@@ -38,15 +38,14 @@
             ],
             "Name": "Camera"
         },
-
         {
             "Components": [
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ -15, 15, 0 ],
-                        "Scale": [ 1, 1, 1 ]
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [-15, 15, 0],
+                        "Scale": [1, 1, 1]
                     }
                 },
                 {
@@ -61,9 +60,9 @@
                             {
                                 "Density": 1.0,
                                 "Material": "Rubber",
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Cube": [ 6, 4, 4 ],
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Cube": [6, 4, 4],
                                 "Scale": 1,
                                 "Type": "Box"
                             }
@@ -78,10 +77,10 @@
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Origin": [ -3, 0, 0 ],
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ -5, 15, 0 ],
-                        "Scale": [ 1, 1, 1 ]
+                        "Origin": [-3, 0, 0],
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [-5, 15, 0],
+                        "Scale": [1, 1, 1]
                     }
                 },
                 {
@@ -96,9 +95,9 @@
                             {
                                 "Density": 1.0,
                                 "Material": "Rubber",
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Radius": [ 3, 2 ],
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Radius": [3, 2],
                                 "Height": 3,
                                 "Scale": 1,
                                 "Type": "Cone"
@@ -106,7 +105,6 @@
                         ]
                     }
                 }
-
             ],
             "Name": "Cone"
         },
@@ -115,9 +113,9 @@
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 5, 15, 0 ],
-                        "Scale": [ 1, 1, 1 ]
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [5, 15, 0],
+                        "Scale": [1, 1, 1]
                     }
                 },
                 {
@@ -132,9 +130,9 @@
                             {
                                 "Density": 1.0,
                                 "Material": "Rubber",
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Radius": [ 2, 3 ],
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Radius": [2, 3],
                                 "Height": 3,
                                 "Scale": 1,
                                 "Type": "Cylinder"
@@ -142,7 +140,6 @@
                         ]
                     }
                 }
-
             ],
             "Name": "cylinder"
         },
@@ -151,9 +148,9 @@
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 0, 5, 0 ],
-                        "Scale": [ 1, 1, 1 ]
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 5, 0],
+                        "Scale": [1, 1, 1]
                     }
                 },
                 {
@@ -168,9 +165,9 @@
                             {
                                 "Density": 1.0,
                                 "Material": "Rubber",
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Radius": [ 3, 1 ],
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Radius": [3, 1],
                                 "Height": 3,
                                 "Ratio": 1.5,
                                 "Scale": 1,
@@ -190,15 +187,14 @@
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 0, -20, 0 ],
-                        "Scale": [ 1, 1, 1 ]
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 5, -5],
+                        "Scale": [1, 1, 1]
                     }
                 },
                 {
                     "Type": "class PhysicsProject::RigidBodyComponent",
                     "Value": {
-                        "Motion" : "Static"
                     }
                 },
                 {
@@ -208,9 +204,222 @@
                             {
                                 "Density": 1.0,
                                 "Material": "Rubber",
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Cube": [ 400, 10, 400 ],
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Scale": 1,
+                                "Type": "Tetrahedron",
+                                "Vertices": [
+                                    [2.82843, 0, -1],
+                                    [-1.4142, 2.44947, -1],
+                                    [-1.4142, -2.44947, -1],
+                                    [0, 0, 3]
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Tetrahedron"
+        },
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 15, -5],
+                        "Scale": [1, 1, 1]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Material": "Rubber",
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Radius": 2.5,
+                                "Scale": 1,
+                                "Type": "Sphere"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Sphere"
+        },
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [-5, 5, -5],
+                        "Scale": [1, 1, 1]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Material": "Rubber",
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Radius": [3, 2, 3],
+                                "Scale": 1,
+                                "Type": "Ellipsoid"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Ellipsoid"
+        },
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [-10, 5, -5],
+                        "Scale": [1, 1, 1]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Material": "Rubber",
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Radius": [4, 3, 4],
+                                "Height": 3,
+                                "Ratio": 1.5,
+                                "Scale": 1,
+                                "Type": "Dome"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Half-Ellipsoid"
+        },
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [5, 5, -5],
+                        "Scale": [1, 1, 1]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Material": "Rubber",
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Radius": [2, 2, 2],
+                                "Height": 4,
+                                "Scale": 1,
+                                "Type": "Capsule"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Capsule"
+        },
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [-5, 5, 5],
+                        "Scale": [1, 1, 1]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Material": "Rubber",
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Radius": [3, 4],
+                                "Scale": 1,
+                                "Type": "Ellipse"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Ellipse"
+        },
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, -20, 0],
+                        "Scale": [1, 1, 1]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                        "Motion": "Static"
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Material": "Rubber",
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Cube": [400, 10, 400],
                                 "Scale": 1,
                                 "Type": "Box"
                             }
@@ -224,23 +433,23 @@
     "Settings": {
         "World": {
             "Draw Broad Phase": {
-                "Color": [ 1, 1, 1, 1 ],
-                "Flag": false 
+                "Color": [1, 1, 1, 1],
+                "Flag": false
             },
             "Draw Contact": {
-                "Color": [ 1, 0, 0, 1 ],
+                "Color": [1, 0, 0, 1],
                 "Flag": true
             },
             "Draw EPA": {
-                "Color": [ 1, 1, 0, 1 ],
+                "Color": [1, 1, 0, 1],
                 "Flag": false
             },
             "Draw GJK": {
-                "Color": [ 0, 1, 0, 1 ],
+                "Color": [0, 1, 0, 1],
                 "Flag": false
             },
             "Draw Primitive": {
-                "Color": [ 0, 0, 1, 1 ],
+                "Color": [0, 0, 1, 1],
                 "Flag": true
             },
             "Forces": [
@@ -254,11 +463,11 @@
                 {
                     "Type": "class PhysicsProject::Gravity",
                     "Value": {
-                        "Global Gravity": [ 0, -10, 0 ],
+                        "Global Gravity": [0, -10, 0],
                         "Gravity Coefficient": 1.0
                     }
                 }
-            ] 
+            ]
         },
         "ProjectionMatrix": "Perspective"
     },

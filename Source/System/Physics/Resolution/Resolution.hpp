@@ -41,7 +41,7 @@ namespace PhysicsProject
         bool m_b_enable_sleep  = true;
 
         int m_velocity_iteration = 8;
-        int m_position_iteration = 0;
+        int m_position_iteration = 3;
 
         FrictionUtility                m_friction_utility;
         ConstraintUtility              m_constraint_utility;

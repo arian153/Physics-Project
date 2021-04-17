@@ -391,7 +391,9 @@ namespace PhysicsProject
                          m_render_texture_generator->GetTexture()->GetTexture(), size
                        , m_uv_min, m_uv_max, m_tint_col, m_border_col);
 
-            if (ImGui::IsItemHovered())
+            bool is_space_hovered = ImGui::IsItemHovered();
+
+            if (is_space_hovered)
             {
                 GUISystem::SetFocusFree(true);
             }
@@ -414,7 +416,7 @@ namespace PhysicsProject
 
             if (space->GetWorld() != nullptr)
             {
-                if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+                if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && is_space_hovered)
                 {
                     space->GetWorld()->SetPickingRay(m_picking_ray);
                     auto found_collider = space->GetWorld()->PickColliderSet(m_picking_ray);

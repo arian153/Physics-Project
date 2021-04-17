@@ -91,7 +91,7 @@ namespace PhysicsProject
 
     void ContactConstraint::SolvePositionConstraints(Real dt)
     {
-        /* bool motion_a = m_body_a->GetMotionMode() == eMotionMode::Dynamic;
+         bool motion_a = m_body_a->GetMotionMode() == eMotionMode::Dynamic;
          bool motion_b = m_body_b->GetMotionMode() == eMotionMode::Dynamic;
          for (auto& contact : m_manifold->contacts)
          {
@@ -108,7 +108,7 @@ namespace PhysicsProject
              Vector3 p       = impulse * contact.normal;
              m_position_term.p_a -= m_mass_term.m_a * p;
              m_position_term.p_b += m_mass_term.m_b * p;
-         }*/
+         }
     }
 
     void ContactConstraint::ApplyPositionConstraints()
@@ -127,7 +127,6 @@ namespace PhysicsProject
             primitive_renderer->DrawPrimitive(Sphere(pos_a, no_rotation, 0.05f), eRenderingMode::Face, color);
             primitive_renderer->DrawPrimitive(Sphere(pos_b, no_rotation, 0.05f), eRenderingMode::Face, color);
             primitive_renderer->DrawSegment(pos_a, pos_a - contact_point.normal * contact_point.depth, color);
-            //primitive_renderer->DrawArrow(pos_b, pos_b + contact_point.normal, color);
         }
     }
 
