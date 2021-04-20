@@ -132,7 +132,7 @@ namespace PhysicsProject
 
     void Resolution::SolvePositionConstraints(Real dt)
     {
-        if (m_position_iteration > 0)
+        if (m_position_iteration > 0 && m_velocity_iteration > 0 )
         {
             for (auto& constraint : m_constraints)
             {

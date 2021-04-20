@@ -70,43 +70,7 @@
                     }
                 }
             ],
-            "Name": "Box1"
-        },
-        {
-            "Components": [
-                {
-                    "Type": "class PhysicsProject::TransformComponent",
-                    "Value": {
-                        "Origin": [-3, 0, 0],
-                        "Orientation": [1, 0, 0, 0],
-                        "Position": [-5, 15, 0],
-                        "Scale": [1, 1, 1]
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::RigidBodyComponent",
-                    "Value": {
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::ColliderComponent",
-                    "Value": {
-                        "Colliders": [
-                            {
-                                "Density": 1.0,
-                                "Material": "Rubber",
-                                "Orientation": [1, 0, 0, 0],
-                                "Position": [0, 0, 0],
-                                "Radius": [3, 2],
-                                "Height": 3,
-                                "Scale": 1,
-                                "Type": "Cone"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "Name": "Cone"
+            "Name": "Box"
         },
         {
             "Components": [
@@ -181,45 +145,6 @@
                 }
             ],
             "Name": "Truncated"
-        },
-        {
-            "Components": [
-                {
-                    "Type": "class PhysicsProject::TransformComponent",
-                    "Value": {
-                        "Orientation": [1, 0, 0, 0],
-                        "Position": [0, 5, -5],
-                        "Scale": [1, 1, 1]
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::RigidBodyComponent",
-                    "Value": {
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::ColliderComponent",
-                    "Value": {
-                        "Colliders": [
-                            {
-                                "Density": 1.0,
-                                "Material": "Rubber",
-                                "Orientation": [1, 0, 0, 0],
-                                "Position": [0, 0, 0],
-                                "Scale": 1,
-                                "Type": "Tetrahedron",
-                                "Vertices": [
-                                    [2.82843, 0, -1],
-                                    [-1.4142, 2.44947, -1],
-                                    [-1.4142, -2.44947, -1],
-                                    [0, 0, 3]
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ],
-            "Name": "Tetrahedron"
         },
         {
             "Components": [
@@ -359,40 +284,6 @@
                 }
             ],
             "Name": "Capsule"
-        },
-        {
-            "Components": [
-                {
-                    "Type": "class PhysicsProject::TransformComponent",
-                    "Value": {
-                        "Orientation": [1, 0, 0, 0],
-                        "Position": [-5, 5, 5],
-                        "Scale": [1, 1, 1]
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::RigidBodyComponent",
-                    "Value": {
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::ColliderComponent",
-                    "Value": {
-                        "Colliders": [
-                            {
-                                "Density": 1.0,
-                                "Material": "Rubber",
-                                "Orientation": [1, 0, 0, 0],
-                                "Position": [0, 0, 0],
-                                "Radius": [3, 4],
-                                "Scale": 1,
-                                "Type": "Ellipse"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "Name": "Ellipse"
         },
         {
             "Components": [

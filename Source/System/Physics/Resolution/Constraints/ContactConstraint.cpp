@@ -43,15 +43,14 @@ namespace PhysicsProject
             basis.CalculateBasisApprox(m_manifold->contacts[i].normal);
             m_manifold->contacts[i].r_a = m_manifold->contacts[i].global_position_a - m_body_a->GetCentroid();
             m_manifold->contacts[i].r_b = m_manifold->contacts[i].global_position_b - m_body_b->GetCentroid();
-            InitializeJacobian(m_manifold->contacts[i], basis.i, m_normal[i], dt, true);
-            InitializeJacobian(m_manifold->contacts[i], basis.j, m_tangent[i], dt);
-            InitializeJacobian(m_manifold->contacts[i], basis.k, m_bitangent[i], dt);
+            InitializeJacobian(m_manifold->contacts[i], basis.i, m_normal[i]);
+            InitializeJacobian(m_manifold->contacts[i], basis.j, m_tangent[i]);
+            InitializeJacobian(m_manifold->contacts[i], basis.k, m_bitangent[i]);
         }
     }
 
     void ContactConstraint::SolveVelocityConstraints(Real dt)
     {
-        E5_UNUSED_PARAM(dt);
         for (size_t i = 0; i < m_count; ++i)
         {
             // Solve tangent constraints first because non-penetration is more important than friction.
@@ -91,24 +90,24 @@ namespace PhysicsProject
 
     void ContactConstraint::SolvePositionConstraints(Real dt)
     {
-         bool motion_a = m_body_a->GetMotionMode() == eMotionMode::Dynamic;
-         bool motion_b = m_body_b->GetMotionMode() == eMotionMode::Dynamic;
-         for (auto& contact : m_manifold->contacts)
-         {
-             Vector3 local_to_global_a = m_body_a->LocalToWorldPoint(contact.collider_a->LocalToWorldPoint(contact.local_position_a));
-             Vector3 local_to_global_b = m_body_b->LocalToWorldPoint(contact.collider_b->LocalToWorldPoint(contact.local_position_b));
-             Real    separation        = DotProduct(local_to_global_b - local_to_global_a, contact.normal) - Physics::Collision::SEPARATION_SLOP;
-             Real    constraints       = Math::Clamp(Physics::Dynamics::BAUMGRATE * (separation + Physics::Collision::LINEAR_SLOP), -Physics::Collision::MAX_LINEAR_CORRECTION, 0.0f);
-             Vector3 ra_n              = CrossProduct(local_to_global_a - m_body_a->GetCentroid(), contact.normal);
-             Vector3 rb_n              = CrossProduct(local_to_global_b - m_body_b->GetCentroid(), contact.normal);
-             Real    k
-                     = (motion_a ? m_mass_term.m_a + ra_n * m_mass_term.i_a * ra_n : 0.0f)
-                     + (motion_b ? m_mass_term.m_b + rb_n * m_mass_term.i_b * rb_n : 0.0f);
-             Real    impulse = k > 0.0f ? -constraints / k : 0.0f;
-             Vector3 p       = impulse * contact.normal;
-             m_position_term.p_a -= m_mass_term.m_a * p;
-             m_position_term.p_b += m_mass_term.m_b * p;
-         }
+        bool motion_a = m_body_a->GetMotionMode() == eMotionMode::Dynamic;
+        bool motion_b = m_body_b->GetMotionMode() == eMotionMode::Dynamic;
+        for (auto& contact : m_manifold->contacts)
+        {
+            Vector3 local_to_global_a = m_body_a->LocalToWorldPoint(contact.collider_a->LocalToWorldPoint(contact.local_position_a));
+            Vector3 local_to_global_b = m_body_b->LocalToWorldPoint(contact.collider_b->LocalToWorldPoint(contact.local_position_b));
+            Real    separation        = DotProduct(local_to_global_b - local_to_global_a, contact.normal) - Physics::Collision::POSITION_SEPARATION_SLOP;
+            Real    constraints       = Math::Clamp(Physics::Dynamics::BAUMGRATE * (separation + Physics::Collision::POSITION_LINEAR_SLOP), -Physics::Collision::MAX_LINEAR_CORRECTION, 0.0f);
+            Vector3 ra_n              = CrossProduct(local_to_global_a - m_body_a->GetCentroid(), contact.normal);
+            Vector3 rb_n              = CrossProduct(local_to_global_b - m_body_b->GetCentroid(), contact.normal);
+            Real    k
+                    = (motion_a ? m_mass_term.m_a + ra_n * m_mass_term.i_a * ra_n : 0.0f)
+                    + (motion_b ? m_mass_term.m_b + rb_n * m_mass_term.i_b * rb_n : 0.0f);
+            Real    impulse = k > 0.0f ? -constraints / k : 0.0f;
+            Vector3 p       = impulse * contact.normal;
+            m_position_term.p_a -= m_mass_term.m_a * p;
+            m_position_term.p_b += m_mass_term.m_b * p;
+        }
     }
 
     void ContactConstraint::ApplyPositionConstraints()
@@ -145,6 +144,7 @@ namespace PhysicsProject
             m_velocity_term.w_a -= m_mass_term.i_a * CrossProduct(contact_point.r_a, p);
             m_velocity_term.v_b += m_mass_term.m_b * p;
             m_velocity_term.w_b += m_mass_term.i_b * CrossProduct(contact_point.r_b, p);
+
             m_normal[i].total_lambda += contact_point.normal_lambda;
             m_tangent[i].total_lambda += contact_point.tangent_lambda;
             m_bitangent[i].total_lambda += contact_point.bitangent_lambda;
@@ -156,30 +156,14 @@ namespace PhysicsProject
         return Math::Min(a->GetMaterial().restitution, b->GetMaterial().restitution);
     }
 
-    void ContactConstraint::InitializeJacobian(const ContactPoint& contact, const Vector3& direction, Jacobian& jacobian, Real dt, bool b_normal) const
+    void ContactConstraint::InitializeJacobian(const ContactPoint& contact, const Vector3& direction, Jacobian& jacobian) const
     {
         jacobian.v_a  = -direction;
         jacobian.w_a  = -CrossProduct(contact.r_a, direction);
         jacobian.v_b  = direction;
         jacobian.w_b  = CrossProduct(contact.r_b, direction);
         jacobian.bias = 0.0f;
-        if (b_normal)
-        {
-            Real    beta              = m_beta;//contact.contact_beta_a * contact.contact_beta_b;
-            Real    restitution       = GetRestitution(contact.collider_a, contact.collider_b);
-            Vector3 relative_velocity =
-                    -m_velocity_term.v_a
-                    - CrossProduct(m_velocity_term.w_a, contact.r_a)
-                    + m_velocity_term.v_b
-                    + CrossProduct(m_velocity_term.w_b, contact.r_b);
-            Real closing_velocity = DotProduct(relative_velocity, direction);
-            //Real depth = -DotProduct((contact.global_position_b - contact.global_position_a), contact.normal);
-            jacobian.bias = -(beta / dt) * Math::Max(contact.depth, 0.0f) + restitution * closing_velocity;
-        }
-        else
-        {
-            jacobian.bias = -m_tangent_speed;
-        }
+
         bool motion_a = m_body_a->GetMotionMode() == eMotionMode::Dynamic;
         bool motion_b = m_body_b->GetMotionMode() == eMotionMode::Dynamic;
         Real k
@@ -198,10 +182,31 @@ namespace PhysicsProject
                 + DotProduct(jacobian.w_a, m_velocity_term.w_a)
                 + DotProduct(jacobian.v_b, m_velocity_term.v_b)
                 + DotProduct(jacobian.w_b, m_velocity_term.w_b);
+        
+
+        if (b_normal)
+        {
+            Real    beta              = Physics::Collision::CONTACT_BETA;
+            Real    restitution       = GetRestitution(contact.collider_a, contact.collider_b);
+            Vector3 relative_velocity =
+                    -m_velocity_term.v_a
+                    - CrossProduct(m_velocity_term.w_a, contact.r_a)
+                    + m_velocity_term.v_b
+                    + CrossProduct(m_velocity_term.w_b, contact.r_b);
+            Real closing_velocity = DotProduct(relative_velocity, dir);
+            Real baumgarte_slop = Math::Max(contact.depth - Physics::Collision::VELOCITY_SLOP, 0.0f);
+            jacobian.bias = -(beta / dt) * baumgarte_slop + restitution * closing_velocity;
+        }
+        else
+        {
+            jacobian.bias = -m_tangent_speed;
+        }
+
         // raw lambda
         Real lambda = jacobian.effective_mass * -(jv + jacobian.bias);
         // clamped lambda
         Real old_total_lambda = jacobian.total_lambda;
+
         if (b_normal)
         {
             //normal - contact resolution : lambda >= 0

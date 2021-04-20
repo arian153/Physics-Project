@@ -19,7 +19,6 @@ namespace PhysicsProject
     {
         m_set_a                      = rhs.m_set_a;
         m_set_b                      = rhs.m_set_b;
-        persistent_threshold_squared = rhs.persistent_threshold_squared;
         is_collide                   = rhs.is_collide;
         for (auto& contact : rhs.contacts)
         {
@@ -33,7 +32,6 @@ namespace PhysicsProject
         {
             m_set_a                      = rhs.m_set_a;
             m_set_b                      = rhs.m_set_b;
-            persistent_threshold_squared = rhs.persistent_threshold_squared;
             is_collide                   = rhs.is_collide;
             for (auto& contact : rhs.contacts)
             {
@@ -47,7 +45,6 @@ namespace PhysicsProject
     {
         m_set_a                      = manifold.m_set_a;
         m_set_b                      = manifold.m_set_b;
-        persistent_threshold_squared = manifold.persistent_threshold_squared;
         is_collide                   = manifold.is_collide;
         for (auto& contact : manifold.contacts)
         {
@@ -55,11 +52,7 @@ namespace PhysicsProject
         }
     }
 
-    void ContactManifold::SetPersistentThreshold(Real threshold)
-    {
-        persistent_threshold_squared = threshold * threshold;
-    }
-
+   
     void ContactManifold::UpdateInvalidContact()
     {
         //erase contact list.
@@ -74,16 +67,18 @@ namespace PhysicsProject
             Vector3 r_ab = local_to_global_b - local_to_global_a;
             Vector3 r_a  = contact.global_position_a - local_to_global_a;
             Vector3 r_b  = contact.global_position_b - local_to_global_b;
+
             //check still penetrate between both bodies.
             bool b_still_penetrating = contact.normal.DotProduct(r_ab) <= 0.0f;
-            bool b_r_a_close_enough  = r_a.LengthSquared() < Physics::Collision::PERSISTENT_THRESHOLD;
-            bool b_r_b_close_enough  = r_b.LengthSquared() < Physics::Collision::PERSISTENT_THRESHOLD;
+            bool b_r_a_close_enough  = r_a.LengthSquared() < Physics::Collision::PERSISTENT_THRESHOLD_SQUARED;
+            bool b_r_b_close_enough  = r_b.LengthSquared() < Physics::Collision::PERSISTENT_THRESHOLD_SQUARED;
             // keep contact point if the collision pair is still colliding at this point, 
             // and the local positions are not too far from the global positions original acquired from collision detection
             if (b_r_a_close_enough && b_r_b_close_enough && b_still_penetrating)
             {
                 // contact persistent, keep
                 contact.b_persistent = true;
+                contact.depth        = contact.normal.DotProduct(r_ab);
             }
             else
             {
@@ -113,8 +108,8 @@ namespace PhysicsProject
         {
             Vector3 r_a            = new_contact.global_position_a - contact.global_position_a;
             Vector3 r_b            = new_contact.global_position_b - contact.global_position_b;
-            bool    r_a_far_enough = r_a.LengthSquared() > persistent_threshold_squared;
-            bool    r_b_far_enough = r_b.LengthSquared() > persistent_threshold_squared;
+            bool    r_a_far_enough = r_a.LengthSquared() > Physics::Collision::PERSISTENT_THRESHOLD_SQUARED;
+            bool    r_b_far_enough = r_b.LengthSquared() > Physics::Collision::PERSISTENT_THRESHOLD_SQUARED;
             // proximity check  
             if (r_a_far_enough && r_b_far_enough)
             {
@@ -122,7 +117,7 @@ namespace PhysicsProject
                 add_contact = true;
             }
         }
-        if (add_contact == true || contacts.empty())
+        if (add_contact || contacts.empty())
         {
             auto set_a = new_contact.collider_a->GetColliderSet();
             auto set_b = new_contact.collider_b->GetColliderSet();
@@ -139,7 +134,7 @@ namespace PhysicsProject
 
     void ContactManifold::CutDownManifold()
     {
-        if (contacts.size() < Physics::Collision::MAX_MANIFOLD_POINT_COUNT)
+        if (contacts.size() <= Physics::Collision::MAX_MANIFOLD_POINT_COUNT)
         {
             return;
         }
