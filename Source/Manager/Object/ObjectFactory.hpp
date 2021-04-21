@@ -27,13 +27,15 @@ namespace PhysicsProject
         Object* CreateArchetypeObject(const std::string& name, size_t archetype_id, Space* space);
 
         void LoadArchetype(ResourceManager* resource_manager);
-
         void AddArchetype(Object* object);
         void AddArchetype(JsonResource* resource);
 
         size_t GetArchetypeID(JsonResource* resource);
-        bool ValidateID(size_t archetype_id) const;
+        bool   ValidateID(size_t archetype_id) const;
         size_t InvalidID() const;
+
+        void SetArchetypeSpace(Space* space);
+        void GetArchetypeName(std::vector<std::string>& names);
     private:
         void ClearArchetypes();
 
@@ -44,6 +46,6 @@ namespace PhysicsProject
         std::unordered_map<JsonResource*, size_t> m_resource_id;
         //others
         std::vector<Object*> m_archetypes;
-        ComponentManager*    m_archetype_component_manager = nullptr;
+        Space*               m_archetype_space = nullptr;
     };
 }

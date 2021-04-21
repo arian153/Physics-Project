@@ -320,6 +320,15 @@ namespace PhysicsProject
                 auto created = this->AddCollider(collider->m_type);
                 created->Clone(collider);
             }
+
+            m_rigid_body = body;
+            m_world = world;
+            m_mass_data = origin->m_mass_data;
+            m_scale = origin->m_scale;
+            if (m_rigid_body != nullptr)
+            {
+                m_rigid_body->SetMassData(m_mass_data);
+            }
         }
     }
 

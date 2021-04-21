@@ -58,7 +58,6 @@
                     "Value": {
                         "Colliders": [
                             {
-                                "Density": 1.0,
                                 "Material": "Rubber",
                                 "Orientation": [1, 0, 0, 0],
                                 "Position": [0, 0, 0],
@@ -92,7 +91,6 @@
                     "Value": {
                         "Colliders": [
                             {
-                                "Density": 1.0,
                                 "Material": "Rubber",
                                 "Orientation": [1, 0, 0, 0],
                                 "Position": [0, 0, 0],
@@ -127,7 +125,6 @@
                     "Value": {
                         "Colliders": [
                             {
-                                "Density": 1.0,
                                 "Material": "Rubber",
                                 "Orientation": [1, 0, 0, 0],
                                 "Position": [0, 0, 0],
@@ -152,13 +149,16 @@
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
                         "Orientation": [1, 0, 0, 0],
-                        "Position": [0, 15, -5],
+                        "Position": [0, 20, -5],
                         "Scale": [1, 1, 1]
                     }
                 },
                 {
                     "Type": "class PhysicsProject::RigidBodyComponent",
                     "Value": {
+                        "Linear": {
+                            "Velocity": [-0.1, 1, 0.1]
+                        }
                     }
                 },
                 {
@@ -166,11 +166,10 @@
                     "Value": {
                         "Colliders": [
                             {
-                                "Density": 1.0,
                                 "Material": "Rubber",
                                 "Orientation": [1, 0, 0, 0],
                                 "Position": [0, 0, 0],
-                                "Radius": 2.5,
+                                "Radius": 1.5,
                                 "Scale": 1,
                                 "Type": "Sphere"
                             }
@@ -193,6 +192,9 @@
                 {
                     "Type": "class PhysicsProject::RigidBodyComponent",
                     "Value": {
+                        "Linear": {
+                            "Velocity": [-1, 1, 1]
+                        }
                     }
                 },
                 {
@@ -200,11 +202,10 @@
                     "Value": {
                         "Colliders": [
                             {
-                                "Density": 1.0,
-                                "Material": "Rubber",
+                                "Density": 0.3,
                                 "Orientation": [1, 0, 0, 0],
                                 "Position": [0, 0, 0],
-                                "Radius": [3, 2, 3],
+                                "Radius": [2, 1.5, 2],
                                 "Scale": 1,
                                 "Type": "Ellipsoid"
                             }
@@ -234,13 +235,11 @@
                     "Value": {
                         "Colliders": [
                             {
-                                "Density": 1.0,
                                 "Material": "Rubber",
                                 "Orientation": [1, 0, 0, 0],
                                 "Position": [0, 0, 0],
-                                "Radius": [4, 3, 4],
+                                "Radius": [3, 3, 4],
                                 "Height": 3,
-                                "Ratio": 1.5,
                                 "Scale": 1,
                                 "Type": "Dome"
                             }
@@ -255,7 +254,7 @@
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Orientation": [1, 0, 0, 0],
+                        "Orientation": [0.2, 0.2, 0.5, -0.5],
                         "Position": [5, 5, -5],
                         "Scale": [1, 1, 1]
                     }
@@ -263,6 +262,9 @@
                 {
                     "Type": "class PhysicsProject::RigidBodyComponent",
                     "Value": {
+                        "Linear": {
+                            "Velocity": [1, 1, 1]
+                        }
                     }
                 },
                 {
@@ -270,7 +272,6 @@
                     "Value": {
                         "Colliders": [
                             {
-                                "Density": 1.0,
                                 "Material": "Rubber",
                                 "Orientation": [1, 0, 0, 0],
                                 "Position": [0, 0, 0],
@@ -291,7 +292,7 @@
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
                         "Orientation": [1, 0, 0, 0],
-                        "Position": [0, -20, 0],
+                        "Position": [0, -30, 0],
                         "Scale": [1, 1, 1]
                     }
                 },
@@ -306,11 +307,10 @@
                     "Value": {
                         "Colliders": [
                             {
-                                "Density": 1.0,
                                 "Material": "Rubber",
                                 "Orientation": [1, 0, 0, 0],
                                 "Position": [0, 0, 0],
-                                "Cube": [400, 10, 400],
+                                "Cube": [120, 20, 120],
                                 "Scale": 1,
                                 "Type": "Box"
                             }

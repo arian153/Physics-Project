@@ -79,6 +79,9 @@ namespace PhysicsProject
         RigidBody*       m_body_a           = nullptr;
         RigidBody*       m_body_b           = nullptr;
 
+        eMotionMode m_motion_a;
+        eMotionMode m_motion_b;
+
         PositionTerm m_position_term;
         VelocityTerm m_velocity_term;
         MassTerm     m_mass_term;

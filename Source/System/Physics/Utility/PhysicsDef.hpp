@@ -32,7 +32,6 @@ namespace PhysicsProject
     enum class eBroadPhaseMode : int
     {
         DynamicBVH,
-        StaticBVH,
         NSquared,
         GridPartition
     };
@@ -54,12 +53,12 @@ namespace PhysicsProject
 
         namespace Collision
         {
-            const Real   BROAD_PHASE_MARGIN           = 0.1f;
+            const Real   BROAD_PHASE_MARGIN           = 0.2f;
             const Real   PERSISTENT_THRESHOLD         = 0.2f;
             const Real   PERSISTENT_THRESHOLD_SQUARED = PERSISTENT_THRESHOLD * PERSISTENT_THRESHOLD;
             const size_t MAX_MANIFOLD_POINT_COUNT     = 4;
 
-            const Real CONTACT_BETA  = 0.25f;
+            const Real CONTACT_BETA  = 0.45f;
             const Real VELOCITY_SLOP = 0.005f;
 
             const Real POSITION_LINEAR_SLOP     = 0.05f;
@@ -67,10 +66,10 @@ namespace PhysicsProject
             const Real MAX_LINEAR_CORRECTION    = 0.2f;
             const Real POSITION_SEPARATION_SLOP = 0.02f;
 
-            const Real SLEEP_THRESHOLD         = 0.001f;
-            const Real SLEEP_THRESHOLD_EXTREME = SLEEP_THRESHOLD * 10.0f;
-            const Real SLEEP_AWAKE             = SLEEP_THRESHOLD * 4.0f;
-            const Real SLEEP_BIAS              = 0.80f;
+            const Real SLEEP_THRESHOLD         = 0.0005f;
+            const Real SLEEP_THRESHOLD_EXTREME = SLEEP_THRESHOLD * 100.0f;
+            const Real SLEEP_AWAKE             = SLEEP_THRESHOLD * 33.0f;
+            const Real SLEEP_BIAS              = 0.95f;
         }
 
         namespace Primitive

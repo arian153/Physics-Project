@@ -236,6 +236,7 @@ namespace PhysicsProject
             }
             if (data["Position"].isString())
             {
+                m_b_random_pos = true;
                 SetPosition(
                             Vector3(
                                     random.GetRangedRandomReal(-50.0f, 50.0f),
@@ -379,6 +380,15 @@ namespace PhysicsProject
             //copy data
             m_transform   = origin->m_transform;
             m_axis_holder = origin->m_axis_holder;
+
+            if (origin->m_b_random_pos)
+            {
+                SetPosition(
+                            Vector3(
+                                    random.GetRangedRandomReal(-50.0f, 50.0f),
+                                    random.GetRangedRandomReal(-20.0f, 20.0f),
+                                    random.GetRangedRandomReal(-50.0f, 50.0f)));
+            }
         }
     }
 

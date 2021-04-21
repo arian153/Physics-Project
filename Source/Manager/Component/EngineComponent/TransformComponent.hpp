@@ -74,5 +74,8 @@ namespace PhysicsProject
 
         Quaternion m_edit_quaternion;
         AxisRadian m_edit_radian;
+        bool       m_b_random_pos = false;
+        bool       m_b_random_rot = false;
+        bool       m_b_random_scl = false;
     };
 }

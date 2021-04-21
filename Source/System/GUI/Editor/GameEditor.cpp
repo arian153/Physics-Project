@@ -2,7 +2,10 @@
 #include "../../../External/imgui/imgui.h"
 #include "../../Core/OS-API/Application.hpp"
 #include "../../../Manager/Level/LevelManager.hpp"
+#include "../../../Manager/Object/ObjectFactory.hpp"
+#include "../../../Manager/Object/ObjectManager.hpp"
 #include "../../../Manager/Resource/ResourceType/JsonResource.hpp"
+#include "../../../Manager/Space/Space.hpp"
 #include "Command/EditorCommand.hpp"
 
 namespace PhysicsProject
@@ -25,6 +28,10 @@ namespace PhysicsProject
         m_window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
         m_command_registry.Initialize();
         m_space_editor.m_command_registry = &m_command_registry;
+
+        m_object_factory   = m_application->GetObjectFactory();
+        m_resource_manager = m_application->GetResourceManager();
+        m_object_factory->GetArchetypeName(m_archetype_names);
     }
 
     void GameEditor::Update(Real dt)
@@ -160,19 +167,32 @@ namespace PhysicsProject
     {
         if (ImGui::BeginMenu("Object"))
         {
-            if (ImGui::MenuItem("Create Empty"))
+            /*if (ImGui::MenuItem("Create Empty"))
+             {
+             }*/
+            if (ImGui::BeginMenu("Create 3D Object"))
             {
-            }
-            if (ImGui::MenuItem("Create 3D Object"))
-            {
+                size_t size = m_archetype_names.size();
+
+                for (size_t i = 0; i < size; ++i)
+                {
+                    if (ImGui::MenuItem(("Create " + m_archetype_names[i]).c_str()))
+                    {
+                        if (m_space_editor.m_editing_space != nullptr)
+                        {
+                            m_space_editor.m_editing_space->GetObjectManager()->AddObject(m_archetype_names[i], i);
+                        }
+                    }
+                }
+                ImGui::EndMenu();
             }
             ImGui::Separator();
-            if (ImGui::MenuItem("Create Camera"))
-            {
-            }
-            if (ImGui::MenuItem("Create Light"))
-            {
-            }
+            /*if (ImGui::MenuItem("Create Camera"))
+              {
+              }
+              if (ImGui::MenuItem("Create Light"))
+              {
+              }*/
             ImGui::EndMenu();
         }
     }

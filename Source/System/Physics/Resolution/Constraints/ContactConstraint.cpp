@@ -24,8 +24,10 @@ namespace PhysicsProject
 
     void ContactConstraint::GenerateVelocityConstraints(Real dt)
     {
-        m_body_a = m_manifold->m_set_a->GetRigidBody();
-        m_body_b = m_manifold->m_set_b->GetRigidBody();
+        m_body_a   = m_manifold->m_set_a->GetRigidBody();
+        m_body_b   = m_manifold->m_set_b->GetRigidBody();
+        m_motion_a = m_body_a->GetMotionMode();
+        m_motion_b = m_body_b->GetMotionMode();
         //set mass
         m_mass_term.m_a = m_body_a->InverseMass();
         m_mass_term.i_a = m_body_a->InverseInertia();
@@ -36,7 +38,25 @@ namespace PhysicsProject
         m_velocity_term.w_a = m_body_a->GetAngularVelocity();
         m_velocity_term.v_b = m_body_b->GetLinearVelocity();
         m_velocity_term.w_b = m_body_b->GetAngularVelocity();
-        m_count             = m_manifold->contacts.size();
+
+        if (!m_velocity_term.v_a.IsValid())
+        {
+            m_velocity_term.v_a.SetZero();
+        }
+        if (!m_velocity_term.w_a.IsValid())
+        {
+            m_velocity_term.w_a.SetZero();
+        }
+        if (!m_velocity_term.v_b.IsValid())
+        {
+            m_velocity_term.v_b.SetZero();
+        }
+        if (!m_velocity_term.w_b.IsValid())
+        {
+            m_velocity_term.w_b.SetZero();
+        }
+
+        m_count = m_manifold->contacts.size();
         Basis basis;
         for (size_t i = 0; i < m_count; ++i)
         {
@@ -96,10 +116,11 @@ namespace PhysicsProject
         {
             Vector3 local_to_global_a = m_body_a->LocalToWorldPoint(contact.collider_a->LocalToWorldPoint(contact.local_position_a));
             Vector3 local_to_global_b = m_body_b->LocalToWorldPoint(contact.collider_b->LocalToWorldPoint(contact.local_position_b));
-            Real    separation        = DotProduct(local_to_global_b - local_to_global_a, contact.normal) - Physics::Collision::POSITION_SEPARATION_SLOP;
-            Real    constraints       = Math::Clamp(Physics::Dynamics::BAUMGRATE * (separation + Physics::Collision::POSITION_LINEAR_SLOP), -Physics::Collision::MAX_LINEAR_CORRECTION, 0.0f);
-            Vector3 ra_n              = CrossProduct(local_to_global_a - m_body_a->GetCentroid(), contact.normal);
-            Vector3 rb_n              = CrossProduct(local_to_global_b - m_body_b->GetCentroid(), contact.normal);
+            //contact.depth = DotProduct(local_to_global_a - local_to_global_b, contact.normal);
+            Real    separation  = DotProduct(local_to_global_b - local_to_global_a, contact.normal) - Physics::Collision::POSITION_SEPARATION_SLOP;
+            Real    constraints = Math::Clamp(Physics::Dynamics::BAUMGRATE * (separation + Physics::Collision::POSITION_LINEAR_SLOP), -Physics::Collision::MAX_LINEAR_CORRECTION, 0.0f);
+            Vector3 ra_n        = CrossProduct(local_to_global_a - m_position_term.p_a, contact.normal);
+            Vector3 rb_n        = CrossProduct(local_to_global_b - m_position_term.p_b, contact.normal);
             Real    k
                     = (motion_a ? m_mass_term.m_a + ra_n * m_mass_term.i_a * ra_n : 0.0f)
                     + (motion_b ? m_mass_term.m_b + rb_n * m_mass_term.i_b * rb_n : 0.0f);
@@ -182,7 +203,6 @@ namespace PhysicsProject
                 + DotProduct(jacobian.w_a, m_velocity_term.w_a)
                 + DotProduct(jacobian.v_b, m_velocity_term.v_b)
                 + DotProduct(jacobian.w_b, m_velocity_term.w_b);
-        
 
         if (b_normal)
         {
@@ -194,8 +214,8 @@ namespace PhysicsProject
                     + m_velocity_term.v_b
                     + CrossProduct(m_velocity_term.w_b, contact.r_b);
             Real closing_velocity = DotProduct(relative_velocity, dir);
-            Real baumgarte_slop = Math::Max(contact.depth - Physics::Collision::VELOCITY_SLOP, 0.0f);
-            jacobian.bias = -(beta / dt) * baumgarte_slop + restitution * closing_velocity;
+            Real baumgarte_slop   = Math::Max(contact.depth - Physics::Collision::VELOCITY_SLOP, 0.0f);
+            jacobian.bias         = -(beta / (1.0f / 60.0f)) * baumgarte_slop + restitution * closing_velocity;
         }
         else
         {

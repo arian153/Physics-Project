@@ -1,0 +1,255 @@
+{
+    "Create Flag": [
+        "ComponentManager",
+        "ObjectManager",
+        "Scene",
+        "World",
+        "Logic"
+    ],
+    "Update Flag": [
+        "Scene",
+        "Logic"
+    ],
+    "FixedUpdate Flag": [
+        "World"
+    ],
+    "Objects": [
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ 0, 0, -60 ],
+                        "Scale": [ 1, 1, 1 ]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::CameraComponent",
+                    "Value": {
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ 0, 0, -60 ],
+                        "Zoom": 1.0
+                    }
+                },
+                {
+                    "Type": "class Game::ControllerComponent"
+                }
+            ],
+            "Name": "Camera"
+        },
+
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ -15, 15, 0 ],
+                        "Scale": [ 1, 1, 1 ]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Orientation": [ 1, 0, 0, 0 ],
+                                "Position": [ 0, 0, 0 ],
+                                "Cube": [ 6, 4, 4 ],
+                                "Scale": 1,
+                                "Type": "Box"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Box"
+        },
+
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ -15, 20, 0 ],
+                        "Scale": [ 1, 1, 1 ]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Orientation": [ 1, 0, 0, 0 ],
+                                "Position": [ 0, 0, 0 ],
+                                "Cube": [ 6, 4, 4 ],
+                                "Scale": 1,
+                                "Type": "Box"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Box"
+        },
+
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ -15, 25, 0 ],
+                        "Scale": [ 1, 1, 1 ]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Orientation": [ 1, 0, 0, 0 ],
+                                "Position": [ 0, 0, 0 ],
+                                "Cube": [ 6, 4, 4 ],
+                                "Scale": 1,
+                                "Type": "Box"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Box"
+        },
+
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ -15, 30, 0 ],
+                        "Scale": [ 1, 1, 1 ]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Density": 1.0,
+                                "Orientation": [ 1, 0, 0, 0 ],
+                                "Position": [ 0, 0, 0 ],
+                                "Cube": [ 6, 4, 4 ],
+                                "Scale": 1,
+                                "Type": "Box"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Box"
+        },
+
+        {
+            "Components": [
+                {
+                    "Type": "class PhysicsProject::TransformComponent",
+                    "Value": {
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ 0, -30, 0 ],
+                        "Scale": [ 1, 1, 1 ]
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::RigidBodyComponent",
+                    "Value": {
+                        "Motion": "Static"
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::ColliderComponent",
+                    "Value": {
+                        "Colliders": [
+                            {
+                                "Material": "Rubber",
+                                "Orientation": [ 1, 0, 0, 0 ],
+                                "Position": [ 0, 0, 0 ],
+                                "Cube": [ 120, 20, 120 ],
+                                "Scale": 1,
+                                "Type": "Box"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Name": "Platform"
+        }
+    ],
+    "Settings": {
+        "World": {
+            "Draw Broad Phase": {
+                "Color": [1, 1, 1, 1],
+                "Flag": false
+            },
+            "Draw Contact": {
+                "Color": [1, 0, 0, 1],
+                "Flag": true
+            },
+            "Draw EPA": {
+                "Color": [1, 1, 0, 1],
+                "Flag": false
+            },
+            "Draw GJK": {
+                "Color": [0, 1, 0, 1],
+                "Flag": false
+            },
+            "Draw Primitive": {
+                "Color": [0, 0, 1, 1],
+                "Flag": true
+            },
+            "Forces": [
+                {
+                    "Type": "class PhysicsProject::Drag",
+                    "Value": {
+                        "Linear Drag": 0.25,
+                        "Angular Drag": 0.25
+                    }
+                },
+                {
+                    "Type": "class PhysicsProject::Gravity",
+                    "Value": {
+                        "Global Gravity": [0, -10, 0],
+                        "Gravity Coefficient": 1.0
+                    }
+                }
+            ]
+        },
+        "ProjectionMatrix": "Perspective"
+    },
+    "Type": "Space"
+}

@@ -52,8 +52,6 @@ namespace PhysicsProject
 
         ColliderComponent* GetComponent() const;
 
-  
-
     private:
         RigidBody*         m_rigid_body = nullptr;
         World*             m_world      = nullptr;

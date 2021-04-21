@@ -65,12 +65,12 @@ namespace PhysicsProject
         m_component_registry->Initialize();
         m_object_factory = new ObjectFactory();
         m_object_factory->Initialize(m_component_registry);
-        m_object_factory->LoadArchetype(m_resource_manager);
-
-
 
         m_space_manager = new SpaceManager(m_physics_system, m_render_system, m_object_factory, m_component_registry, m_resource_manager, m_logic_system);
         m_space_manager->Initialize();
+
+        m_object_factory->LoadArchetype(m_resource_manager);
+
         m_level_manager = new LevelManager();
         m_level_manager->Initialize(this);
         //setup missing system parameters
@@ -106,18 +106,20 @@ namespace PhysicsProject
             delete m_level_manager;
             m_level_manager = nullptr;
         }
-        if (m_space_manager != nullptr)
-        {
-            m_space_manager->Shutdown();
-            delete m_space_manager;
-            m_space_manager = nullptr;
-        }
         if (m_object_factory != nullptr)
         {
             m_object_factory->Shutdown();
             delete m_object_factory;
             m_object_factory = nullptr;
         }
+
+        if (m_space_manager != nullptr)
+        {
+            m_space_manager->Shutdown();
+            delete m_space_manager;
+            m_space_manager = nullptr;
+        }
+
         if (m_component_registry != nullptr)
         {
             m_component_registry->Shutdown();

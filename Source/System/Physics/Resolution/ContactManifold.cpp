@@ -78,7 +78,6 @@ namespace PhysicsProject
             {
                 // contact persistent, keep
                 contact.b_persistent = true;
-                contact.depth        = contact.normal.DotProduct(r_ab);
             }
             else
             {
@@ -129,6 +128,10 @@ namespace PhysicsProject
             {
                 contacts.push_back(new_contact);
             }
+        }
+        else
+        {
+            //replace?
         }
     }
 
