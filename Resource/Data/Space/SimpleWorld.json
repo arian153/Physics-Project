@@ -185,7 +185,7 @@
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
                         "Orientation": [1, 0, 0, 0],
-                        "Position": [-5, 5, -5],
+                        "Position": [-5, 5, -15],
                         "Scale": [1, 1, 1]
                     }
                 },
