@@ -23,6 +23,12 @@ namespace PhysicsProject
         m_max = max;
     }
 
+    void BoundingAABB::ExpandMargin(Real margin)
+    {
+        m_min -= margin;
+        m_max += margin;
+    }
+
     bool BoundingAABB::Intersect(BoundingAABB* aabb) const
     {
         // if separated in x direction

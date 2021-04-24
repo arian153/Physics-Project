@@ -58,18 +58,18 @@ namespace PhysicsProject
             const Real   PERSISTENT_THRESHOLD_SQUARED = PERSISTENT_THRESHOLD * PERSISTENT_THRESHOLD;
             const size_t MAX_MANIFOLD_POINT_COUNT     = 4;
 
-            const Real CONTACT_BETA  = 0.45f;
-            const Real VELOCITY_SLOP = 0.005f;
+            const Real CONTACT_BETA  = 0.15f;
+            const Real VELOCITY_SLOP = 0.1f;
 
             const Real POSITION_LINEAR_SLOP     = 0.05f;
             const Real POSITION_ANGULAR_SLOP    = Math::RADIAN * 2.0f;
             const Real MAX_LINEAR_CORRECTION    = 0.2f;
             const Real POSITION_SEPARATION_SLOP = 0.02f;
 
-            const Real SLEEP_THRESHOLD         = 0.0005f;
+            const Real SLEEP_THRESHOLD         = 0.0007f;
             const Real SLEEP_THRESHOLD_EXTREME = SLEEP_THRESHOLD * 100.0f;
             const Real SLEEP_AWAKE             = SLEEP_THRESHOLD * 33.0f;
-            const Real SLEEP_BIAS              = 0.95f;
+            const Real SLEEP_BIAS              = 0.75f;
         }
 
         namespace Primitive

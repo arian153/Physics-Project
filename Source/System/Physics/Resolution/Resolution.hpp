@@ -37,8 +37,9 @@ namespace PhysicsProject
     private:
         friend class World;
     private:
-        bool m_b_warm_starting = true;
-        bool m_b_enable_sleep  = true;
+        bool m_b_warm_starting    = true;
+        bool m_b_enable_sleep     = true;
+        bool m_b_enable_baumgarte = true;
 
         int m_velocity_iteration = 8;
         int m_position_iteration = 3;

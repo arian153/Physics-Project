@@ -61,7 +61,6 @@ namespace PhysicsProject
         void CrossChildren(DynamicBVHNode* node, std::list<ColliderPair>& result);
 
     private:
-        Real m_margin;
         DynamicBVHNode* m_root = nullptr;
         std::vector<DynamicBVHNode*> m_invalid_nodes;
       

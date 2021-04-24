@@ -53,7 +53,7 @@ namespace PhysicsProject
         };
 
     public:
-        explicit ContactConstraint(ContactManifold* input, FrictionUtility* friction_utility, Real tangent_speed = 0.0f);
+        explicit ContactConstraint(ContactManifold* input, FrictionUtility* friction_utility, bool enable_baum, Real tangent_speed = 0.0f);
         ~ContactConstraint();
 
         void Shutdown() override;
@@ -81,6 +81,7 @@ namespace PhysicsProject
 
         eMotionMode m_motion_a;
         eMotionMode m_motion_b;
+        bool        m_b_enable_baumgarte = true;
 
         PositionTerm m_position_term;
         VelocityTerm m_velocity_term;

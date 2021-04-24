@@ -9,8 +9,8 @@
 
 namespace PhysicsProject
 {
-    ContactConstraint::ContactConstraint(ContactManifold* input, FrictionUtility* friction_utility, Real tangent_speed)
-        : m_friction_utility(friction_utility), m_manifold(input), m_tangent_speed(tangent_speed)
+    ContactConstraint::ContactConstraint(ContactManifold* input, FrictionUtility* friction_utility, bool enable_baum, Real tangent_speed)
+        : m_friction_utility(friction_utility), m_manifold(input), m_motion_a(), m_motion_b(), m_b_enable_baumgarte(enable_baum), m_tangent_speed(tangent_speed)
     {
     }
 
@@ -148,6 +148,25 @@ namespace PhysicsProject
             primitive_renderer->DrawPrimitive(Sphere(pos_b, no_rotation, 0.05f), eRenderingMode::Face, color);
             primitive_renderer->DrawSegment(pos_a, pos_a - contact_point.normal * contact_point.depth, color);
         }
+
+        size_t contact_size = m_manifold->contacts.size();
+        if (contact_size == 3)
+        {
+            primitive_renderer->DrawTriangle(
+                m_manifold->contacts[0].global_position_a,
+                m_manifold->contacts[1].global_position_a,
+                m_manifold->contacts[2].global_position_a,
+                eRenderingMode::Face, color);
+        }
+        if (contact_size == 4)
+        {
+            primitive_renderer->DrawRectangle(
+                m_manifold->contacts[0].global_position_a,
+                m_manifold->contacts[1].global_position_a,
+                m_manifold->contacts[2].global_position_a,
+                m_manifold->contacts[3].global_position_a,
+                eRenderingMode::Face, color);
+        }
     }
 
     void ContactConstraint::WarmStart()
@@ -214,7 +233,7 @@ namespace PhysicsProject
                     + m_velocity_term.v_b
                     + CrossProduct(m_velocity_term.w_b, contact.r_b);
             Real closing_velocity = DotProduct(relative_velocity, dir);
-            Real baumgarte_slop   = Math::Max(contact.depth - Physics::Collision::VELOCITY_SLOP, 0.0f);
+            Real baumgarte_slop   = m_b_enable_baumgarte ? Math::Max(contact.depth - Physics::Collision::VELOCITY_SLOP, 0.0f) : contact.depth;
             jacobian.bias         = -(beta / (1.0f / 60.0f)) * baumgarte_slop + restitution * closing_velocity;
         }
         else

@@ -72,6 +72,41 @@ namespace PhysicsProject
         else if (mode == eRenderingMode::Face)
         {
             PushFaceIndices(index + 0, index + 1, index + 2);
+            PushFaceIndices(index + 0, index + 2, index + 1);
+        }
+    }
+
+    void PrimitiveRenderer::DrawRectangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Vector3& p3, eRenderingMode mode, Color color)
+    {
+        I32 index = static_cast<I32>(VerticesSize(mode));
+        I32 count = 4;
+        ReserveVertices(count, mode);
+        PushVertex(p0, mode, color);
+        PushVertex(p1, mode, color);
+        PushVertex(p2, mode, color);
+        PushVertex(p3, mode, color);
+
+        if (mode == eRenderingMode::Dot)
+        {
+            for (I32 i = 0; i < count; ++i)
+            {
+                PushIndex(index + i, mode);
+            }
+        }
+        else if (mode == eRenderingMode::Line)
+        {
+            for (int i = 0; i < count; ++i)
+            {
+                I32 j = i + 1 < count ? i + 1 : 0;
+                PushLineIndices(index + i, index + j);
+            }
+        }
+        else if (mode == eRenderingMode::Face)
+        {
+            PushFaceIndices(index + 0, index + 1, index + 2);
+            PushFaceIndices(index + 0, index + 2, index + 3);
+            PushFaceIndices(index + 0, index + 2, index + 1);
+            PushFaceIndices(index + 0, index + 3, index + 2);
         }
     }
 

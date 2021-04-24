@@ -59,7 +59,10 @@ namespace PhysicsProject
         m_contact_constraints.clear();
         for (auto& [key, manifold] : manifold_table->m_manifold_table)
         {
-            auto& contact = m_contact_constraints.emplace_back(&manifold, &m_friction_utility);
+            if (manifold.is_collide)
+            {
+                m_contact_constraints.emplace_back(&manifold, &m_friction_utility, m_b_enable_baumgarte);
+            }
         }
     }
 
@@ -132,7 +135,7 @@ namespace PhysicsProject
 
     void Resolution::SolvePositionConstraints(Real dt)
     {
-        if (m_position_iteration > 0 && m_velocity_iteration > 0 )
+        if (m_position_iteration > 0 && m_velocity_iteration > 0)
         {
             for (auto& constraint : m_constraints)
             {

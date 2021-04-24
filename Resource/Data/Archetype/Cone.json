@@ -1,0 +1,36 @@
+{
+    "Components": [
+        {
+            "Type": "class PhysicsProject::TransformComponent",
+            "Value": {
+                "Orientation": "Random",
+                "Position": "Random",
+                "Scale": [ 1, 1, 1 ]
+            }
+        },
+        {
+            "Type": "class PhysicsProject::RigidBodyComponent",
+            "Value": {
+            }
+        },
+        {
+            "Type": "class PhysicsProject::ColliderComponent",
+            "Value": {
+                "Colliders": [
+                    {
+                        "Material": "Rubber",
+                        "Orientation": [ 1, 0, 0, 0 ],
+                        "Position": [ 0, 0, 0 ],
+                        "Radius": [ 3, 3 ],
+                        "Height": 5,
+                        "Scale": 1,
+                        "Type": "Cone"
+                    }
+
+                ]
+            }
+        }
+    ],
+    "Name": "Cone",
+    "Type": "Archetype"
+}

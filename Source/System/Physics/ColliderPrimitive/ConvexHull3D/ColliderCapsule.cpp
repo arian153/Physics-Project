@@ -33,8 +33,9 @@ namespace PhysicsProject
         result         = result.HadamardProduct(direction);
         Real denom     = radius.HadamardProduct(direction).Length();
         result         = Math::IsZero(denom) ? result * 0.0f : result / denom;
-        Real top       = direction.DotProduct(axis_vector);
-        Real bot       = direction.DotProduct(-axis_vector);
+
+        Real top = direction.DotProduct(result + axis_vector);
+        Real bot = direction.DotProduct(result - axis_vector);
         if (top > bot)
         {
             result += axis_vector;
@@ -282,8 +283,8 @@ namespace PhysicsProject
         bool has_body = m_rigid_body != nullptr;
 
         Vector3 min = has_body
-            ? m_rigid_body->LocalToWorldPoint(m_local.LocalToWorldPoint(obb_vertices[0]))
-            : m_local.LocalToWorldPoint(obb_vertices[0]);
+                          ? m_rigid_body->LocalToWorldPoint(m_local.LocalToWorldPoint(obb_vertices[0]))
+                          : m_local.LocalToWorldPoint(obb_vertices[0]);
         Vector3 max = min;
 
         if (has_body)
@@ -291,12 +292,12 @@ namespace PhysicsProject
             for (int i = 1; i < 8; ++i)
             {
                 Vector3 vertex = m_rigid_body->LocalToWorldPoint(m_local.LocalToWorldPoint(obb_vertices[i]));
-                min.x = Math::Min(min.x, vertex.x);
-                min.y = Math::Min(min.y, vertex.y);
-                min.z = Math::Min(min.z, vertex.z);
-                max.x = Math::Max(max.x, vertex.x);
-                max.y = Math::Max(max.y, vertex.y);
-                max.z = Math::Max(max.z, vertex.z);
+                min.x          = Math::Min(min.x, vertex.x);
+                min.y          = Math::Min(min.y, vertex.y);
+                min.z          = Math::Min(min.z, vertex.z);
+                max.x          = Math::Max(max.x, vertex.x);
+                max.y          = Math::Max(max.y, vertex.y);
+                max.z          = Math::Max(max.z, vertex.z);
             }
         }
         else
@@ -304,12 +305,12 @@ namespace PhysicsProject
             for (int i = 1; i < 8; ++i)
             {
                 Vector3 vertex = m_local.LocalToWorldPoint(obb_vertices[i]);
-                min.x = Math::Min(min.x, vertex.x);
-                min.y = Math::Min(min.y, vertex.y);
-                min.z = Math::Min(min.z, vertex.z);
-                max.x = Math::Max(max.x, vertex.x);
-                max.y = Math::Max(max.y, vertex.y);
-                max.z = Math::Max(max.z, vertex.z);
+                min.x          = Math::Min(min.x, vertex.x);
+                min.y          = Math::Min(min.y, vertex.y);
+                min.z          = Math::Min(min.z, vertex.z);
+                max.x          = Math::Max(max.x, vertex.x);
+                max.y          = Math::Max(max.y, vertex.y);
+                max.z          = Math::Max(max.z, vertex.z);
             }
         }
 

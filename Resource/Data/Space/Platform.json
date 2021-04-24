@@ -19,16 +19,16 @@
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 0, 0, -60 ],
-                        "Scale": [ 1, 1, 1 ]
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 0, -60],
+                        "Scale": [1, 1, 1]
                     }
                 },
                 {
                     "Type": "class PhysicsProject::CameraComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 0, 0, -60 ],
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, 0, -60],
                         "Zoom": 1.0
                     }
                 },
@@ -38,151 +38,14 @@
             ],
             "Name": "Camera"
         },
-
         {
             "Components": [
                 {
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ -15, 15, 0 ],
-                        "Scale": [ 1, 1, 1 ]
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::RigidBodyComponent",
-                    "Value": {
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::ColliderComponent",
-                    "Value": {
-                        "Colliders": [
-                            {
-                                "Density": 1.0,
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Cube": [ 6, 4, 4 ],
-                                "Scale": 1,
-                                "Type": "Box"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "Name": "Box"
-        },
-
-        {
-            "Components": [
-                {
-                    "Type": "class PhysicsProject::TransformComponent",
-                    "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ -15, 20, 0 ],
-                        "Scale": [ 1, 1, 1 ]
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::RigidBodyComponent",
-                    "Value": {
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::ColliderComponent",
-                    "Value": {
-                        "Colliders": [
-                            {
-                                "Density": 1.0,
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Cube": [ 6, 4, 4 ],
-                                "Scale": 1,
-                                "Type": "Box"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "Name": "Box"
-        },
-
-        {
-            "Components": [
-                {
-                    "Type": "class PhysicsProject::TransformComponent",
-                    "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ -15, 25, 0 ],
-                        "Scale": [ 1, 1, 1 ]
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::RigidBodyComponent",
-                    "Value": {
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::ColliderComponent",
-                    "Value": {
-                        "Colliders": [
-                            {
-                                "Density": 1.0,
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Cube": [ 6, 4, 4 ],
-                                "Scale": 1,
-                                "Type": "Box"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "Name": "Box"
-        },
-
-        {
-            "Components": [
-                {
-                    "Type": "class PhysicsProject::TransformComponent",
-                    "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ -15, 30, 0 ],
-                        "Scale": [ 1, 1, 1 ]
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::RigidBodyComponent",
-                    "Value": {
-                    }
-                },
-                {
-                    "Type": "class PhysicsProject::ColliderComponent",
-                    "Value": {
-                        "Colliders": [
-                            {
-                                "Density": 1.0,
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Cube": [ 6, 4, 4 ],
-                                "Scale": 1,
-                                "Type": "Box"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "Name": "Box"
-        },
-
-        {
-            "Components": [
-                {
-                    "Type": "class PhysicsProject::TransformComponent",
-                    "Value": {
-                        "Orientation": [ 1, 0, 0, 0 ],
-                        "Position": [ 0, -30, 0 ],
-                        "Scale": [ 1, 1, 1 ]
+                        "Orientation": [1, 0, 0, 0],
+                        "Position": [0, -40, 0],
+                        "Scale": [1, 1, 1]
                     }
                 },
                 {
@@ -197,9 +60,9 @@
                         "Colliders": [
                             {
                                 "Material": "Rubber",
-                                "Orientation": [ 1, 0, 0, 0 ],
-                                "Position": [ 0, 0, 0 ],
-                                "Cube": [ 120, 20, 120 ],
+                                "Orientation": [1, 0, 0, 0],
+                                "Position": [0, 0, 0],
+                                "Cube": [1200, 30, 1200],
                                 "Scale": 1,
                                 "Type": "Box"
                             }

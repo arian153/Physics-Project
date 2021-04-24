@@ -13,6 +13,7 @@ namespace PhysicsProject
         ~BoundingAABB();
 
         void         Set(const Vector3& min, const Vector3& max);
+        void         ExpandMargin(Real margin);
         bool         Intersect(BoundingAABB* aabb) const;
         bool         Intersect(const BoundingAABB& aabb) const;
         bool         Contains(const Vector3& point) const;

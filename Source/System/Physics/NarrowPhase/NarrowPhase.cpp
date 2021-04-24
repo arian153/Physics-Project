@@ -37,7 +37,7 @@ namespace PhysicsProject
 
     void NarrowPhase::GenerateContact(std::list<ColliderPair>& potential_list, ManifoldTable* data_table)
     {
-        data_table->FilteringManifolds();
+       
         size_t count = potential_list.size();
         m_simplexes.clear();
         m_simplexes.reserve(count);
@@ -51,14 +51,6 @@ namespace PhysicsProject
             if (GJKCollisionDetection(pair.first, pair.second, simplex) == true)
             {
                 ////collider pair have a collision do epa and create collision.
-                //if (simplex.IsValid() == false)
-                //{
-                //    if (simplex.count == 0)
-                //    {
-                //        continue;
-                //    }
-                //    BlowUpSimplexToTetrahedron(pair.first, pair.second, simplex);
-                //}
                 m_simplexes.push_back(simplex);
                 Polytope polytope = Polytope(simplex);
                 //draw gjk result simplex
@@ -160,7 +152,7 @@ namespace PhysicsProject
             if (CrossProduct(a->PlaneNormal2D(), b->PlaneNormal2D()).IsZero())
             {
                 Vector3 direction = a->m_local.orientation.Rotate(Vector3(0, 1, 0));
-                
+
                 for (size_t i = 0; i < m_gjk_exit_iteration; ++i)
                 {
                     if (direction.IsValid() == false)
@@ -182,9 +174,9 @@ namespace PhysicsProject
         }
 
         Vector3 direction = Vector3(
-            random.GetRangedRandomReal(-10.0f, 10.0f),
-            random.GetRangedRandomReal(-10.0f, 10.0f),
-            random.GetRangedRandomReal(-10.0f, 10.0f)).Unit();
+                                    random.GetRangedRandomReal(-10.0f, 10.0f),
+                                    random.GetRangedRandomReal(-10.0f, 10.0f),
+                                    random.GetRangedRandomReal(-10.0f, 10.0f)).Unit();
         for (size_t i = 0; i < m_gjk_exit_iteration; ++i)
         {
             if (direction.IsValid() == false)

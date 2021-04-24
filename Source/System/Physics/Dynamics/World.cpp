@@ -417,6 +417,10 @@ namespace PhysicsProject
                     }
                 }
 
+                ImGui::Text("Enable Baumgarte");
+                ImGui::SameLine();
+                ImGui::Checkbox("##Enable Baumgarte", &m_resolution_phase->m_b_enable_baumgarte);
+
                 ImGui::Text("Enable Warm Start");
                 ImGui::SameLine();
                 ImGui::Checkbox("##Enable Warm Start", &m_resolution_phase->m_b_warm_starting);
@@ -462,6 +466,7 @@ namespace PhysicsProject
 
         if (m_do_narrow_phase)
         {
+            m_manifold_table->FilteringManifolds();
             m_narrow_phase->GenerateContact(m_pairs, m_manifold_table);
         }
 

@@ -17,9 +17,9 @@ namespace PhysicsProject
 
     ContactManifold::ContactManifold(const ContactManifold& rhs)
     {
-        m_set_a                      = rhs.m_set_a;
-        m_set_b                      = rhs.m_set_b;
-        is_collide                   = rhs.is_collide;
+        m_set_a    = rhs.m_set_a;
+        m_set_b    = rhs.m_set_b;
+        is_collide = rhs.is_collide;
         for (auto& contact : rhs.contacts)
         {
             contacts.push_back(contact);
@@ -30,9 +30,9 @@ namespace PhysicsProject
     {
         if (this != &rhs)
         {
-            m_set_a                      = rhs.m_set_a;
-            m_set_b                      = rhs.m_set_b;
-            is_collide                   = rhs.is_collide;
+            m_set_a    = rhs.m_set_a;
+            m_set_b    = rhs.m_set_b;
+            is_collide = rhs.is_collide;
             for (auto& contact : rhs.contacts)
             {
                 contacts.push_back(contact);
@@ -43,16 +43,15 @@ namespace PhysicsProject
 
     void ContactManifold::Set(const ContactManifold& manifold)
     {
-        m_set_a                      = manifold.m_set_a;
-        m_set_b                      = manifold.m_set_b;
-        is_collide                   = manifold.is_collide;
+        m_set_a    = manifold.m_set_a;
+        m_set_b    = manifold.m_set_b;
+        is_collide = manifold.is_collide;
         for (auto& contact : manifold.contacts)
         {
             contacts.push_back(contact);
         }
     }
 
-   
     void ContactManifold::UpdateInvalidContact()
     {
         //erase contact list.
@@ -102,22 +101,32 @@ namespace PhysicsProject
 
     void ContactManifold::UpdateCurrentManifold(const ContactPoint& new_contact)
     {
-        bool add_contact = false;
-        for (auto& contact : contacts)
+        bool discard_contact = false;
+
+        size_t size          = contacts.size();
+        size_t replace_index = size;
+        for (size_t i = 0; i < size; ++i)
         {
-            Vector3 r_a            = new_contact.global_position_a - contact.global_position_a;
-            Vector3 r_b            = new_contact.global_position_b - contact.global_position_b;
-            bool    r_a_far_enough = r_a.LengthSquared() > Physics::Collision::PERSISTENT_THRESHOLD_SQUARED;
-            bool    r_b_far_enough = r_b.LengthSquared() > Physics::Collision::PERSISTENT_THRESHOLD_SQUARED;
+            Vector3 r_a              = new_contact.global_position_a - contacts[i].global_position_a;
+            bool    r_a_close_enough = r_a.LengthSquared() < Physics::Collision::PERSISTENT_THRESHOLD_SQUARED;
             // proximity check  
-            if (r_a_far_enough && r_b_far_enough)
+            if (r_a_close_enough)
             {
-                //add new_contact
-                add_contact = true;
+                //replace new_contact
+                discard_contact = true;
+                replace_index   = i;
+                break;
             }
         }
-        if (add_contact || contacts.empty())
+
+        if (discard_contact)
         {
+            //replace new contact
+            contacts[replace_index].UpdateContactPoint(new_contact);
+        }
+        else
+        {
+            //add new contact
             auto set_a = new_contact.collider_a->GetColliderSet();
             auto set_b = new_contact.collider_b->GetColliderSet();
             if (set_a == m_set_b && set_b == m_set_a)
@@ -128,10 +137,6 @@ namespace PhysicsProject
             {
                 contacts.push_back(new_contact);
             }
-        }
-        else
-        {
-            //replace?
         }
     }
 

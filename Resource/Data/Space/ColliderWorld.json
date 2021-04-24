@@ -128,9 +128,9 @@
                                 "Material": "Rubber",
                                 "Orientation": [1, 0, 0, 0],
                                 "Position": [0, 0, 0],
-                                "Radius": [3, 1],
+                                "Radius": [3, 4],
                                 "Height": 3,
-                                "Ratio": 1.5,
+                                "Ratio": 0.8,
                                 "Scale": 1,
                                 "Type": "Truncated"
                             }
@@ -149,7 +149,7 @@
                     "Type": "class PhysicsProject::TransformComponent",
                     "Value": {
                         "Orientation": [1, 0, 0, 0],
-                        "Position": [0, 20, -5],
+                        "Position": [0, 20, -6],
                         "Scale": [1, 1, 1]
                     }
                 },

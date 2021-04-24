@@ -284,6 +284,8 @@ namespace PhysicsProject
                     collider_data->UpdateBoundingVolume();
                     m_bounding_volume = collider_data->m_bounding_volume->Union(m_bounding_volume);
                 }
+
+                m_bounding_volume.ExpandMargin(Physics::Collision::BROAD_PHASE_MARGIN * 2);
             }
         }
     }
@@ -322,9 +324,9 @@ namespace PhysicsProject
             }
 
             m_rigid_body = body;
-            m_world = world;
-            m_mass_data = origin->m_mass_data;
-            m_scale = origin->m_scale;
+            m_world      = world;
+            m_mass_data  = origin->m_mass_data;
+            m_scale      = origin->m_scale;
             if (m_rigid_body != nullptr)
             {
                 m_rigid_body->SetMassData(m_mass_data);

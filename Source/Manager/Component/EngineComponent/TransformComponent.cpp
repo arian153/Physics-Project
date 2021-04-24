@@ -263,6 +263,19 @@ namespace PhysicsProject
             {
                 SetOrientation(JsonResource::AsQuaternionRIJK(data["Orientation"]));
             }
+
+            if (data["Orientation"].isString())
+            {
+                m_b_random_rot        = true;
+                Quaternion random_rot = Quaternion(
+                                                   random.GetRangedRandomReal(-1.0f, 1.0f),
+                                                   random.GetRangedRandomReal(-1.0f, 1.0f),
+                                                   random.GetRangedRandomReal(-1.0f, 1.0f),
+                                                   random.GetRangedRandomReal(-1.0f, 1.0f));
+
+                random_rot.SetNormalize();
+                SetOrientation(random_rot);
+            }
         }
         return true;
     }
@@ -388,6 +401,18 @@ namespace PhysicsProject
                                     random.GetRangedRandomReal(-50.0f, 50.0f),
                                     random.GetRangedRandomReal(-20.0f, 20.0f),
                                     random.GetRangedRandomReal(-50.0f, 50.0f)));
+            }
+
+            if (origin->m_b_random_rot)
+            {
+                Quaternion random_rot = Quaternion(
+                                                   random.GetRangedRandomReal(-1.0f, 1.0f),
+                                                   random.GetRangedRandomReal(-1.0f, 1.0f),
+                                                   random.GetRangedRandomReal(-1.0f, 1.0f),
+                                                   random.GetRangedRandomReal(-1.0f, 1.0f));
+
+                random_rot.SetNormalize();
+                SetOrientation(random_rot);
             }
         }
     }

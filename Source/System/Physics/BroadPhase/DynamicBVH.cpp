@@ -62,7 +62,6 @@ namespace PhysicsProject
     }
 
     DynamicBVH::DynamicBVH()
-        : m_margin(0.2f)
     {
     }
 
@@ -88,7 +87,7 @@ namespace PhysicsProject
                         m_root->data->GetCollider()->UpdateBoundingVolume();
                     }
                 }
-                m_root->UpdateAABB(m_margin);
+                m_root->UpdateAABB(Physics::Collision::BROAD_PHASE_MARGIN);
             }
             else
             {
@@ -113,7 +112,7 @@ namespace PhysicsProject
                     *parent_link    = sibling;
                     delete parent;
                     // re-insert node
-                    node->UpdateAABB(m_margin);
+                    node->UpdateAABB(Physics::Collision::BROAD_PHASE_MARGIN);
                     InsertNodeRecursive(node, &m_root);
                 }
                 m_invalid_nodes.clear();
@@ -138,7 +137,7 @@ namespace PhysicsProject
             // not first node, insert node to tree
             DynamicBVHNode* node = new DynamicBVHNode();
             node->SetLeaf(aabb);
-            node->UpdateAABB(m_margin);
+            node->UpdateAABB(Physics::Collision::BROAD_PHASE_MARGIN);
             InsertNodeRecursive(node, &m_root);
         }
         else
@@ -146,7 +145,7 @@ namespace PhysicsProject
             // first node, make root
             m_root = new DynamicBVHNode();
             m_root->SetLeaf(aabb);
-            m_root->UpdateAABB(m_margin);
+            m_root->UpdateAABB(Physics::Collision::BROAD_PHASE_MARGIN);
         }
     }
 
@@ -456,7 +455,7 @@ namespace PhysicsProject
             }
         }
         // update parent AABB (propagates back up the recursion stack)
-        (*parent)->UpdateAABB(m_margin);
+        (*parent)->UpdateAABB(Physics::Collision::BROAD_PHASE_MARGIN);
     }
 
     void DynamicBVH::RemoveNodeRecursive(DynamicBVHNode* node)
