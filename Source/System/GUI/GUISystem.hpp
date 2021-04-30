@@ -27,6 +27,7 @@ namespace PhysicsProject
         static void SetFocusFree(bool flag);
 
         void AddGUI(GameEditor* game_editor);
+        void StyleVisualStudio();
 
     private:
         ImGuiIO&           m_im_gui_io;
