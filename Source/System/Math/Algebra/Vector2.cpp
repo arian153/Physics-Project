@@ -388,7 +388,7 @@ namespace PhysicsProject
 
     Real CrossProduct(const Vector2& vec1, const Vector2& vec2)
     {
-        return vec1.CrossProduct(vec2);
+        return (vec1.x * vec2.y - vec1.y * vec2.x);
     }
 
     Vector2 CrossProduct(Real vec1, const Vector2& vec2)
@@ -398,7 +398,7 @@ namespace PhysicsProject
 
     Vector2 CrossProduct(const Vector2& vec1, Real vec2)
     {
-        return vec1.CrossProduct(vec2);
+        return Vector2(vec2 * vec1.y, -vec2 * vec1.x);
     }
 
     Matrix22 OuterProduct(const Vector2& vec1, const Vector2& vec2)

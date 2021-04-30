@@ -58,7 +58,7 @@ namespace PhysicsProject
             const Real   PERSISTENT_THRESHOLD_SQUARED = PERSISTENT_THRESHOLD * PERSISTENT_THRESHOLD;
             const size_t MAX_MANIFOLD_POINT_COUNT     = 4;
 
-            const Real CONTACT_BETA  = 0.15f;
+            const Real CONTACT_BETA  = 0.55f;
             const Real VELOCITY_SLOP = 0.1f;
 
             const Real POSITION_LINEAR_SLOP     = 0.05f;

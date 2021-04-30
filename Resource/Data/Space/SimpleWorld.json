@@ -275,7 +275,7 @@
                                 "Material": "Rubber",
                                 "Orientation": [1, 0, 0, 0],
                                 "Position": [0, 0, 0],
-                                "Radius": [2, 2, 2],
+                                "Radius": [2, 2, 3],
                                 "Height": 4,
                                 "Scale": 1,
                                 "Type": "Capsule"
